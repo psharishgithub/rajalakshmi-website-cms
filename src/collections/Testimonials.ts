@@ -9,7 +9,7 @@ export const Testimonials: CollectionConfig = {
   access: {
     create: ({ req: { user } }: any) => adminOnly.create({ req: { user } }),
     read: ({ req: { user } }: any) => {
-      // If user is admin, show all testimonials (including inactive ones)
+      // If user is SuperAdmin or Admin, show all testimonials (including inactive ones)
       if (user && adminOnly.read({ req: { user } })) {
         return true;
       }

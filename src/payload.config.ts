@@ -13,6 +13,10 @@ import { Announcements } from './collections/Announcements'
 import { HomeSlider } from './collections/HomeSlider'
 import { BlogPosts } from './collections/BlogPosts'
 import { Testimonials } from './collections/Testimonials'
+import { COE } from './collections/COE'
+import { COECategories } from './collections/COECategories'
+import { Regulations } from './collections/Regulations'
+import { RegulationCategories } from './collections/RegulationCategories'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,7 +28,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials],
+  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

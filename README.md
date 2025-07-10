@@ -24,6 +24,36 @@ After you click the `Deploy` button above, you'll want to have standalone copy o
 
 That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
 
+## User Roles
+
+The system has been configured with three distinct user roles:
+
+### SuperAdmin
+- Full system access and control
+- Can create, read, update, and delete all content
+- Can manage user roles and create/delete users
+- Can assign roles to other users
+- Has access to all administrative functions
+
+### Admin
+- Can manage most content (announcements, home slider, testimonials)
+- Can create and manage other users (except SuperAdmin role assignment)
+- Can view and manage all media and blog posts
+- Cannot delete users or assign SuperAdmin roles
+
+### Blogger
+- Can create and manage their own blog posts
+- Can upload and manage their own media files
+- Cannot access other users' content
+- Cannot manage system-wide content like announcements or testimonials
+
+To create your first SuperAdmin user, run:
+```bash
+pnpm run create-admin
+```
+
+This will create a SuperAdmin user with the credentials specified in your `.env` file.
+
 #### Docker (Optional)
 
 If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.

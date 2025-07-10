@@ -73,6 +73,10 @@ export interface Config {
     'home-slider': HomeSlider;
     'blog-posts': BlogPost;
     testimonials: Testimonial;
+    coe: Coe;
+    'coe-categories': CoeCategory;
+    regulations: Regulation;
+    'regulation-categories': RegulationCategory;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +89,10 @@ export interface Config {
     'home-slider': HomeSliderSelect<false> | HomeSliderSelect<true>;
     'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    coe: CoeSelect<false> | CoeSelect<true>;
+    'coe-categories': CoeCategoriesSelect<false> | CoeCategoriesSelect<true>;
+    regulations: RegulationsSelect<false> | RegulationsSelect<true>;
+    'regulation-categories': RegulationCategoriesSelect<false> | RegulationCategoriesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -127,7 +135,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
-  role: 'admin' | 'blogger';
+  role: 'SuperAdmin' | 'Admin' | 'Blogger';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -280,6 +288,156 @@ export interface Testimonial {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coe".
+ */
+export interface Coe {
+  id: string;
+  /**
+   * Title of the COE document
+   */
+  title: string;
+  /**
+   * Brief description of the document
+   */
+  description?: string | null;
+  /**
+   * Select the category for this document
+   */
+  category: string | CoeCategory;
+  /**
+   * Upload the PDF file for this COE document
+   */
+  pdfFile: string | Media;
+  /**
+   * Whether this document is active and visible
+   */
+  isActive?: boolean | null;
+  /**
+   * Higher numbers appear first within the category
+   */
+  priority?: number | null;
+  /**
+   * Number of times this document has been downloaded
+   */
+  downloadCount?: number | null;
+  /**
+   * Optional tags for better organization and searchability
+   */
+  tags?:
+    | {
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coe-categories".
+ */
+export interface CoeCategory {
+  id: string;
+  /**
+   * Name of the COE category (e.g., "AI/ML", "IoT", "Cybersecurity")
+   */
+  name: string;
+  /**
+   * Brief description of what this category represents
+   */
+  description?: string | null;
+  /**
+   * Icon class or emoji for the category (optional)
+   */
+  icon?: string | null;
+  /**
+   * Whether this category is active and visible
+   */
+  isActive?: boolean | null;
+  /**
+   * Order of display (higher numbers appear first)
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regulations".
+ */
+export interface Regulation {
+  id: string;
+  /**
+   * Title of the regulation document
+   */
+  title: string;
+  /**
+   * Brief description of the regulation
+   */
+  description?: string | null;
+  /**
+   * Select the category for this regulation
+   */
+  category: string | RegulationCategory;
+  /**
+   * Upload the PDF file for this regulation document
+   */
+  pdfFile: string | Media;
+  /**
+   * Whether this regulation is active and visible
+   */
+  isActive?: boolean | null;
+  /**
+   * Higher numbers appear first within the category
+   */
+  priority?: number | null;
+  /**
+   * Number of times this regulation has been downloaded
+   */
+  downloadCount?: number | null;
+  /**
+   * Optional tags for better organization and searchability
+   */
+  tags?:
+    | {
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regulation-categories".
+ */
+export interface RegulationCategory {
+  id: string;
+  /**
+   * Name of the regulation category (e.g., "Academic Regulations", "Administrative Policies", "Student Guidelines")
+   */
+  name: string;
+  /**
+   * Brief description of what this category represents
+   */
+  description?: string | null;
+  /**
+   * Icon class or emoji for the category (optional)
+   */
+  icon?: string | null;
+  /**
+   * Whether this category is active and visible
+   */
+  isActive?: boolean | null;
+  /**
+   * Order of display (higher numbers appear first)
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -308,6 +466,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'testimonials';
         value: string | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'coe';
+        value: string | Coe;
+      } | null)
+    | ({
+        relationTo: 'coe-categories';
+        value: string | CoeCategory;
+      } | null)
+    | ({
+        relationTo: 'regulations';
+        value: string | Regulation;
+      } | null)
+    | ({
+        relationTo: 'regulation-categories';
+        value: string | RegulationCategory;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -446,6 +620,74 @@ export interface TestimonialsSelect<T extends boolean = true> {
   authorTitle?: T;
   authorImage?: T;
   isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coe_select".
+ */
+export interface CoeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  category?: T;
+  pdfFile?: T;
+  isActive?: T;
+  priority?: T;
+  downloadCount?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coe-categories_select".
+ */
+export interface CoeCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  icon?: T;
+  isActive?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regulations_select".
+ */
+export interface RegulationsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  category?: T;
+  pdfFile?: T;
+  isActive?: T;
+  priority?: T;
+  downloadCount?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regulation-categories_select".
+ */
+export interface RegulationCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  icon?: T;
+  isActive?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
