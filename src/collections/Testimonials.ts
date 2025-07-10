@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { adminOnly } from '../access'
+import { adminOnly, isSuperAdmin, isAdmin } from '../access'
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -10,7 +10,7 @@ export const Testimonials: CollectionConfig = {
     create: ({ req: { user } }: any) => adminOnly.create({ req: { user } }),
     read: ({ req: { user } }: any) => {
       // If user is SuperAdmin or Admin, show all testimonials (including inactive ones)
-      if (user && adminOnly.read({ req: { user } })) {
+      if (user && (isSuperAdmin(user) || isAdmin(user))) {
         return true;
       }
       // For public access (no user), only show active testimonials

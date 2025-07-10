@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { adminAndBlogger } from '../access'
+import { adminAndBloggerWithSuperAdminAccess } from '../access'
 
 export const Regulations: CollectionConfig = {
   slug: 'regulations',
@@ -7,7 +7,7 @@ export const Regulations: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'isActive', 'updatedAt'],
   },
-  access: adminAndBlogger,
+  access: adminAndBloggerWithSuperAdminAccess,
   hooks: {
     beforeChange: [
       ({ data, req, operation }) => {

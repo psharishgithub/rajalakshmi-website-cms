@@ -55,11 +55,29 @@ export const adminAndBlogger = {
   delete: ({ req: { user } }: any) => isAnyAdminOrBlogger(user),
 }
 
+// Enhanced access pattern that gives SuperAdmin full access while maintaining existing restrictions for others
+export const adminAndBloggerWithSuperAdminAccess = {
+  create: ({ req: { user } }: any) => isAnyAdminOrBlogger(user),
+  read: ({ req: { user } }: any) => {
+    if (isSuperAdmin(user)) return true
+    return isAdminOrBlogger(user)
+  },
+  update: ({ req: { user } }: any) => {
+    if (isSuperAdmin(user)) return true
+    return isAdminOrBlogger(user)
+  },
+  delete: ({ req: { user } }: any) => {
+    if (isSuperAdmin(user)) return true
+    return isAdminOrBlogger(user)
+  },
+}
+
 // Blog-specific access control - bloggers can only see their own posts
 export const blogPostAccess = {
   create: ({ req: { user } }: any) => isAnyAdminOrBlogger(user),
   read: ({ req: { user } }: any) => {
-    if (isSuperAdminOrAdmin(user)) return true
+    if (isSuperAdmin(user)) return true
+    if (isAdmin(user)) return true
     if (isBlogger(user)) {
       // Bloggers can only read their own blog posts
       return {
@@ -71,7 +89,8 @@ export const blogPostAccess = {
     return false
   },
   update: ({ req: { user } }: any) => {
-    if (isSuperAdminOrAdmin(user)) return true
+    if (isSuperAdmin(user)) return true
+    if (isAdmin(user)) return true
     if (isBlogger(user)) {
       // Bloggers can only update their own blog posts
       return {
@@ -83,7 +102,8 @@ export const blogPostAccess = {
     return false
   },
   delete: ({ req: { user } }: any) => {
-    if (isSuperAdminOrAdmin(user)) return true
+    if (isSuperAdmin(user)) return true
+    if (isAdmin(user)) return true
     if (isBlogger(user)) {
       // Bloggers can only delete their own blog posts
       return {
@@ -103,8 +123,11 @@ export const mediaAccess = {
     // If no user (public access), allow read for frontend
     if (!user) return true
     
-    // SuperAdmin and Admin can see all media
-    if (isSuperAdminOrAdmin(user)) return true
+    // SuperAdmin can see all media
+    if (isSuperAdmin(user)) return true
+    
+    // Admin can see all media
+    if (isAdmin(user)) return true
     
     // Bloggers can only see their own uploaded media in admin
     if (isBlogger(user)) {
@@ -118,7 +141,8 @@ export const mediaAccess = {
     return false
   },
   update: ({ req: { user } }: any) => {
-    if (isSuperAdminOrAdmin(user)) return true
+    if (isSuperAdmin(user)) return true
+    if (isAdmin(user)) return true
     if (isBlogger(user)) {
       // Bloggers can only update their own uploaded media
       return {
@@ -130,7 +154,8 @@ export const mediaAccess = {
     return false
   },
   delete: ({ req: { user } }: any) => {
-    if (isSuperAdminOrAdmin(user)) return true
+    if (isSuperAdmin(user)) return true
+    if (isAdmin(user)) return true
     if (isBlogger(user)) {
       // Bloggers can only delete their own uploaded media
       return {
