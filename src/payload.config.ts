@@ -17,6 +17,13 @@ import { COE } from './collections/COE'
 import { COECategories } from './collections/COECategories'
 import { Regulations } from './collections/Regulations'
 import { RegulationCategories } from './collections/RegulationCategories'
+import { DepartmentSections } from './collections/DepartmentSections'
+import { About } from './collections/About'
+import { IQAC } from './collections/IQAC'
+import { InternationalRelations } from './collections/InternationalRelations'
+import { NAAC } from './collections/NAAC'
+import { Admissions } from './collections/Admissions'
+import { Research } from './collections/Research'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,7 +35,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories],
+  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, DepartmentSections, About, IQAC, InternationalRelations, NAAC, Admissions, Research],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
