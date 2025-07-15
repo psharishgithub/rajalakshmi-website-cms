@@ -84,6 +84,8 @@ export interface Config {
     naac: Naac;
     admissions: Admission;
     research: Research;
+    'secondary-nav': SecondaryNav;
+    placement: Placement;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -107,6 +109,8 @@ export interface Config {
     naac: NaacSelect<false> | NaacSelect<true>;
     admissions: AdmissionsSelect<false> | AdmissionsSelect<true>;
     research: ResearchSelect<false> | ResearchSelect<true>;
+    'secondary-nav': SecondaryNavSelect<false> | SecondaryNavSelect<true>;
+    placement: PlacementSelect<false> | PlacementSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -5565,6 +5569,1604 @@ export interface Research {
   createdAt: string;
 }
 /**
+ * Manage secondary navigation bar buttons and their content pages
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "secondary-nav".
+ */
+export interface SecondaryNav {
+  id: string;
+  /**
+   * Title/Label for the navigation button
+   */
+  title: string;
+  /**
+   * Optional description for admin reference
+   */
+  description?: string | null;
+  /**
+   * URL slug for this navigation item (e.g., admissions-portal, student-resources)
+   */
+  slug: string;
+  /**
+   * Choose whether this creates a content page or links to an external URL
+   */
+  linkType: 'content' | 'external';
+  /**
+   * Full external URL (e.g., https://google.com)
+   */
+  externalUrl?: string | null;
+  /**
+   * Content for the page this navigation button will create
+   */
+  pageContent?: {
+    heroSection?: {
+      /**
+       * Main title for the page (defaults to nav title if empty)
+       */
+      heroTitle?: string | null;
+      /**
+       * Subtitle or tagline for the page
+       */
+      heroSubtitle?: string | null;
+      /**
+       * Hero background image
+       */
+      heroImage?: (string | null) | Media;
+      /**
+       * Rich text content for the hero section
+       */
+      heroContent?: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+    };
+    /**
+     * Main content of the page
+     */
+    mainContent: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    /**
+     * Add multiple content sections to build your page
+     */
+    contentSections?:
+      | {
+          /**
+           * Title for this content section
+           */
+          sectionTitle: string;
+          /**
+           * Type of content section
+           */
+          sectionType: 'text' | 'gallery' | 'cards' | 'list' | 'accordion' | 'contact' | 'downloads';
+          /**
+           * Rich text content for this section
+           */
+          textContent?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Collection of images for gallery
+           */
+          imageGallery?:
+            | {
+                image: string | Media;
+                /**
+                 * Image caption
+                 */
+                caption?: string | null;
+                /**
+                 * Alt text for accessibility
+                 */
+                altText?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Feature cards or highlight items
+           */
+          cardItems?:
+            | {
+                cardTitle: string;
+                cardDescription?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                cardImage?: (string | null) | Media;
+                /**
+                 * Optional link for the card
+                 */
+                cardLink?: string | null;
+                /**
+                 * Icon class or emoji for the card
+                 */
+                cardIcon?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * List of items with titles and descriptions
+           */
+          listItems?:
+            | {
+                itemTitle: string;
+                itemDescription?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                /**
+                 * Optional link for this item
+                 */
+                itemLink?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Expandable accordion items (great for FAQs)
+           */
+          accordionItems?:
+            | {
+                /**
+                 * Question or header text
+                 */
+                question: string;
+                /**
+                 * Answer or content that expands
+                 */
+                answer: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                };
+                /**
+                 * Whether this item should be expanded by default
+                 */
+                isOpenByDefault?: boolean | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Contact details section
+           */
+          contactInfo?: {
+            email?: string | null;
+            phone?: string | null;
+            address?: string | null;
+            workingHours?: string | null;
+            /**
+             * Google Maps embed code (iframe)
+             */
+            mapEmbedCode?: string | null;
+          };
+          /**
+           * Downloadable files and documents
+           */
+          downloadLinks?:
+            | {
+                downloadTitle: string;
+                downloadDescription?: string | null;
+                downloadFile: string | Media;
+                /**
+                 * Category for grouping downloads
+                 */
+                downloadCategory?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Order of this section (higher numbers appear first)
+           */
+          sectionOrder?: number | null;
+          id?: string | null;
+        }[]
+      | null;
+    seoSettings?: {
+      /**
+       * Page title for search engines (defaults to page title if empty)
+       */
+      metaTitle?: string | null;
+      /**
+       * Page description for search engines
+       */
+      metaDescription?: string | null;
+      /**
+       * SEO keywords (comma-separated)
+       */
+      keywords?: string | null;
+      /**
+       * Image for social media sharing
+       */
+      ogImage?: (string | null) | Media;
+    };
+  };
+  /**
+   * Open external links in a new tab
+   */
+  openInNewTab?: boolean | null;
+  /**
+   * Visual style of the button
+   */
+  buttonStyle?: ('primary' | 'secondary' | 'outline' | 'text' | 'warning' | 'info' | 'success' | 'danger') | null;
+  /**
+   * Optional icon class or emoji for the button (e.g., fa-home, 🏠)
+   */
+  icon?: string | null;
+  /**
+   * Position of the icon relative to text
+   */
+  iconPosition?: ('left' | 'right' | 'none') | null;
+  /**
+   * Whether this button is visible in the navigation
+   */
+  isVisible?: boolean | null;
+  /**
+   * Order of appearance (higher numbers appear first)
+   */
+  order?: number | null;
+  /**
+   * Control on which pages this button should appear
+   */
+  showOnPages?: ('all' | 'home' | 'internal' | 'specific')[] | null;
+  /**
+   * Define specific pages where this button should appear
+   */
+  specificPages?:
+    | {
+        /**
+         * Page path (e.g., /about, /research, /admissions)
+         */
+        pagePath: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Who can see this navigation button
+   */
+  accessLevel?: ('public' | 'students' | 'faculty' | 'admin') | null;
+  scheduleSettings?: {
+    /**
+     * Enable time-based visibility for this button
+     */
+    isScheduled?: boolean | null;
+    /**
+     * Start date for button visibility
+     */
+    startDate?: string | null;
+    /**
+     * End date for button visibility (leave empty for no end date)
+     */
+    endDate?: string | null;
+  };
+  analytics?: {
+    /**
+     * Track clicks on this button for analytics
+     */
+    trackClicks?: boolean | null;
+    /**
+     * Total number of clicks (automatically updated)
+     */
+    clickCount?: number | null;
+    /**
+     * Custom Google Analytics event name for this button
+     */
+    googleAnalyticsEvent?: string | null;
+  };
+  additionalAttributes?: {
+    /**
+     * Additional CSS classes for custom styling
+     */
+    cssClass?: string | null;
+    /**
+     * Tooltip text that appears on hover
+     */
+    tooltip?: string | null;
+    /**
+     * Accessibility label for screen readers
+     */
+    ariaLabel?: string | null;
+    /**
+     * Custom data attributes for the button element
+     */
+    dataAttributes?:
+      | {
+          /**
+           * Attribute name (without data- prefix)
+           */
+          key: string;
+          /**
+           * Attribute value
+           */
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Internal notes about this navigation item (not visible to users)
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "placement".
+ */
+export interface Placement {
+  id: string;
+  /**
+   * Title for the placement section
+   */
+  title: string;
+  /**
+   * URL slug for the placement page (e.g., placement-2024-25)
+   */
+  slug: string;
+  /**
+   * Whether this placement page is active and visible
+   */
+  isActive?: boolean | null;
+  placementCell?: {
+    /**
+     * Overview of the placement cell
+     */
+    overview?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Vision of the placement cell
+     */
+    vision?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Mission of the placement cell
+     */
+    mission?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Objectives and goals of the placement cell
+     */
+    objectives?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    teamMembers?:
+      | {
+          /**
+           * Name of the team member
+           */
+          name: string;
+          /**
+           * Designation/Position
+           */
+          designation: string;
+          /**
+           * Department
+           */
+          department?: string | null;
+          /**
+           * Email address
+           */
+          email?: string | null;
+          /**
+           * Phone number
+           */
+          phone?: string | null;
+          /**
+           * Photo of the team member
+           */
+          photo?: (string | null) | Media;
+          isActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  whyRajalakshmi?: {
+    /**
+     * Content explaining why students should choose Rajalakshmi
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    strengthsList?:
+      | {
+          /**
+           * Title of the strength
+           */
+          title: string;
+          /**
+           * Description of the strength
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Icon or image representing this strength
+           */
+          icon?: (string | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+    statistics?:
+      | {
+          /**
+           * Metric name (e.g., Placement Rate)
+           */
+          metric: string;
+          /**
+           * Value (e.g., 95%)
+           */
+          value: string;
+          /**
+           * Additional description
+           */
+          description?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  procedure?: {
+    /**
+     * Overview of placement procedure
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    steps?:
+      | {
+          /**
+           * Step number in the process
+           */
+          stepNumber: number;
+          /**
+           * Title of the step
+           */
+          title: string;
+          /**
+           * Detailed description of the step
+           */
+          description: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
+          /**
+           * Expected timeline for this step
+           */
+          timeline?: string | null;
+          documents?:
+            | {
+                document: string | Media;
+                description?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Eligibility criteria for placement
+     */
+    eligibilityCriteria?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Student registration process details
+     */
+    registrationProcess?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  trainingPrograms?: {
+    /**
+     * Overview of training programs
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    programsList?:
+      | {
+          /**
+           * Name of the training program
+           */
+          programName: string;
+          /**
+           * Type of training program
+           */
+          programType?:
+            | (
+                | 'technical'
+                | 'soft_skills'
+                | 'aptitude'
+                | 'interview'
+                | 'industry_specific'
+                | 'communication'
+                | 'leadership'
+              )
+            | null;
+          /**
+           * Detailed description of the program
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Duration of the program
+           */
+          duration?: string | null;
+          /**
+           * Target audience (e.g., Final year students)
+           */
+          targetAudience?: string | null;
+          /**
+           * Program schedule and timings
+           */
+          schedule?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Trainer/Instructor name
+           */
+          trainer?: string | null;
+          materials?:
+            | {
+                material: string | Media;
+                description?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          isActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  placementReport?: {
+    /**
+     * Overview of placement reports
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    yearlyReports?:
+      | {
+          /**
+           * Academic year (e.g., 2023-24)
+           */
+          academicYear: string;
+          /**
+           * Total eligible students
+           */
+          totalStudents?: number | null;
+          /**
+           * Number of students placed
+           */
+          studentsPlaced?: number | null;
+          /**
+           * Placement percentage
+           */
+          placementPercentage?: number | null;
+          /**
+           * Average package offered
+           */
+          averagePackage?: string | null;
+          /**
+           * Highest package offered
+           */
+          highestPackage?: string | null;
+          /**
+           * Number of companies visited
+           */
+          companiesVisited?: number | null;
+          departmentWiseData?:
+            | {
+                department: string;
+                totalStudents?: number | null;
+                studentsPlaced?: number | null;
+                placementPercentage?: number | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Detailed placement report document (PDF)
+           */
+          reportDocument?: (string | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  recruiters?: {
+    /**
+     * Overview content about recruiters
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    recruitersList?:
+      | {
+          /**
+           * Name of the recruiting company
+           */
+          companyName: string;
+          /**
+           * Company logo
+           */
+          companyLogo?: (string | null) | Media;
+          /**
+           * Industry category
+           */
+          industry?:
+            | (
+                | 'it_software'
+                | 'manufacturing'
+                | 'automotive'
+                | 'banking_finance'
+                | 'consulting'
+                | 'healthcare'
+                | 'education'
+                | 'government'
+                | 'others'
+              )
+            | null;
+          /**
+           * Company website URL
+           */
+          website?: string | null;
+          /**
+           * Brief description about the company
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Typical roles offered (comma separated)
+           */
+          rolesOffered?: string | null;
+          /**
+           * Package range offered
+           */
+          packageRange?: string | null;
+          /**
+           * How frequently they visit for recruitment
+           */
+          visitFrequency?: ('annual' | 'biannual' | 'occasional' | 'regular') | null;
+          isActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  employabilityTrainingCamp?: {
+    /**
+     * Overview of employability training camp
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    campDetails?:
+      | {
+          /**
+           * Title of the training camp
+           */
+          campTitle: string;
+          /**
+           * Duration of the camp
+           */
+          duration?: string | null;
+          /**
+           * Start date of the camp
+           */
+          startDate?: string | null;
+          /**
+           * End date of the camp
+           */
+          endDate?: string | null;
+          /**
+           * Objectives and goals of the camp
+           */
+          objectives?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          modules?:
+            | {
+                moduleName: string;
+                description?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                duration?: string | null;
+                trainer?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Target participants (e.g., Final year students)
+           */
+          targetParticipants?: string | null;
+          /**
+           * Expected outcomes and benefits
+           */
+          outcomes?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Registration link for the camp
+           */
+          registrationLink?: string | null;
+          materials?:
+            | {
+                material: string | Media;
+                description?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          isActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  placementContact?: {
+    /**
+     * General contact information content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    placementOfficer?: {
+      /**
+       * Name of the placement officer
+       */
+      name?: string | null;
+      /**
+       * Designation/Title
+       */
+      designation?: string | null;
+      /**
+       * Email address
+       */
+      email?: string | null;
+      /**
+       * Phone number
+       */
+      phone?: string | null;
+      /**
+       * Office hours
+       */
+      officeHours?: string | null;
+    };
+    generalContact?: {
+      /**
+       * Physical address of placement cell
+       */
+      address?: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      /**
+       * General email for placement queries
+       */
+      email?: string | null;
+      /**
+       * General phone number
+       */
+      phone?: string | null;
+      /**
+       * Fax number if available
+       */
+      fax?: string | null;
+      /**
+       * General office hours
+       */
+      officeHours?: string | null;
+    };
+    departmentContacts?:
+      | {
+          /**
+           * Department name
+           */
+          department: string;
+          /**
+           * Placement coordinator name
+           */
+          coordinatorName?: string | null;
+          /**
+           * Department coordinator email
+           */
+          email?: string | null;
+          /**
+           * Department coordinator phone
+           */
+          phone?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  downloads?: {
+    /**
+     * Overview content for downloads section
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    downloadsList?:
+      | {
+          /**
+           * Title of the download
+           */
+          title: string;
+          /**
+           * Category of the download
+           */
+          category?:
+            | ('brochure' | 'report' | 'forms' | 'training' | 'guidelines' | 'policies' | 'company_info' | 'others')
+            | null;
+          /**
+           * Description of the file
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * File to download
+           */
+          file: string | Media;
+          /**
+           * File size (e.g., 2.5 MB)
+           */
+          fileSize?: string | null;
+          /**
+           * Last updated date
+           */
+          lastUpdated?: string | null;
+          isActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  gallery?: {
+    /**
+     * Overview content for gallery section
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    galleryItems?:
+      | {
+          /**
+           * Title of the gallery item
+           */
+          title: string;
+          /**
+           * Category of the gallery item
+           */
+          category?:
+            | ('placement_drive' | 'training' | 'interviews' | 'industry_visits' | 'job_fairs' | 'awards' | 'others')
+            | null;
+          /**
+           * Description of the event/activity
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Date of the event/activity
+           */
+          date?: string | null;
+          images?:
+            | {
+                image: string | Media;
+                /**
+                 * Image caption
+                 */
+                caption?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          isActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  capacityDevelopmentSkillsEnhancement?: {
+    /**
+     * Overview of capacity development and skills enhancement programs
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    programs?:
+      | {
+          /**
+           * Name of the development program
+           */
+          programName: string;
+          /**
+           * Type of development program
+           */
+          programType?:
+            | (
+                | 'technical'
+                | 'soft_skills'
+                | 'leadership'
+                | 'communication'
+                | 'entrepreneurship'
+                | 'industry_readiness'
+                | 'research'
+                | 'others'
+              )
+            | null;
+          /**
+           * Detailed description of the program
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Learning objectives and outcomes
+           */
+          objectives?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Duration of the program
+           */
+          duration?: string | null;
+          /**
+           * Target audience for the program
+           */
+          targetAudience?: string | null;
+          /**
+           * Teaching/training methodology used
+           */
+          methodology?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          facilitators?:
+            | {
+                name: string;
+                designation?: string | null;
+                organization?: string | null;
+                expertise?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Program schedule and timeline
+           */
+          schedule?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          resources?:
+            | {
+                resource: string | Media;
+                description?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Expected outcomes and success metrics
+           */
+          outcomes?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Participant feedback and testimonials
+           */
+          feedback?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Registration process and requirements
+           */
+          registrationInfo?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          isActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    skillAssessment?: {
+      /**
+       * Overview of skills assessment process
+       */
+      overview?: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      assessmentTools?:
+        | {
+            toolName: string;
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Skills assessed by this tool
+             */
+            skillsAssessed?: string | null;
+            /**
+             * Link to access the assessment tool
+             */
+            accessLink?: string | null;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    certifications?: {
+      /**
+       * Overview of certification programs
+       */
+      overview?: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      certificationList?:
+        | {
+            certificationName: string;
+            /**
+             * Certification provider/organization
+             */
+            provider?: string | null;
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            /**
+             * Eligibility criteria
+             */
+            eligibility?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            duration?: string | null;
+            /**
+             * Certification fee if any
+             */
+            fee?: string | null;
+            /**
+             * Registration link
+             */
+            registrationLink?: string | null;
+            isActive?: boolean | null;
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
+  /**
+   * Higher numbers appear first
+   */
+  priority?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -5638,6 +7240,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'research';
         value: string | Research;
+      } | null)
+    | ({
+        relationTo: 'secondary-nav';
+        value: string | SecondaryNav;
+      } | null)
+    | ({
+        relationTo: 'placement';
+        value: string | Placement;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -7491,6 +9101,467 @@ export interface ResearchSelect<T extends boolean = true> {
               document?: T;
               description?: T;
               id?: T;
+            };
+      };
+  priority?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "secondary-nav_select".
+ */
+export interface SecondaryNavSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  slug?: T;
+  linkType?: T;
+  externalUrl?: T;
+  pageContent?:
+    | T
+    | {
+        heroSection?:
+          | T
+          | {
+              heroTitle?: T;
+              heroSubtitle?: T;
+              heroImage?: T;
+              heroContent?: T;
+            };
+        mainContent?: T;
+        contentSections?:
+          | T
+          | {
+              sectionTitle?: T;
+              sectionType?: T;
+              textContent?: T;
+              imageGallery?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    altText?: T;
+                    id?: T;
+                  };
+              cardItems?:
+                | T
+                | {
+                    cardTitle?: T;
+                    cardDescription?: T;
+                    cardImage?: T;
+                    cardLink?: T;
+                    cardIcon?: T;
+                    id?: T;
+                  };
+              listItems?:
+                | T
+                | {
+                    itemTitle?: T;
+                    itemDescription?: T;
+                    itemLink?: T;
+                    id?: T;
+                  };
+              accordionItems?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    isOpenByDefault?: T;
+                    id?: T;
+                  };
+              contactInfo?:
+                | T
+                | {
+                    email?: T;
+                    phone?: T;
+                    address?: T;
+                    workingHours?: T;
+                    mapEmbedCode?: T;
+                  };
+              downloadLinks?:
+                | T
+                | {
+                    downloadTitle?: T;
+                    downloadDescription?: T;
+                    downloadFile?: T;
+                    downloadCategory?: T;
+                    id?: T;
+                  };
+              sectionOrder?: T;
+              id?: T;
+            };
+        seoSettings?:
+          | T
+          | {
+              metaTitle?: T;
+              metaDescription?: T;
+              keywords?: T;
+              ogImage?: T;
+            };
+      };
+  openInNewTab?: T;
+  buttonStyle?: T;
+  icon?: T;
+  iconPosition?: T;
+  isVisible?: T;
+  order?: T;
+  showOnPages?: T;
+  specificPages?:
+    | T
+    | {
+        pagePath?: T;
+        id?: T;
+      };
+  accessLevel?: T;
+  scheduleSettings?:
+    | T
+    | {
+        isScheduled?: T;
+        startDate?: T;
+        endDate?: T;
+      };
+  analytics?:
+    | T
+    | {
+        trackClicks?: T;
+        clickCount?: T;
+        googleAnalyticsEvent?: T;
+      };
+  additionalAttributes?:
+    | T
+    | {
+        cssClass?: T;
+        tooltip?: T;
+        ariaLabel?: T;
+        dataAttributes?:
+          | T
+          | {
+              key?: T;
+              value?: T;
+              id?: T;
+            };
+      };
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "placement_select".
+ */
+export interface PlacementSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  isActive?: T;
+  placementCell?:
+    | T
+    | {
+        overview?: T;
+        vision?: T;
+        mission?: T;
+        objectives?: T;
+        teamMembers?:
+          | T
+          | {
+              name?: T;
+              designation?: T;
+              department?: T;
+              email?: T;
+              phone?: T;
+              photo?: T;
+              isActive?: T;
+              id?: T;
+            };
+      };
+  whyRajalakshmi?:
+    | T
+    | {
+        content?: T;
+        strengthsList?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              icon?: T;
+              id?: T;
+            };
+        statistics?:
+          | T
+          | {
+              metric?: T;
+              value?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  procedure?:
+    | T
+    | {
+        content?: T;
+        steps?:
+          | T
+          | {
+              stepNumber?: T;
+              title?: T;
+              description?: T;
+              timeline?: T;
+              documents?:
+                | T
+                | {
+                    document?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        eligibilityCriteria?: T;
+        registrationProcess?: T;
+      };
+  trainingPrograms?:
+    | T
+    | {
+        content?: T;
+        programsList?:
+          | T
+          | {
+              programName?: T;
+              programType?: T;
+              description?: T;
+              duration?: T;
+              targetAudience?: T;
+              schedule?: T;
+              trainer?: T;
+              materials?:
+                | T
+                | {
+                    material?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              isActive?: T;
+              id?: T;
+            };
+      };
+  placementReport?:
+    | T
+    | {
+        content?: T;
+        yearlyReports?:
+          | T
+          | {
+              academicYear?: T;
+              totalStudents?: T;
+              studentsPlaced?: T;
+              placementPercentage?: T;
+              averagePackage?: T;
+              highestPackage?: T;
+              companiesVisited?: T;
+              departmentWiseData?:
+                | T
+                | {
+                    department?: T;
+                    totalStudents?: T;
+                    studentsPlaced?: T;
+                    placementPercentage?: T;
+                    id?: T;
+                  };
+              reportDocument?: T;
+              id?: T;
+            };
+      };
+  recruiters?:
+    | T
+    | {
+        content?: T;
+        recruitersList?:
+          | T
+          | {
+              companyName?: T;
+              companyLogo?: T;
+              industry?: T;
+              website?: T;
+              description?: T;
+              rolesOffered?: T;
+              packageRange?: T;
+              visitFrequency?: T;
+              isActive?: T;
+              id?: T;
+            };
+      };
+  employabilityTrainingCamp?:
+    | T
+    | {
+        content?: T;
+        campDetails?:
+          | T
+          | {
+              campTitle?: T;
+              duration?: T;
+              startDate?: T;
+              endDate?: T;
+              objectives?: T;
+              modules?:
+                | T
+                | {
+                    moduleName?: T;
+                    description?: T;
+                    duration?: T;
+                    trainer?: T;
+                    id?: T;
+                  };
+              targetParticipants?: T;
+              outcomes?: T;
+              registrationLink?: T;
+              materials?:
+                | T
+                | {
+                    material?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              isActive?: T;
+              id?: T;
+            };
+      };
+  placementContact?:
+    | T
+    | {
+        content?: T;
+        placementOfficer?:
+          | T
+          | {
+              name?: T;
+              designation?: T;
+              email?: T;
+              phone?: T;
+              officeHours?: T;
+            };
+        generalContact?:
+          | T
+          | {
+              address?: T;
+              email?: T;
+              phone?: T;
+              fax?: T;
+              officeHours?: T;
+            };
+        departmentContacts?:
+          | T
+          | {
+              department?: T;
+              coordinatorName?: T;
+              email?: T;
+              phone?: T;
+              id?: T;
+            };
+      };
+  downloads?:
+    | T
+    | {
+        content?: T;
+        downloadsList?:
+          | T
+          | {
+              title?: T;
+              category?: T;
+              description?: T;
+              file?: T;
+              fileSize?: T;
+              lastUpdated?: T;
+              isActive?: T;
+              id?: T;
+            };
+      };
+  gallery?:
+    | T
+    | {
+        content?: T;
+        galleryItems?:
+          | T
+          | {
+              title?: T;
+              category?: T;
+              description?: T;
+              date?: T;
+              images?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              isActive?: T;
+              id?: T;
+            };
+      };
+  capacityDevelopmentSkillsEnhancement?:
+    | T
+    | {
+        content?: T;
+        programs?:
+          | T
+          | {
+              programName?: T;
+              programType?: T;
+              description?: T;
+              objectives?: T;
+              duration?: T;
+              targetAudience?: T;
+              methodology?: T;
+              facilitators?:
+                | T
+                | {
+                    name?: T;
+                    designation?: T;
+                    organization?: T;
+                    expertise?: T;
+                    id?: T;
+                  };
+              schedule?: T;
+              resources?:
+                | T
+                | {
+                    resource?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              outcomes?: T;
+              feedback?: T;
+              registrationInfo?: T;
+              isActive?: T;
+              id?: T;
+            };
+        skillAssessment?:
+          | T
+          | {
+              overview?: T;
+              assessmentTools?:
+                | T
+                | {
+                    toolName?: T;
+                    description?: T;
+                    skillsAssessed?: T;
+                    accessLink?: T;
+                    id?: T;
+                  };
+            };
+        certifications?:
+          | T
+          | {
+              overview?: T;
+              certificationList?:
+                | T
+                | {
+                    certificationName?: T;
+                    provider?: T;
+                    description?: T;
+                    eligibility?: T;
+                    duration?: T;
+                    fee?: T;
+                    registrationLink?: T;
+                    isActive?: T;
+                    id?: T;
+                  };
             };
       };
   priority?: T;

@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { adminAndBloggerWithSuperAdminAccess } from '../access'
+import { universalAccess } from '../access'
 
 export const COE: CollectionConfig = {
   slug: 'coe',
@@ -7,7 +7,7 @@ export const COE: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'isActive', 'updatedAt'],
   },
-  access: adminAndBloggerWithSuperAdminAccess,
+  access: universalAccess,
   hooks: {
     beforeChange: [
       ({ data, req, operation }) => {

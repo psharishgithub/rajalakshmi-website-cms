@@ -24,6 +24,8 @@ import { InternationalRelations } from './collections/InternationalRelations'
 import { NAAC } from './collections/NAAC'
 import { Admissions } from './collections/Admissions'
 import { Research } from './collections/Research'
+import { SecondaryNav } from './collections/SecondaryNav'
+import { Placement } from './collections/Placement'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -35,7 +37,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, DepartmentSections, About, IQAC, InternationalRelations, NAAC, Admissions, Research],
+  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, DepartmentSections, About, IQAC, InternationalRelations, NAAC, Admissions, Research, SecondaryNav, Placement],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

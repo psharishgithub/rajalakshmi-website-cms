@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { adminAndBloggerWithSuperAdminAccess } from '../access'
+import { universalAccess } from '../access'
 
 export const IQAC: CollectionConfig = {
   slug: 'iqac',
@@ -7,7 +7,7 @@ export const IQAC: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'isActive', 'updatedAt'],
   },
-  access: adminAndBloggerWithSuperAdminAccess,
+  access: universalAccess,
   fields: [
     {
       name: 'title',

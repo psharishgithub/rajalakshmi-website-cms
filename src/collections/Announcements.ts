@@ -1,12 +1,12 @@
 import { CollectionConfig } from 'payload'
-import { adminOnly } from '../access'
+import { universalAccess } from '../access'
 
 export const Announcements: CollectionConfig = {
   slug: 'announcements',
   admin: {
     useAsTitle: 'title',
   },
-  access: adminOnly,
+  access: universalAccess,
   fields: [
     {
       name: 'title',

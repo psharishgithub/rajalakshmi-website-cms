@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { adminAndBloggerWithSuperAdminAccess } from '../access'
+import { universalAccess } from '../access'
 
 export const Placement: CollectionConfig = {
   slug: 'placement',
@@ -7,7 +7,7 @@ export const Placement: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'isActive', 'updatedAt'],
   },
-  access: adminAndBloggerWithSuperAdminAccess,
+  access: universalAccess,
   fields: [
     {
       name: 'title',

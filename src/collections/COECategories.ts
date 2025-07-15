@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { adminOnly } from '../access'
+import { universalAccess } from '../access'
 
 export const COECategories: CollectionConfig = {
   slug: 'coe-categories',
@@ -7,7 +7,7 @@ export const COECategories: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'isActive', 'order', 'updatedAt'],
   },
-  access: adminOnly,
+  access: universalAccess,
   fields: [
     {
       name: 'name',

@@ -167,3 +167,49 @@ export const mediaAccess = {
     return false
   },
 }
+
+// Universal access pattern with public read for active content
+export const universalAccess = {
+  create: ({ req: { user } }: any) => adminOnly.create({ req: { user } }),
+  read: ({ req: { user } }: any) => {
+    // If user is SuperAdmin or Admin, show all content (including inactive ones)
+    if (user && (isSuperAdmin(user) || isAdmin(user))) {
+      return true;
+    }
+    // For public access (no user), only show active content
+    if (!user) {
+      return {
+        isActive: {
+          equals: true,
+        },
+      };
+    }
+    // Default deny for non-admin users
+    return false;
+  },
+  update: ({ req: { user } }: any) => adminOnly.update({ req: { user } }),
+  delete: ({ req: { user } }: any) => adminOnly.delete({ req: { user } }),
+}
+
+// Universal access pattern with public read for visible content (for collections using isVisible)
+export const universalAccessVisible = {
+  create: ({ req: { user } }: any) => adminOnly.create({ req: { user } }),
+  read: ({ req: { user } }: any) => {
+    // If user is SuperAdmin or Admin, show all content (including hidden ones)
+    if (user && (isSuperAdmin(user) || isAdmin(user))) {
+      return true;
+    }
+    // For public access (no user), only show visible content
+    if (!user) {
+      return {
+        isVisible: {
+          equals: true,
+        },
+      };
+    }
+    // Default deny for non-admin users
+    return false;
+  },
+  update: ({ req: { user } }: any) => adminOnly.update({ req: { user } }),
+  delete: ({ req: { user } }: any) => adminOnly.delete({ req: { user } }),
+}
