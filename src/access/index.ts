@@ -222,16 +222,27 @@ export const universalAccessPublished = {
     if (user && (isSuperAdmin(user) || isAdmin(user))) {
       return true;
     }
-    // For public access (no user), only show published content
-    if (!user) {
-      return {
-        isPublished: {
-          equals: true,
-        },
-      };
-    }
-    // Default deny for non-admin users
-    return false;
+    // For everyone else (including public access), only show published content
+    return {
+      isPublished: {
+        equals: true,
+      },
+    };
+  },
+  update: ({ req: { user } }: any) => adminOnly.update({ req: { user } }),
+  delete: ({ req: { user } }: any) => adminOnly.delete({ req: { user } }),
+}
+
+// Blog-specific public access - completely public read for published posts
+export const blogPostPublicAccess = {
+  create: ({ req: { user } }: any) => adminOnly.create({ req: { user } }),
+  read: () => {
+    // Always allow read access, but filter by published status
+    return {
+      isPublished: {
+        equals: true,
+      },
+    };
   },
   update: ({ req: { user } }: any) => adminOnly.update({ req: { user } }),
   delete: ({ req: { user } }: any) => adminOnly.delete({ req: { user } }),
