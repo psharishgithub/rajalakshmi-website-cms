@@ -213,3 +213,26 @@ export const universalAccessVisible = {
   update: ({ req: { user } }: any) => adminOnly.update({ req: { user } }),
   delete: ({ req: { user } }: any) => adminOnly.delete({ req: { user } }),
 }
+
+// Universal access pattern with public read for published content (for collections using isPublished)
+export const universalAccessPublished = {
+  create: ({ req: { user } }: any) => adminOnly.create({ req: { user } }),
+  read: ({ req: { user } }: any) => {
+    // If user is SuperAdmin or Admin, show all content (including unpublished ones)
+    if (user && (isSuperAdmin(user) || isAdmin(user))) {
+      return true;
+    }
+    // For public access (no user), only show published content
+    if (!user) {
+      return {
+        isPublished: {
+          equals: true,
+        },
+      };
+    }
+    // Default deny for non-admin users
+    return false;
+  },
+  update: ({ req: { user } }: any) => adminOnly.update({ req: { user } }),
+  delete: ({ req: { user } }: any) => adminOnly.delete({ req: { user } }),
+}
