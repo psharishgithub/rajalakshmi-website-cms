@@ -1,12 +1,12 @@
 import { CollectionConfig } from 'payload'
-import { blogPostAccess } from '../access'
+import { blogPostAccess, universalAccess } from '../access'
 
 export const BlogPosts: CollectionConfig = {
   slug: 'blog-posts',
   admin: {
     useAsTitle: 'title',
   },
-  access: blogPostAccess,
+  access: universalAccess,
   hooks: {
     beforeChange: [
       ({ data, req, operation }) => {
