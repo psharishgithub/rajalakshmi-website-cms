@@ -53,7 +53,7 @@ export default buildConfig({
     'http://localhost:4200',
     'https://reccms.flashserver.in',
     'https://cmsrec.flashserver.in',
-    'http://192.250.228.70',
+    'http://192.250.228.70:3000',
   ],
   csrf: [
     'http://localhost:3000',
