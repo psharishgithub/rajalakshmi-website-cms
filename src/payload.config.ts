@@ -53,6 +53,7 @@ export default buildConfig({
     'http://localhost:4200',
     'https://reccms.flashserver.in',
     'https://cmsrec.flashserver.in',
+    'http://192.250.228.70'
     process.env.FRONTEND_URL || '',
   ],
   csrf: [
@@ -62,6 +63,7 @@ export default buildConfig({
     'http://localhost:4200',
     'https://reccms.flashserver.in',
     'https://cmsrec.flashserver.in',
+    'http://192.250.228.70:3000'
     process.env.FRONTEND_URL || '',
   ],
   sharp,
