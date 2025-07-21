@@ -16,6 +16,8 @@
     "create-admin": "cross-env NODE_OPTIONS=--no-deprecation node scripts/create-admin.js",
     "seed-coe": "cross-env NODE_OPTIONS=--no-deprecation node scripts/seed-coe-categories.js",
     "seed-regulations": "cross-env NODE_OPTIONS=--no-deprecation node scripts/seed-regulation-categories.js",
+    "regenerate-types": "cross-env NODE_OPTIONS=--no-deprecation node scripts/regenerate-types.js",
+    "test-departments": "cross-env NODE_OPTIONS=--no-deprecation node scripts/test-departments.js",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"

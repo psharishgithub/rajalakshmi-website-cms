@@ -77,6 +77,7 @@ export interface Config {
     'coe-categories': CoeCategory;
     regulations: Regulation;
     'regulation-categories': RegulationCategory;
+    departments: Department;
     'department-sections': DepartmentSection;
     about: About;
     iqac: Iqac;
@@ -102,6 +103,7 @@ export interface Config {
     'coe-categories': CoeCategoriesSelect<false> | CoeCategoriesSelect<true>;
     regulations: RegulationsSelect<false> | RegulationsSelect<true>;
     'regulation-categories': RegulationCategoriesSelect<false> | RegulationCategoriesSelect<true>;
+    departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     'department-sections': DepartmentSectionsSelect<false> | DepartmentSectionsSelect<true>;
     about: AboutSelect<false> | AboutSelect<true>;
     iqac: IqacSelect<false> | IqacSelect<true>;
@@ -455,27 +457,114 @@ export interface RegulationCategory {
   createdAt: string;
 }
 /**
+ * Manage departments for navigation dropdown
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "departments".
+ */
+export interface Department {
+  id: string;
+  /**
+   * Department name (e.g., Computer Science Engineering)
+   */
+  name: string;
+  /**
+   * Department code (e.g., CSE, ECE, MECH)
+   */
+  code: string;
+  /**
+   * URL slug (e.g., computer-science-engineering)
+   */
+  slug: string;
+  /**
+   * Short name for display in dropdown (optional)
+   */
+  shortName?: string | null;
+  /**
+   * Brief description of the department
+   */
+  description?: string | null;
+  /**
+   * Department icon for navigation
+   */
+  icon?: (string | null) | Media;
+  /**
+   * Show in navigation dropdown
+   */
+  isActive?: boolean | null;
+  /**
+   * Display order in dropdown (higher numbers first)
+   */
+  order?: number | null;
+  /**
+   * Year the department was established
+   */
+  establishedYear?: number | null;
+  /**
+   * Current Head of Department
+   */
+  headOfDepartment?: string | null;
+  /**
+   * Department contact email
+   */
+  contactEmail?: string | null;
+  /**
+   * Department contact phone
+   */
+  contactPhone?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "department-sections".
  */
 export interface DepartmentSection {
   id: string;
   /**
-   * Name of the department (e.g., Computer Science Engineering)
+   * Select the department this content belongs to
    */
-  department: string;
+  department: string | Department;
   /**
-   * URL slug for the department (e.g., computer-science-engineering)
+   * Internal title for this content section
    */
-  slug: string;
+  title: string;
   /**
-   * Department code (e.g., CSE, ECE, MECH)
-   */
-  departmentCode: string;
-  /**
-   * Whether this department section is active and visible
+   * Whether this section is active and visible
    */
   isActive?: boolean | null;
+  heroSection?: {
+    /**
+     * Main title for department page (defaults to department name)
+     */
+    heroTitle?: string | null;
+    /**
+     * Subtitle or tagline
+     */
+    heroSubtitle?: string | null;
+    /**
+     * Hero background image
+     */
+    heroImage?: (string | null) | Media;
+    /**
+     * Brief intro content for hero section
+     */
+    heroContent?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
   introduction?: {
     /**
      * Introduction content for the department
@@ -7214,6 +7303,10 @@ export interface PayloadLockedDocument {
         value: string | RegulationCategory;
       } | null)
     | ({
+        relationTo: 'departments';
+        value: string | Department;
+      } | null)
+    | ({
         relationTo: 'department-sections';
         value: string | DepartmentSection;
       } | null)
@@ -7459,13 +7552,40 @@ export interface RegulationCategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "departments_select".
+ */
+export interface DepartmentsSelect<T extends boolean = true> {
+  name?: T;
+  code?: T;
+  slug?: T;
+  shortName?: T;
+  description?: T;
+  icon?: T;
+  isActive?: T;
+  order?: T;
+  establishedYear?: T;
+  headOfDepartment?: T;
+  contactEmail?: T;
+  contactPhone?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "department-sections_select".
  */
 export interface DepartmentSectionsSelect<T extends boolean = true> {
   department?: T;
-  slug?: T;
-  departmentCode?: T;
+  title?: T;
   isActive?: T;
+  heroSection?:
+    | T
+    | {
+        heroTitle?: T;
+        heroSubtitle?: T;
+        heroImage?: T;
+        heroContent?: T;
+      };
   introduction?:
     | T
     | {

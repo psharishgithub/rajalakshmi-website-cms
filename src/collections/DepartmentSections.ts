@@ -4,35 +4,26 @@ import { universalAccess } from '../access'
 export const DepartmentSections: CollectionConfig = {
   slug: 'department-sections',
   admin: {
-    useAsTitle: 'department',
-    defaultColumns: ['department', 'slug', 'isActive', 'updatedAt'],
+    useAsTitle: 'title',
+    defaultColumns: ['department', 'title', 'isActive', 'updatedAt'],
   },
   access: universalAccess,
   fields: [
     {
       name: 'department',
-      type: 'text',
+      type: 'relationship',
+      relationTo: 'departments',
       required: true,
       admin: {
-        description: 'Name of the department (e.g., Computer Science Engineering)',
+        description: 'Select the department this content belongs to',
       },
     },
     {
-      name: 'slug',
+      name: 'title',
       type: 'text',
       required: true,
-      unique: true,
       admin: {
-        description: 'URL slug for the department (e.g., computer-science-engineering)',
-      },
-    },
-    {
-      name: 'departmentCode',
-      type: 'text',
-      required: true,
-      unique: true,
-      admin: {
-        description: 'Department code (e.g., CSE, ECE, MECH)',
+        description: 'Internal title for this content section',
       },
     },
     {
@@ -40,8 +31,46 @@ export const DepartmentSections: CollectionConfig = {
       type: 'checkbox',
       defaultValue: true,
       admin: {
-        description: 'Whether this department section is active and visible',
+        description: 'Whether this section is active and visible',
       },
+    },
+
+    // Hero Section for Department Page
+    {
+      name: 'heroSection',
+      type: 'group',
+      label: 'Hero Section',
+      fields: [
+        {
+          name: 'heroTitle',
+          type: 'text',
+          admin: {
+            description: 'Main title for department page (defaults to department name)',
+          },
+        },
+        {
+          name: 'heroSubtitle',
+          type: 'text',
+          admin: {
+            description: 'Subtitle or tagline',
+          },
+        },
+        {
+          name: 'heroImage',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Hero background image',
+          },
+        },
+        {
+          name: 'heroContent',
+          type: 'richText',
+          admin: {
+            description: 'Brief intro content for hero section',
+          },
+        },
+      ],
     },
     
     // Introduction Section

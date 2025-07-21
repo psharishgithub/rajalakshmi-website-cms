@@ -17,6 +17,7 @@ import { COE } from './collections/COE'
 import { COECategories } from './collections/COECategories'
 import { Regulations } from './collections/Regulations'
 import { RegulationCategories } from './collections/RegulationCategories'
+import { Departments } from './collections/Departments'
 import { DepartmentSections } from './collections/DepartmentSections'
 import { About } from './collections/About'
 import { IQAC } from './collections/IQAC'
@@ -26,6 +27,9 @@ import { Admissions } from './collections/Admissions'
 import { Research } from './collections/Research'
 import { SecondaryNav } from './collections/SecondaryNav'
 import { Placement } from './collections/Placement'
+
+// Import endpoints
+import { departmentsNavEndpoint, departmentContentEndpoint } from './endpoints/departments'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -37,7 +41,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, DepartmentSections, About, IQAC, InternationalRelations, NAAC, Admissions, Research, SecondaryNav, Placement],
+  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, Departments, DepartmentSections, About, IQAC, InternationalRelations, NAAC, Admissions, Research, SecondaryNav, Placement],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
