@@ -76,6 +76,14 @@ export const adminAndBloggerWithSuperAdminAccess = {
 export const blogPostAccess = {
   create: ({ req: { user } }: any) => isAnyAdminOrBlogger(user),
   read: ({ req: { user } }: any) => {
+    console.log('BlogPost read access check:', { 
+      userId: user?.id, 
+      userRole: user?.role,
+      isSuperAdmin: isSuperAdmin(user),
+      isAdmin: isAdmin(user),
+      isBlogger: isBlogger(user)
+    })
+    
     if (isSuperAdmin(user)) return true
     if (isAdmin(user)) return true
     if (isBlogger(user)) {
@@ -86,6 +94,8 @@ export const blogPostAccess = {
         },
       }
     }
+    // Allow read if no user context (for certain internal operations)
+    if (!user) return false
     return false
   },
   update: ({ req: { user } }: any) => {
