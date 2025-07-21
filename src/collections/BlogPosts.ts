@@ -6,7 +6,7 @@ export const BlogPosts: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
-  access: blogPostPublicAccess,
+  access: blogPostAccess,
   hooks: {
     beforeChange: [
       ({ data, req, operation }) => {
