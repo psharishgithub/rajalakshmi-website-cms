@@ -72,7 +72,7 @@ export const adminAndBloggerWithSuperAdminAccess = {
   },
 }
 
-// Blog-specific access control - bloggers can only see their own posts
+// Blog-specific access control - admin see all, bloggers see all but edit own, public see published
 export const blogPostAccess = {
   create: ({ req: { user } }: any) => isAnyAdminOrBlogger(user),
   read: ({ req: { user } }: any) => {
@@ -84,18 +84,22 @@ export const blogPostAccess = {
       isBlogger: isBlogger(user)
     })
     
-    if (isSuperAdmin(user)) return true
-    if (isAdmin(user)) return true
-    if (isBlogger(user)) {
-      // Bloggers can only read their own blog posts
+    // SuperAdmin and Admin can see all posts (published and unpublished)
+    if (isSuperAdmin(user) || isAdmin(user)) return true
+    
+    // Bloggers can see all posts (for browsing in admin)
+    if (isBlogger(user)) return true
+    
+    // Public access (no user) - only published posts
+    if (!user) {
       return {
-        author: {
-          equals: user?.id,
+        isPublished: {
+          equals: true,
         },
       }
     }
-    // Allow read if no user context (for certain internal operations)
-    if (!user) return false
+    
+    // Default deny for any other case
     return false
   },
   update: ({ req: { user } }: any) => {

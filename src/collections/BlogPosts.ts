@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { adminAndBlogger } from '../access'
+import { blogPostAccess } from '../access'
 
 export const BlogPosts: CollectionConfig = {
   slug: 'blog-posts',
@@ -7,7 +7,7 @@ export const BlogPosts: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'author', 'isPublished', 'updatedAt'],
   },
-  access: adminAndBlogger,
+  access: blogPostAccess,
   hooks: {
     beforeChange: [
       ({ data, req, operation }) => {
