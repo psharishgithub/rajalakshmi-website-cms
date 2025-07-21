@@ -29,7 +29,7 @@ import { SecondaryNav } from './collections/SecondaryNav'
 import { Placement } from './collections/Placement'
 
 // Import endpoints
-import { departmentsNavEndpoint, departmentContentEndpoint } from './endpoints/departments'
+import { departmentsNavEndpoint, departmentContentEndpoint, departmentBySectionEndpoint } from './endpoints/departments'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -71,5 +71,10 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+  ],
+  endpoints: [
+    departmentsNavEndpoint,
+    departmentContentEndpoint,
+    departmentBySectionEndpoint,
   ],
 })

@@ -19,15 +19,35 @@ export const departmentsNavEndpoint: Endpoint = {
         limit: 100,
       })
 
-      const navData = departments.docs.map((dept: any) => ({
-        id: dept.id,
-        name: dept.name,
-        shortName: dept.shortName || dept.name,
-        slug: dept.slug,
-        code: dept.code,
-        icon: dept.icon,
-        order: dept.order,
-      }))
+      // For each department, find its corresponding department-section
+      const navData = await Promise.all(
+        departments.docs.map(async (dept: any) => {
+          // Find the department section for this department
+          const departmentSection = await payload.find({
+            collection: 'department-sections',
+            where: {
+              department: {
+                equals: dept.id,
+              },
+              isActive: {
+                equals: true,
+              },
+            },
+            limit: 1,
+          })
+
+          return {
+            id: dept.id,
+            name: dept.name,
+            shortName: dept.shortName || dept.name,
+            slug: dept.slug,
+            code: dept.code,
+            icon: dept.icon,
+            order: dept.order,
+            sectionId: departmentSection.docs.length > 0 ? departmentSection.docs[0].id : null,
+          }
+        })
+      )
 
       return Response.json({
         success: true,
@@ -94,6 +114,45 @@ export const departmentContentEndpoint: Endpoint = {
         data: {
           department: department,
           sections: sectionsQuery.docs,
+        },
+      })
+    } catch (error: any) {
+      return Response.json({
+        success: false,
+        error: error?.message || 'An error occurred',
+      }, { status: 500 })
+    }
+  },
+}
+
+// Get department content by section ID
+export const departmentBySectionEndpoint: Endpoint = {
+  path: '/department-by-section/:sectionId',
+  method: 'get',
+  handler: async (req) => {
+    const { payload } = req
+    const sectionId = req.routeParams?.sectionId
+
+    try {
+      // Get the department section by ID with populated department
+      const sectionQuery = await payload.findByID({
+        collection: 'department-sections',
+        id: sectionId as string,
+        depth: 2,
+      })
+
+      if (!sectionQuery) {
+        return Response.json({
+          success: false,
+          error: 'Department section not found',
+        }, { status: 404 })
+      }
+
+      return Response.json({
+        success: true,
+        data: {
+          department: sectionQuery.department,
+          section: sectionQuery,
         },
       })
     } catch (error: any) {
