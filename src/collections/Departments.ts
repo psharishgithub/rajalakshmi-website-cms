@@ -51,14 +51,6 @@ export const Departments: CollectionConfig = {
       },
     },
     {
-      name: 'icon',
-      type: 'upload',
-      relationTo: 'media',
-      admin: {
-        description: 'Department icon for navigation',
-      },
-    },
-    {
       name: 'isActive',
       type: 'checkbox',
       defaultValue: true,
@@ -72,34 +64,6 @@ export const Departments: CollectionConfig = {
       defaultValue: 0,
       admin: {
         description: 'Display order in dropdown (higher numbers first)',
-      },
-    },
-    {
-      name: 'establishedYear',
-      type: 'number',
-      admin: {
-        description: 'Year the department was established',
-      },
-    },
-    {
-      name: 'headOfDepartment',
-      type: 'text',
-      admin: {
-        description: 'Current Head of Department',
-      },
-    },
-    {
-      name: 'contactEmail',
-      type: 'email',
-      admin: {
-        description: 'Department contact email',
-      },
-    },
-    {
-      name: 'contactPhone',
-      type: 'text',
-      admin: {
-        description: 'Department contact phone',
       },
     },
   ],

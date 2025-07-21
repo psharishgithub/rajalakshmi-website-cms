@@ -485,10 +485,6 @@ export interface Department {
    */
   description?: string | null;
   /**
-   * Department icon for navigation
-   */
-  icon?: (string | null) | Media;
-  /**
    * Show in navigation dropdown
    */
   isActive?: boolean | null;
@@ -496,22 +492,6 @@ export interface Department {
    * Display order in dropdown (higher numbers first)
    */
   order?: number | null;
-  /**
-   * Year the department was established
-   */
-  establishedYear?: number | null;
-  /**
-   * Current Head of Department
-   */
-  headOfDepartment?: string | null;
-  /**
-   * Department contact email
-   */
-  contactEmail?: string | null;
-  /**
-   * Department contact phone
-   */
-  contactPhone?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -7560,13 +7540,8 @@ export interface DepartmentsSelect<T extends boolean = true> {
   slug?: T;
   shortName?: T;
   description?: T;
-  icon?: T;
   isActive?: T;
   order?: T;
-  establishedYear?: T;
-  headOfDepartment?: T;
-  contactEmail?: T;
-  contactPhone?: T;
   updatedAt?: T;
   createdAt?: T;
 }
