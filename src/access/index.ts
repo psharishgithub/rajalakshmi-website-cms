@@ -205,6 +205,14 @@ export const universalAccess = {
   delete: ({ req: { user } }: any) => adminOnly.delete({ req: { user } }),
 }
 
+// Global access pattern with full public read access (for globals that don't have isActive field)
+export const globalAccess = {
+  create: ({ req: { user } }: any) => adminOnly.create({ req: { user } }),
+  read: () => true, // Allow public read access without any conditions
+  update: ({ req: { user } }: any) => adminOnly.update({ req: { user } }),
+  delete: ({ req: { user } }: any) => adminOnly.delete({ req: { user } }),
+}
+
 // Universal access pattern with public read for visible content (for collections using isVisible)
 export const universalAccessVisible = {
   create: ({ req: { user } }: any) => adminOnly.create({ req: { user } }),

@@ -1,13 +1,12 @@
-import { CollectionConfig } from 'payload'
-import { universalAccess } from '../access'
+import { GlobalConfig } from 'payload'
+import { globalAccess } from '../access'
 
-export const NAAC: CollectionConfig = {
+export const NAAC: GlobalConfig = {
   slug: 'naac',
   admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'isActive', 'updatedAt'],
+    group: 'Content',
   },
-  access: universalAccess,
+  access: globalAccess,
   fields: [
     {
       name: 'title',
@@ -15,15 +14,6 @@ export const NAAC: CollectionConfig = {
       required: true,
       admin: {
         description: 'Title for the NAAC section',
-      },
-    },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      admin: {
-        description: 'URL slug for the NAAC page (e.g., 2024-25)',
       },
     },
     {
@@ -842,15 +832,5 @@ export const NAAC: CollectionConfig = {
         },
       ],
     },
-
-    {
-      name: 'priority',
-      type: 'number',
-      defaultValue: 0,
-      admin: {
-        description: 'Higher numbers appear first',
-      },
-    },
   ],
-  timestamps: true,
 }

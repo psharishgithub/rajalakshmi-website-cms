@@ -79,14 +79,7 @@ export interface Config {
     'regulation-categories': RegulationCategory;
     departments: Department;
     'department-sections': DepartmentSection;
-    about: About;
-    iqac: Iqac;
-    'international-relations': InternationalRelation;
-    naac: Naac;
-    admissions: Admission;
-    research: Research;
     'secondary-nav': SecondaryNav;
-    placement: Placement;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -105,14 +98,7 @@ export interface Config {
     'regulation-categories': RegulationCategoriesSelect<false> | RegulationCategoriesSelect<true>;
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     'department-sections': DepartmentSectionsSelect<false> | DepartmentSectionsSelect<true>;
-    about: AboutSelect<false> | AboutSelect<true>;
-    iqac: IqacSelect<false> | IqacSelect<true>;
-    'international-relations': InternationalRelationsSelect<false> | InternationalRelationsSelect<true>;
-    naac: NaacSelect<false> | NaacSelect<true>;
-    admissions: AdmissionsSelect<false> | AdmissionsSelect<true>;
-    research: ResearchSelect<false> | ResearchSelect<true>;
     'secondary-nav': SecondaryNavSelect<false> | SecondaryNavSelect<true>;
-    placement: PlacementSelect<false> | PlacementSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -120,8 +106,24 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    about: About;
+    naac: Naac;
+    admissions: Admission;
+    research: Research;
+    placement: Placement;
+    'international-relations': InternationalRelation;
+    iqac: Iqac;
+  };
+  globalsSelect: {
+    about: AboutSelect<false> | AboutSelect<true>;
+    naac: NaacSelect<false> | NaacSelect<true>;
+    admissions: AdmissionsSelect<false> | AdmissionsSelect<true>;
+    research: ResearchSelect<false> | ResearchSelect<true>;
+    placement: PlacementSelect<false> | PlacementSelect<true>;
+    'international-relations': InternationalRelationsSelect<false> | InternationalRelationsSelect<true>;
+    iqac: IqacSelect<false> | IqacSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -941,23 +943,1103 @@ export interface DepartmentSection {
   createdAt: string;
 }
 /**
+ * Manage secondary navigation bar buttons and their content pages
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "secondary-nav".
+ */
+export interface SecondaryNav {
+  id: string;
+  /**
+   * Title/Label for the navigation button
+   */
+  title: string;
+  /**
+   * Optional description for admin reference
+   */
+  description?: string | null;
+  /**
+   * URL slug for this navigation item (e.g., admissions-portal, student-resources)
+   */
+  slug: string;
+  /**
+   * Choose whether this creates a content page or links to an external URL
+   */
+  linkType: 'content' | 'external';
+  /**
+   * Full external URL (e.g., https://google.com)
+   */
+  externalUrl?: string | null;
+  /**
+   * Content for the page this navigation button will create
+   */
+  pageContent?: {
+    heroSection?: {
+      /**
+       * Main title for the page (defaults to nav title if empty)
+       */
+      heroTitle?: string | null;
+      /**
+       * Subtitle or tagline for the page
+       */
+      heroSubtitle?: string | null;
+      /**
+       * Hero background image
+       */
+      heroImage?: (string | null) | Media;
+      /**
+       * Rich text content for the hero section
+       */
+      heroContent?: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+    };
+    /**
+     * Main content of the page
+     */
+    mainContent: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    /**
+     * Add multiple content sections to build your page
+     */
+    contentSections?:
+      | {
+          /**
+           * Title for this content section
+           */
+          sectionTitle: string;
+          /**
+           * Type of content section
+           */
+          sectionType: 'text' | 'gallery' | 'cards' | 'list' | 'accordion' | 'contact' | 'downloads';
+          /**
+           * Rich text content for this section
+           */
+          textContent?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Collection of images for gallery
+           */
+          imageGallery?:
+            | {
+                image: string | Media;
+                /**
+                 * Image caption
+                 */
+                caption?: string | null;
+                /**
+                 * Alt text for accessibility
+                 */
+                altText?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Feature cards or highlight items
+           */
+          cardItems?:
+            | {
+                cardTitle: string;
+                cardDescription?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                cardImage?: (string | null) | Media;
+                /**
+                 * Optional link for the card
+                 */
+                cardLink?: string | null;
+                /**
+                 * Icon class or emoji for the card
+                 */
+                cardIcon?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * List of items with titles and descriptions
+           */
+          listItems?:
+            | {
+                itemTitle: string;
+                itemDescription?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                /**
+                 * Optional link for this item
+                 */
+                itemLink?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Expandable accordion items (great for FAQs)
+           */
+          accordionItems?:
+            | {
+                /**
+                 * Question or header text
+                 */
+                question: string;
+                /**
+                 * Answer or content that expands
+                 */
+                answer: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                };
+                /**
+                 * Whether this item should be expanded by default
+                 */
+                isOpenByDefault?: boolean | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Contact details section
+           */
+          contactInfo?: {
+            email?: string | null;
+            phone?: string | null;
+            address?: string | null;
+            workingHours?: string | null;
+            /**
+             * Google Maps embed code (iframe)
+             */
+            mapEmbedCode?: string | null;
+          };
+          /**
+           * Downloadable files and documents
+           */
+          downloadLinks?:
+            | {
+                downloadTitle: string;
+                downloadDescription?: string | null;
+                downloadFile: string | Media;
+                /**
+                 * Category for grouping downloads
+                 */
+                downloadCategory?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Order of this section (higher numbers appear first)
+           */
+          sectionOrder?: number | null;
+          id?: string | null;
+        }[]
+      | null;
+    seoSettings?: {
+      /**
+       * Page title for search engines (defaults to page title if empty)
+       */
+      metaTitle?: string | null;
+      /**
+       * Page description for search engines
+       */
+      metaDescription?: string | null;
+      /**
+       * SEO keywords (comma-separated)
+       */
+      keywords?: string | null;
+      /**
+       * Image for social media sharing
+       */
+      ogImage?: (string | null) | Media;
+    };
+  };
+  /**
+   * Open external links in a new tab
+   */
+  openInNewTab?: boolean | null;
+  /**
+   * Visual style of the button
+   */
+  buttonStyle?: ('primary' | 'secondary' | 'outline' | 'text' | 'warning' | 'info' | 'success' | 'danger') | null;
+  /**
+   * Optional icon class or emoji for the button (e.g., fa-home, 🏠)
+   */
+  icon?: string | null;
+  /**
+   * Position of the icon relative to text
+   */
+  iconPosition?: ('left' | 'right' | 'none') | null;
+  /**
+   * Whether this button is visible in the navigation
+   */
+  isVisible?: boolean | null;
+  /**
+   * Order of appearance (higher numbers appear first)
+   */
+  order?: number | null;
+  /**
+   * Control on which pages this button should appear
+   */
+  showOnPages?: ('all' | 'home' | 'internal' | 'specific')[] | null;
+  /**
+   * Define specific pages where this button should appear
+   */
+  specificPages?:
+    | {
+        /**
+         * Page path (e.g., /about, /research, /admissions)
+         */
+        pagePath: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Who can see this navigation button
+   */
+  accessLevel?: ('public' | 'students' | 'faculty' | 'admin') | null;
+  scheduleSettings?: {
+    /**
+     * Enable time-based visibility for this button
+     */
+    isScheduled?: boolean | null;
+    /**
+     * Start date for button visibility
+     */
+    startDate?: string | null;
+    /**
+     * End date for button visibility (leave empty for no end date)
+     */
+    endDate?: string | null;
+  };
+  analytics?: {
+    /**
+     * Track clicks on this button for analytics
+     */
+    trackClicks?: boolean | null;
+    /**
+     * Total number of clicks (automatically updated)
+     */
+    clickCount?: number | null;
+    /**
+     * Custom Google Analytics event name for this button
+     */
+    googleAnalyticsEvent?: string | null;
+  };
+  additionalAttributes?: {
+    /**
+     * Additional CSS classes for custom styling
+     */
+    cssClass?: string | null;
+    /**
+     * Tooltip text that appears on hover
+     */
+    tooltip?: string | null;
+    /**
+     * Accessibility label for screen readers
+     */
+    ariaLabel?: string | null;
+    /**
+     * Custom data attributes for the button element
+     */
+    dataAttributes?:
+      | {
+          /**
+           * Attribute name (without data- prefix)
+           */
+          key: string;
+          /**
+           * Attribute value
+           */
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Internal notes about this navigation item (not visible to users)
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-locked-documents".
+ */
+export interface PayloadLockedDocument {
+  id: string;
+  document?:
+    | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'announcements';
+        value: string | Announcement;
+      } | null)
+    | ({
+        relationTo: 'home-slider';
+        value: string | HomeSlider;
+      } | null)
+    | ({
+        relationTo: 'blog-posts';
+        value: string | BlogPost;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: string | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'coe';
+        value: string | Coe;
+      } | null)
+    | ({
+        relationTo: 'coe-categories';
+        value: string | CoeCategory;
+      } | null)
+    | ({
+        relationTo: 'regulations';
+        value: string | Regulation;
+      } | null)
+    | ({
+        relationTo: 'regulation-categories';
+        value: string | RegulationCategory;
+      } | null)
+    | ({
+        relationTo: 'departments';
+        value: string | Department;
+      } | null)
+    | ({
+        relationTo: 'department-sections';
+        value: string | DepartmentSection;
+      } | null)
+    | ({
+        relationTo: 'secondary-nav';
+        value: string | SecondaryNav;
+      } | null);
+  globalSlug?: string | null;
+  user: {
+    relationTo: 'users';
+    value: string | User;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-preferences".
+ */
+export interface PayloadPreference {
+  id: string;
+  user: {
+    relationTo: 'users';
+    value: string | User;
+  };
+  key?: string | null;
+  value?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-migrations".
+ */
+export interface PayloadMigration {
+  id: string;
+  name?: string | null;
+  batch?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  role?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  uploadedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcements_select".
+ */
+export interface AnnouncementsSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  link?: T;
+  linkText?: T;
+  isActive?: T;
+  priority?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-slider_select".
+ */
+export interface HomeSliderSelect<T extends boolean = true> {
+  title?: T;
+  desktopImage?: T;
+  mobileImage?: T;
+  link?: T;
+  isActive?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-posts_select".
+ */
+export interface BlogPostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  content?: T;
+  featuredImage?: T;
+  author?: T;
+  isPublished?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  quote?: T;
+  authorName?: T;
+  authorTitle?: T;
+  authorImage?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coe_select".
+ */
+export interface CoeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  category?: T;
+  pdfFile?: T;
+  isActive?: T;
+  priority?: T;
+  downloadCount?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coe-categories_select".
+ */
+export interface CoeCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  icon?: T;
+  isActive?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regulations_select".
+ */
+export interface RegulationsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  category?: T;
+  pdfFile?: T;
+  isActive?: T;
+  priority?: T;
+  downloadCount?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regulation-categories_select".
+ */
+export interface RegulationCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  icon?: T;
+  isActive?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "departments_select".
+ */
+export interface DepartmentsSelect<T extends boolean = true> {
+  name?: T;
+  code?: T;
+  slug?: T;
+  shortName?: T;
+  description?: T;
+  isActive?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "department-sections_select".
+ */
+export interface DepartmentSectionsSelect<T extends boolean = true> {
+  department?: T;
+  title?: T;
+  isActive?: T;
+  heroSection?:
+    | T
+    | {
+        heroTitle?: T;
+        heroSubtitle?: T;
+        heroImage?: T;
+        heroContent?: T;
+      };
+  introduction?:
+    | T
+    | {
+        content?: T;
+        image?: T;
+      };
+  peos?:
+    | T
+    | {
+        content?: T;
+        objectives?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  pos?:
+    | T
+    | {
+        content?: T;
+        outcomes?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  opportunities?:
+    | T
+    | {
+        content?: T;
+        opportunityList?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              image?: T;
+              id?: T;
+            };
+      };
+  labFacility?:
+    | T
+    | {
+        content?: T;
+        labs?:
+          | T
+          | {
+              name?: T;
+              description?: T;
+              equipment?: T;
+              images?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+      };
+  faculty?:
+    | T
+    | {
+        content?: T;
+        facultyMembers?:
+          | T
+          | {
+              name?: T;
+              designation?: T;
+              qualification?: T;
+              specialization?: T;
+              experience?: T;
+              email?: T;
+              phone?: T;
+              image?: T;
+              bio?: T;
+              id?: T;
+            };
+      };
+  achievements?:
+    | T
+    | {
+        content?: T;
+        achievementList?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              date?: T;
+              category?: T;
+              image?: T;
+              id?: T;
+            };
+      };
+  classroom?:
+    | T
+    | {
+        content?: T;
+        classrooms?:
+          | T
+          | {
+              name?: T;
+              capacity?: T;
+              facilities?: T;
+              images?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+      };
+  facultyPublications?:
+    | T
+    | {
+        content?: T;
+        publications?:
+          | T
+          | {
+              title?: T;
+              authors?: T;
+              journal?: T;
+              conference?: T;
+              year?: T;
+              type?: T;
+              doi?: T;
+              id?: T;
+            };
+      };
+  guestLectures?:
+    | T
+    | {
+        content?: T;
+        lectures?:
+          | T
+          | {
+              title?: T;
+              speaker?: T;
+              speakerDesignation?: T;
+              organization?: T;
+              date?: T;
+              description?: T;
+              image?: T;
+              id?: T;
+            };
+      };
+  mous?:
+    | T
+    | {
+        content?: T;
+        mouList?:
+          | T
+          | {
+              organization?: T;
+              purpose?: T;
+              dateOfSigning?: T;
+              duration?: T;
+              status?: T;
+              document?: T;
+              id?: T;
+            };
+      };
+  universityRankHolders?:
+    | T
+    | {
+        content?: T;
+        rankHolders?:
+          | T
+          | {
+              studentName?: T;
+              rank?: T;
+              academicYear?: T;
+              course?: T;
+              cgpa?: T;
+              photo?: T;
+              currentPosition?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "secondary-nav_select".
+ */
+export interface SecondaryNavSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  slug?: T;
+  linkType?: T;
+  externalUrl?: T;
+  pageContent?:
+    | T
+    | {
+        heroSection?:
+          | T
+          | {
+              heroTitle?: T;
+              heroSubtitle?: T;
+              heroImage?: T;
+              heroContent?: T;
+            };
+        mainContent?: T;
+        contentSections?:
+          | T
+          | {
+              sectionTitle?: T;
+              sectionType?: T;
+              textContent?: T;
+              imageGallery?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    altText?: T;
+                    id?: T;
+                  };
+              cardItems?:
+                | T
+                | {
+                    cardTitle?: T;
+                    cardDescription?: T;
+                    cardImage?: T;
+                    cardLink?: T;
+                    cardIcon?: T;
+                    id?: T;
+                  };
+              listItems?:
+                | T
+                | {
+                    itemTitle?: T;
+                    itemDescription?: T;
+                    itemLink?: T;
+                    id?: T;
+                  };
+              accordionItems?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    isOpenByDefault?: T;
+                    id?: T;
+                  };
+              contactInfo?:
+                | T
+                | {
+                    email?: T;
+                    phone?: T;
+                    address?: T;
+                    workingHours?: T;
+                    mapEmbedCode?: T;
+                  };
+              downloadLinks?:
+                | T
+                | {
+                    downloadTitle?: T;
+                    downloadDescription?: T;
+                    downloadFile?: T;
+                    downloadCategory?: T;
+                    id?: T;
+                  };
+              sectionOrder?: T;
+              id?: T;
+            };
+        seoSettings?:
+          | T
+          | {
+              metaTitle?: T;
+              metaDescription?: T;
+              keywords?: T;
+              ogImage?: T;
+            };
+      };
+  openInNewTab?: T;
+  buttonStyle?: T;
+  icon?: T;
+  iconPosition?: T;
+  isVisible?: T;
+  order?: T;
+  showOnPages?: T;
+  specificPages?:
+    | T
+    | {
+        pagePath?: T;
+        id?: T;
+      };
+  accessLevel?: T;
+  scheduleSettings?:
+    | T
+    | {
+        isScheduled?: T;
+        startDate?: T;
+        endDate?: T;
+      };
+  analytics?:
+    | T
+    | {
+        trackClicks?: T;
+        clickCount?: T;
+        googleAnalyticsEvent?: T;
+      };
+  additionalAttributes?:
+    | T
+    | {
+        cssClass?: T;
+        tooltip?: T;
+        ariaLabel?: T;
+        dataAttributes?:
+          | T
+          | {
+              key?: T;
+              value?: T;
+              id?: T;
+            };
+      };
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-locked-documents_select".
+ */
+export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
+  document?: T;
+  globalSlug?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-preferences_select".
+ */
+export interface PayloadPreferencesSelect<T extends boolean = true> {
+  user?: T;
+  key?: T;
+  value?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-migrations_select".
+ */
+export interface PayloadMigrationsSelect<T extends boolean = true> {
+  name?: T;
+  batch?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about".
  */
 export interface About {
   id: string;
   /**
-   * Title for the about page section
+   * Main hero title for the about page
    */
-  title: string;
+  heroTitle: string;
   /**
-   * URL slug for the about page (e.g., about-college)
+   * Hero subtitle displayed below the main title
    */
-  slug: string;
+  heroSubtitle?: string | null;
   /**
-   * Whether this about page is active and visible
+   * Hero banner image for the about page
    */
-  isActive?: boolean | null;
+  heroImage?: (string | null) | Media;
+  sections?:
+    | {
+        /**
+         * Title of the about section
+         */
+        title: string;
+        /**
+         * Content for this about section
+         */
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        /**
+         * Optional image for this section
+         */
+        image?: (string | null) | Media;
+        /**
+         * Order of display (lower numbers appear first)
+         */
+        order?: number | null;
+        /**
+         * Whether this section is active and visible
+         */
+        isActive?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
   profile?: {
     /**
      * College profile content
@@ -1539,991 +2621,8 @@ export interface About {
         }[]
       | null;
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "iqac".
- */
-export interface Iqac {
-  id: string;
-  /**
-   * Title for the IQAC page section
-   */
-  title: string;
-  /**
-   * URL slug for the IQAC page (e.g., 2024-25)
-   */
-  slug: string;
-  /**
-   * Whether this IQAC page is active and visible
-   */
-  isActive?: boolean | null;
-  coordinatorMessage?: {
-    /**
-     * IQAC Coordinator's message content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    /**
-     * Name of the IQAC Coordinator
-     */
-    coordinatorName?: string | null;
-    /**
-     * Designation of the IQAC Coordinator
-     */
-    coordinatorDesignation?: string | null;
-    /**
-     * Photo of the IQAC Coordinator
-     */
-    coordinatorImage?: (string | null) | Media;
-  };
-  members?: {
-    /**
-     * IQAC members overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    memberList?:
-      | {
-          /**
-           * Full name of the IQAC member
-           */
-          name: string;
-          /**
-           * Designation of the member
-           */
-          designation?: string | null;
-          /**
-           * Department/Organization of the member
-           */
-          department?: string | null;
-          /**
-           * Role of the member in IQAC
-           */
-          role?:
-            | (
-                | 'chairperson'
-                | 'coordinator'
-                | 'member_secretary'
-                | 'faculty_member'
-                | 'student_rep'
-                | 'alumni_rep'
-                | 'industry_rep'
-                | 'external_expert'
-                | 'member'
-              )
-            | null;
-          /**
-           * Contact email of the member
-           */
-          contactEmail?: string | null;
-          /**
-           * Photo of the member
-           */
-          memberImage?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  minutes?: {
-    /**
-     * IQAC minutes overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    minutesList?:
-      | {
-          /**
-           * Title of the meeting
-           */
-          title: string;
-          /**
-           * Date of the meeting
-           */
-          meetingDate: string;
-          /**
-           * Type of the meeting
-           */
-          meetingType?: ('regular' | 'special' | 'review' | 'planning') | null;
-          /**
-           * Meeting agenda
-           */
-          agenda?: string | null;
-          /**
-           * Upload the minutes document (PDF)
-           */
-          minutesDocument: string | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  accreditation?: {
-    /**
-     * Accreditation overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    accreditationList?:
-      | {
-          /**
-           * Name of the accrediting body (e.g., NAAC, NBA)
-           */
-          accreditingBody: string;
-          /**
-           * Type of accreditation
-           */
-          accreditationType?: ('naac' | 'nba' | 'nirf' | 'iso' | 'other') | null;
-          /**
-           * Grade/Rating received
-           */
-          grade?: string | null;
-          /**
-           * Accreditation valid from date
-           */
-          validFrom?: string | null;
-          /**
-           * Accreditation valid until date
-           */
-          validUntil?: string | null;
-          /**
-           * Upload the accreditation certificate
-           */
-          certificate?: (string | null) | Media;
-          /**
-           * Upload the accreditation report
-           */
-          report?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  aqar?: {
-    /**
-     * AQAR overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    aqarList?:
-      | {
-          /**
-           * Academic year (e.g., 2023-24)
-           */
-          academicYear: string;
-          /**
-           * Title of the AQAR report
-           */
-          title: string;
-          /**
-           * Date of submission to NAAC
-           */
-          submissionDate?: string | null;
-          /**
-           * Status of the AQAR report
-           */
-          status?: ('draft' | 'submitted' | 'approved' | 'under_review') | null;
-          /**
-           * Upload the AQAR document (PDF)
-           */
-          document: string | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  auditedStatement?: {
-    /**
-     * Audited statement overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    statementList?:
-      | {
-          /**
-           * Financial year (e.g., 2023-24)
-           */
-          financialYear: string;
-          /**
-           * Title of the audited statement
-           */
-          title: string;
-          /**
-           * Name of the auditing firm/auditor
-           */
-          auditorName?: string | null;
-          /**
-           * Date of audit completion
-           */
-          auditDate?: string | null;
-          /**
-           * Upload the audited statement document (PDF)
-           */
-          document: string | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  iqacPolicy?: {
-    /**
-     * IQAC policy overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    policyList?:
-      | {
-          /**
-           * Title of the policy
-           */
-          title: string;
-          /**
-           * Brief description of the policy
-           */
-          description?: string | null;
-          /**
-           * Category of the policy
-           */
-          category?:
-            | (
-                | 'quality_policy'
-                | 'academic_policy'
-                | 'research_policy'
-                | 'assessment_policy'
-                | 'feedback_policy'
-                | 'other'
-              )
-            | null;
-          /**
-           * Date from which the policy is effective
-           */
-          effectiveDate?: string | null;
-          /**
-           * Version of the policy document
-           */
-          version?: string | null;
-          /**
-           * Upload the policy document (PDF)
-           */
-          document: string | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  studentSurvey?: {
-    /**
-     * Student survey overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    surveyList?:
-      | {
-          /**
-           * Title of the survey
-           */
-          title: string;
-          /**
-           * Academic year of the survey (e.g., 2023-24)
-           */
-          academicYear: string;
-          /**
-           * Type of student survey
-           */
-          surveyType?:
-            | (
-                | 'course_feedback'
-                | 'faculty_feedback'
-                | 'infrastructure_feedback'
-                | 'overall_satisfaction'
-                | 'exit_survey'
-                | 'alumni_survey'
-                | 'other'
-              )
-            | null;
-          /**
-           * Semester for which the survey was conducted
-           */
-          semester?: ('sem1' | 'sem2' | 'sem3' | 'sem4' | 'sem5' | 'sem6' | 'sem7' | 'sem8' | 'all') | null;
-          /**
-           * Department (if survey is department-specific)
-           */
-          department?: string | null;
-          /**
-           * Number of student responses received
-           */
-          responseCount?: number | null;
-          surveyPeriod?: {
-            /**
-             * Survey start date
-             */
-            startDate?: string | null;
-            /**
-             * Survey end date
-             */
-            endDate?: string | null;
-          };
-          /**
-           * Upload the survey analysis report (PDF)
-           */
-          analysisReport?: (string | null) | Media;
-          /**
-           * Action taken based on survey feedback
-           */
-          actionTaken?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  /**
-   * Higher numbers appear first
-   */
-  priority?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "international-relations".
- */
-export interface InternationalRelation {
-  id: string;
-  /**
-   * Title for the international relations section
-   */
-  title: string;
-  /**
-   * URL slug for the international relations page (e.g., international-relations)
-   */
-  slug: string;
-  /**
-   * Whether this international relations page is active and visible
-   */
-  isActive?: boolean | null;
-  introduction?: {
-    /**
-     * Introduction content for international relations
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    /**
-     * Vision statement for international relations
-     */
-    vision?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    /**
-     * Mission statement for international relations
-     */
-    mission?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    objectives?:
-      | {
-          objective: string;
-          id?: string | null;
-        }[]
-      | null;
-    /**
-     * Featured image for introduction section
-     */
-    featuredImage?: (string | null) | Media;
-  };
-  services?: {
-    /**
-     * Services overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    servicesList?:
-      | {
-          title: string;
-          description: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          };
-          category?:
-            | (
-                | 'student_exchange'
-                | 'faculty_exchange'
-                | 'research_collaboration'
-                | 'academic_partnership'
-                | 'international_programs'
-                | 'study_abroad'
-                | 'cultural_exchange'
-                | 'other'
-              )
-            | null;
-          /**
-           * Service icon/image
-           */
-          icon?: (string | null) | Media;
-          isActive?: boolean | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  admissions?: {
-    /**
-     * International admissions overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    programs?:
-      | {
-          programName: string;
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Program duration (e.g., 2 years, 6 months)
-           */
-          duration?: string | null;
-          eligibility?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          applicationProcess?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          fees?: string | null;
-          intake?: ('fall' | 'spring' | 'summer' | 'multiple') | null;
-          /**
-           * Program brochure (PDF)
-           */
-          brochure?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-    requirements?:
-      | {
-          requirement: string;
-          description?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-    /**
-     * International admission application form (PDF)
-     */
-    applicationForm?: (string | null) | Media;
-  };
-  approvalsAccreditations?: {
-    /**
-     * Approvals, accreditations and honours overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    approvals?:
-      | {
-          name: string;
-          approvingBody: string;
-          description?: string | null;
-          dateOfApproval?: string | null;
-          validityPeriod?: string | null;
-          /**
-           * Approval certificate (PDF)
-           */
-          certificate?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-    accreditations?:
-      | {
-          name: string;
-          accreditingBody: string;
-          grade?: string | null;
-          validFrom?: string | null;
-          validTo?: string | null;
-          /**
-           * Accreditation certificate (PDF)
-           */
-          certificate?: (string | null) | Media;
-          logo?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-    honours?:
-      | {
-          title: string;
-          awardingBody: string;
-          description?: string | null;
-          dateReceived?: string | null;
-          category?:
-            | (
-                | 'academic_excellence'
-                | 'research_recognition'
-                | 'international_partnership'
-                | 'quality_assurance'
-                | 'innovation_award'
-                | 'other'
-              )
-            | null;
-          /**
-           * Award certificate/document (PDF)
-           */
-          certificate?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  research?: {
-    /**
-     * International research collaboration overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    researchAreas?:
-      | {
-          title: string;
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          collaborations?:
-            | {
-                institution: string;
-                country: string;
-                collaborationType?:
-                  | (
-                      | 'joint_research'
-                      | 'student_exchange'
-                      | 'faculty_exchange'
-                      | 'publication'
-                      | 'conference'
-                      | 'project'
-                    )
-                  | null;
-                startDate?: string | null;
-                endDate?: string | null;
-                status?: ('active' | 'completed' | 'proposed') | null;
-                id?: string | null;
-              }[]
-            | null;
-          id?: string | null;
-        }[]
-      | null;
-    publications?:
-      | {
-          title: string;
-          authors: string;
-          journal?: string | null;
-          conference?: string | null;
-          publishedDate?: string | null;
-          doi?: string | null;
-          abstract?: string | null;
-          /**
-           * Publication document (PDF)
-           */
-          document?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  mous?: {
-    /**
-     * International MOUs overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    mouList?:
-      | {
-          institution: string;
-          country: string;
-          purpose: string;
-          dateOfSigning?: string | null;
-          /**
-           * Duration of the MOU (e.g., 3 years, 5 years)
-           */
-          duration?: string | null;
-          status?: ('active' | 'expired' | 'renewed' | 'under_review' | 'draft') | null;
-          category?:
-            | (
-                | 'academic'
-                | 'research'
-                | 'student_exchange'
-                | 'faculty_exchange'
-                | 'dual_degree'
-                | 'joint_research'
-                | 'cultural_exchange'
-                | 'other'
-              )
-            | null;
-          keyActivities?:
-            | {
-                activity: string;
-                id?: string | null;
-              }[]
-            | null;
-          /**
-           * Benefits and outcomes of the MOU
-           */
-          benefits?: string | null;
-          /**
-           * MOU document (PDF)
-           */
-          document?: (string | null) | Media;
-          institutionLogo?: (string | null) | Media;
-          contactPerson?: string | null;
-          contactEmail?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  testimonials?: {
-    /**
-     * Testimonials overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    testimonialsList?:
-      | {
-          name: string;
-          designation?: string | null;
-          institution?: string | null;
-          country?: string | null;
-          testimonial: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          };
-          category?:
-            | (
-                | 'international_student'
-                | 'exchange_student'
-                | 'visiting_faculty'
-                | 'partner_institution'
-                | 'alumni'
-                | 'research_collaborator'
-                | 'other'
-              )
-            | null;
-          /**
-           * Program or collaboration they were part of
-           */
-          program?: string | null;
-          /**
-           * Year of their experience/graduation
-           */
-          year?: number | null;
-          /**
-           * Rating out of 5 stars
-           */
-          rating?: number | null;
-          /**
-           * Photo of the person giving testimonial
-           */
-          image?: (string | null) | Media;
-          /**
-           * Whether this testimonial is active and visible
-           */
-          isActive?: boolean | null;
-          /**
-           * Whether this testimonial should be featured prominently
-           */
-          isFeatured?: boolean | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  updatedAt: string;
-  createdAt: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2535,10 +2634,6 @@ export interface Naac {
    * Title for the NAAC section
    */
   title: string;
-  /**
-   * URL slug for the NAAC page (e.g., 2024-25)
-   */
-  slug: string;
   /**
    * Whether this NAAC page is active and visible
    */
@@ -3342,12 +3437,8 @@ export interface Naac {
      */
     dateOfSubmission?: string | null;
   };
-  /**
-   * Higher numbers appear first
-   */
-  priority?: number | null;
-  updatedAt: string;
-  createdAt: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3359,10 +3450,6 @@ export interface Admission {
    * Title for the admission section
    */
   title: string;
-  /**
-   * URL slug for the admission page (e.g., 2024-25-admissions)
-   */
-  slug: string;
   /**
    * Whether this admission page is active and visible
    */
@@ -3768,12 +3855,8 @@ export interface Admission {
       feeDocument?: (string | null) | Media;
     };
   };
-  /**
-   * Higher numbers appear first
-   */
-  priority?: number | null;
-  updatedAt: string;
-  createdAt: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3785,10 +3868,6 @@ export interface Research {
    * Title for the research section
    */
   title: string;
-  /**
-   * URL slug for the research page (e.g., research-activities)
-   */
-  slug: string;
   /**
    * Whether this research page is active and visible
    */
@@ -4047,9 +4126,9 @@ export interface Research {
         }[]
       | null;
   };
-  recognitionAndFocus?: {
+  researchPublications?: {
     /**
-     * Recognition and focus areas overview content
+     * Research publications overview content
      */
     content?: {
       root: {
@@ -4066,44 +4145,50 @@ export interface Research {
       };
       [k: string]: unknown;
     } | null;
-    recognitionsList?:
+    publicationsList?:
       | {
           /**
-           * Title of the recognition/award
+           * Title of the publication
            */
           title: string;
           /**
-           * Organization that gave the recognition
+           * Authors of the publication (comma separated)
            */
-          awardingBody: string;
+          authors: string;
           /**
-           * Category of recognition
+           * Type of publication
            */
-          category?:
-            | (
-                | 'research_excellence'
-                | 'innovation'
-                | 'best_researcher'
-                | 'publication'
-                | 'patent'
-                | 'industry'
-                | 'government'
-                | 'international'
-                | 'other'
-              )
+          publicationType?:
+            | ('journal' | 'conference' | 'book_chapter' | 'book' | 'patent' | 'technical_report' | 'other')
             | null;
           /**
-           * Name of the recipient (faculty/student/institution)
+           * Journal/Conference name
            */
-          recipient?: string | null;
+          journal?: string | null;
           /**
-           * Year of recognition
+           * Volume number
            */
-          year?: number | null;
+          volume?: string | null;
           /**
-           * Description of the recognition
+           * Issue number
            */
-          description?: {
+          issue?: string | null;
+          /**
+           * Page numbers
+           */
+          pages?: string | null;
+          /**
+           * Date of publication
+           */
+          publishedDate?: string | null;
+          /**
+           * DOI (Digital Object Identifier)
+           */
+          doi?: string | null;
+          /**
+           * Abstract of the publication
+           */
+          abstract?: {
             root: {
               type: string;
               children: {
@@ -4119,202 +4204,28 @@ export interface Research {
             [k: string]: unknown;
           } | null;
           /**
-           * Certificate/document of recognition
+           * Keywords (comma separated)
            */
-          certificate?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-    focusAreas?:
-      | {
+          keywords?: string | null;
           /**
-           * Name of the research focus area
+           * Impact factor of the journal
            */
-          areaName: string;
+          impactFactor?: string | null;
           /**
-           * Associated department
+           * URL to the publication
            */
-          department?: string | null;
+          url?: string | null;
           /**
-           * Description of the focus area
+           * Upload publication document (PDF)
            */
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          keyProjects?:
-            | {
-                projectTitle: string;
-                principalInvestigator?: string | null;
-                status?: ('ongoing' | 'completed' | 'proposed') | null;
-                id?: string | null;
-              }[]
-            | null;
+          document?: (string | null) | Media;
           id?: string | null;
         }[]
       | null;
   };
-  industryInstituteCollaborations?: {
+  researchProjects?: {
     /**
-     * Industry-institute collaborations overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    collaborationsList?:
-      | {
-          /**
-           * Name of the collaborating partner
-           */
-          partnerName: string;
-          /**
-           * Type of collaborating partner
-           */
-          partnerType?:
-            | ('industry' | 'research_institute' | 'university' | 'government' | 'international' | 'ngo' | 'other')
-            | null;
-          /**
-           * Type of collaboration
-           */
-          collaborationType?:
-            | (
-                | 'research'
-                | 'student_exchange'
-                | 'faculty_exchange'
-                | 'joint_projects'
-                | 'internship'
-                | 'consultancy'
-                | 'training'
-                | 'sponsored_research'
-                | 'other'
-              )
-            | null;
-          /**
-           * Start date of collaboration
-           */
-          startDate?: string | null;
-          /**
-           * End date of collaboration (if applicable)
-           */
-          endDate?: string | null;
-          /**
-           * Duration of collaboration
-           */
-          duration?: string | null;
-          /**
-           * Current status of collaboration
-           */
-          status?: ('active' | 'completed' | 'suspended' | 'renewed') | null;
-          /**
-           * Detailed description of the collaboration
-           */
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Objectives and goals of the collaboration
-           */
-          objectives?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Outcomes and achievements from the collaboration
-           */
-          outcomes?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          contactPerson?: {
-            /**
-             * Name of the contact person from college
-             */
-            name?: string | null;
-            /**
-             * Designation of the contact person
-             */
-            designation?: string | null;
-            /**
-             * Email of the contact person
-             */
-            email?: string | null;
-            /**
-             * Phone number of the contact person
-             */
-            phone?: string | null;
-          };
-          /**
-           * MOU document (PDF)
-           */
-          mou?: (string | null) | Media;
-          /**
-           * Logo of the collaborating partner
-           */
-          partnerLogo?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  externallyFundedProjects?: {
-    /**
-     * Externally funded projects overview content
+     * Research projects overview content
      */
     content?: {
       root: {
@@ -4338,38 +4249,29 @@ export interface Research {
            */
           projectTitle: string;
           /**
-           * Principal Investigator name
+           * Principal investigator name
            */
           principalInvestigator: string;
-          coInvestigators?:
-            | {
-                /**
-                 * Name of co-investigator
-                 */
-                name: string;
-                /**
-                 * Designation of co-investigator
-                 */
-                designation?: string | null;
-                /**
-                 * Department of co-investigator
-                 */
-                department?: string | null;
-                id?: string | null;
-              }[]
-            | null;
           /**
-           * Name of the funding agency
+           * Co-investigators (comma separated)
            */
-          fundingAgency: string;
+          coInvestigators?: string | null;
           /**
-           * Name of the funding scheme/program
+           * Department conducting the research
            */
-          fundingScheme?: string | null;
+          department?: string | null;
           /**
-           * Total grant amount in rupees
+           * Funding agency/organization
            */
-          grantAmount?: number | null;
+          fundingAgency?: string | null;
+          /**
+           * Total funding amount
+           */
+          fundingAmount?: number | null;
+          /**
+           * Project duration (e.g., 3 years)
+           */
+          projectDuration?: string | null;
           /**
            * Project start date
            */
@@ -4379,17 +4281,13 @@ export interface Research {
            */
           endDate?: string | null;
           /**
-           * Project duration (e.g., 3 years)
-           */
-          duration?: string | null;
-          /**
            * Current status of the project
            */
-          status?: ('ongoing' | 'completed' | 'sanctioned' | 'submitted' | 'under_review') | null;
+          status?: ('ongoing' | 'completed' | 'proposed' | 'suspended') | null;
           /**
-           * Project abstract/summary
+           * Detailed description of the project
            */
-          abstract?: {
+          description?: {
             root: {
               type: string;
               children: {
@@ -4405,7 +4303,7 @@ export interface Research {
             [k: string]: unknown;
           } | null;
           /**
-           * Project objectives
+           * Project objectives and goals
            */
           objectives?: {
             root: {
@@ -4441,169 +4339,7 @@ export interface Research {
             [k: string]: unknown;
           } | null;
           /**
-           * Expected outcomes and deliverables
-           */
-          expectedOutcomes?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Key achievements and milestones
-           */
-          achievements?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          publications?:
-            | {
-                /**
-                 * Publication title
-                 */
-                title: string;
-                /**
-                 * List of authors
-                 */
-                authors?: string | null;
-                /**
-                 * Journal/Conference name
-                 */
-                journal?: string | null;
-                /**
-                 * Year of publication
-                 */
-                year?: number | null;
-                /**
-                 * DOI or link to publication
-                 */
-                doi?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          /**
-           * Project proposal/report document
-           */
-          projectDocument?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  internallyFundedProjects?: {
-    /**
-     * Internally funded projects overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    projectsList?:
-      | {
-          /**
-           * Title of the research project
-           */
-          projectTitle: string;
-          /**
-           * Principal Investigator name
-           */
-          principalInvestigator: string;
-          /**
-           * Department of the principal investigator
-           */
-          department?: string | null;
-          /**
-           * Source of internal funding
-           */
-          fundingSource?: ('college_fund' | 'seed_money' | 'faculty_development' | 'student_research' | 'other') | null;
-          /**
-           * Grant amount in rupees
-           */
-          grantAmount?: number | null;
-          /**
-           * Project start date
-           */
-          startDate?: string | null;
-          /**
-           * Project end date
-           */
-          endDate?: string | null;
-          /**
-           * Project duration
-           */
-          duration?: string | null;
-          /**
-           * Current status of the project
-           */
-          status?: ('ongoing' | 'completed' | 'approved' | 'under_review') | null;
-          /**
-           * Project abstract/summary
-           */
-          abstract?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Project objectives
-           */
-          objectives?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Project outcomes and results
+           * Expected or achieved outcomes
            */
           outcomes?: {
             root: {
@@ -4621,74 +4357,9 @@ export interface Research {
             [k: string]: unknown;
           } | null;
           /**
-           * Project proposal/report document
+           * Publications arising from this project
            */
-          projectDocument?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  listOfDoctorates?: {
-    /**
-     * List of doctorates overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    doctoratesList?:
-      | {
-          /**
-           * Name of the doctorate candidate
-           */
-          candidateName: string;
-          /**
-           * Title of the doctoral thesis
-           */
-          thesisTitle: string;
-          /**
-           * Name of the research supervisor
-           */
-          supervisor: string;
-          /**
-           * Name of the co-supervisor (if any)
-           */
-          coSupervisor?: string | null;
-          /**
-           * Department of research
-           */
-          department?: string | null;
-          /**
-           * Research area/specialization
-           */
-          researchArea?: string | null;
-          /**
-           * University that awarded the degree
-           */
-          university?: string | null;
-          /**
-           * Date when degree was awarded
-           */
-          degreeAwarded?: string | null;
-          /**
-           * Registration number of the candidate
-           */
-          registrationNumber?: string | null;
-          /**
-           * Abstract of the doctoral thesis
-           */
-          abstract?: {
+          publications?: {
             root: {
               type: string;
               children: {
@@ -4703,601 +4374,6 @@ export interface Research {
             };
             [k: string]: unknown;
           } | null;
-          publications?:
-            | {
-                /**
-                 * Publication title
-                 */
-                title: string;
-                /**
-                 * Journal/Conference name
-                 */
-                journal?: string | null;
-                /**
-                 * Year of publication
-                 */
-                year?: number | null;
-                id?: string | null;
-              }[]
-            | null;
-          /**
-           * Doctoral thesis document (PDF)
-           */
-          thesisDocument?: (string | null) | Media;
-          /**
-           * Degree certificate document
-           */
-          certificateDocument?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  facultyPursuingDoctorate?: {
-    /**
-     * Faculty pursuing doctorate overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    facultyList?:
-      | {
-          /**
-           * Name of the faculty member
-           */
-          facultyName: string;
-          /**
-           * Current designation
-           */
-          designation?: string | null;
-          /**
-           * Department of the faculty
-           */
-          department?: string | null;
-          /**
-           * Title of the doctoral research
-           */
-          researchTitle: string;
-          /**
-           * Name of the research supervisor
-           */
-          supervisor?: string | null;
-          /**
-           * University where pursuing doctorate
-           */
-          university?: string | null;
-          /**
-           * Date of registration for doctorate
-           */
-          registrationDate?: string | null;
-          /**
-           * Expected completion date
-           */
-          expectedCompletion?: string | null;
-          /**
-           * Research area/specialization
-           */
-          researchArea?: string | null;
-          /**
-           * Current status of doctorate
-           */
-          status?:
-            | ('coursework' | 'synopsis' | 'research' | 'thesis_writing' | 'thesis_submitted' | 'viva_voce')
-            | null;
-          /**
-           * Research abstract
-           */
-          abstract?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Photo of the faculty member
-           */
-          facultyImage?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  recognizedResearchSupervisors?: {
-    /**
-     * Recognized research supervisors overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    supervisorsList?:
-      | {
-          /**
-           * Name of the research supervisor
-           */
-          supervisorName: string;
-          /**
-           * Current designation
-           */
-          designation?: string | null;
-          /**
-           * Department of the supervisor
-           */
-          department?: string | null;
-          /**
-           * Educational qualification
-           */
-          qualification?: string | null;
-          /**
-           * Area of specialization
-           */
-          specialization?: string | null;
-          researchAreas?:
-            | {
-                /**
-                 * Research area
-                 */
-                area: string;
-                id?: string | null;
-              }[]
-            | null;
-          recognizingUniversities?:
-            | {
-                /**
-                 * Name of the university
-                 */
-                universityName: string;
-                /**
-                 * Date of recognition
-                 */
-                recognitionDate?: string | null;
-                /**
-                 * Valid until date
-                 */
-                validUntil?: string | null;
-                /**
-                 * Recognition certificate document
-                 */
-                recognitionDocument?: (string | null) | Media;
-                id?: string | null;
-              }[]
-            | null;
-          scholarsSupervised?: {
-            /**
-             * Number of scholars completed
-             */
-            completed?: number | null;
-            /**
-             * Number of scholars currently ongoing
-             */
-            ongoing?: number | null;
-          };
-          /**
-           * Years of experience in research supervision
-           */
-          experience?: string | null;
-          /**
-           * Number of research publications
-           */
-          publications?: number | null;
-          /**
-           * Email address
-           */
-          email?: string | null;
-          /**
-           * Photo of the supervisor
-           */
-          supervisorImage?: (string | null) | Media;
-          /**
-           * Whether currently accepting new research scholars
-           */
-          isActive?: boolean | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  centresOfExcellence?: {
-    /**
-     * Centres of excellence overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    centresList?:
-      | {
-          /**
-           * Name of the centre of excellence
-           */
-          centreName: string;
-          /**
-           * Year the centre was established
-           */
-          establishedYear?: number | null;
-          /**
-           * Funding agency or sponsor
-           */
-          fundingAgency?: string | null;
-          /**
-           * Director of the centre
-           */
-          director?: string | null;
-          /**
-           * Associated department
-           */
-          department?: string | null;
-          focusAreas?:
-            | {
-                /**
-                 * Focus area of excellence
-                 */
-                area: string;
-                id?: string | null;
-              }[]
-            | null;
-          /**
-           * Objectives of the centre
-           */
-          objectives?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Detailed description of the centre
-           */
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Available facilities and infrastructure
-           */
-          facilities?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Key achievements and milestones
-           */
-          achievements?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          researchPrograms?:
-            | {
-                /**
-                 * Name of the research program
-                 */
-                programName: string;
-                /**
-                 * Brief description of the program
-                 */
-                description?: string | null;
-                /**
-                 * Duration of the program
-                 */
-                duration?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          industryPartners?:
-            | {
-                /**
-                 * Name of industry partner
-                 */
-                partnerName: string;
-                /**
-                 * Type of collaboration
-                 */
-                collaborationType?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          contactInfo?: {
-            /**
-             * Contact email
-             */
-            email?: string | null;
-            /**
-             * Contact phone number
-             */
-            phone?: string | null;
-            /**
-             * Physical location
-             */
-            location?: string | null;
-          };
-          centreImages?:
-            | {
-                image: string | Media;
-                /**
-                 * Image caption
-                 */
-                caption?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          /**
-           * Whether this centre is currently active
-           */
-          isActive?: boolean | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  projectsAndPatents?: {
-    /**
-     * Projects and patents overview content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    patentsList?:
-      | {
-          /**
-           * Title of the patent
-           */
-          patentTitle: string;
-          inventors?:
-            | {
-                /**
-                 * Name of inventor
-                 */
-                name: string;
-                /**
-                 * Designation of inventor
-                 */
-                designation?: string | null;
-                /**
-                 * Department of inventor
-                 */
-                department?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          /**
-           * Patent application/grant number
-           */
-          patentNumber?: string | null;
-          /**
-           * Date of patent application
-           */
-          applicationDate?: string | null;
-          /**
-           * Date of patent grant (if granted)
-           */
-          grantDate?: string | null;
-          /**
-           * Current status of the patent
-           */
-          status?: ('filed' | 'published' | 'granted' | 'rejected' | 'withdrawn') | null;
-          /**
-           * Patent office where filed
-           */
-          patentOffice?: ('indian' | 'us' | 'european' | 'international' | 'other') | null;
-          /**
-           * Patent abstract
-           */
-          abstract?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Technical field of the invention
-           */
-          technicalField?: string | null;
-          /**
-           * Commercialization potential and status
-           */
-          commercialization?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Patent document (PDF)
-           */
-          patentDocument?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-    innovationProjects?:
-      | {
-          /**
-           * Title of the innovation project
-           */
-          projectTitle: string;
-          /**
-           * Project leader name
-           */
-          projectLeader?: string | null;
-          teamMembers?:
-            | {
-                /**
-                 * Name of team member
-                 */
-                name: string;
-                /**
-                 * Role in the project
-                 */
-                role?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          /**
-           * Associated department
-           */
-          department?: string | null;
-          /**
-           * Project start date
-           */
-          startDate?: string | null;
-          /**
-           * Project completion date
-           */
-          completionDate?: string | null;
-          /**
-           * Current status of the project
-           */
-          status?: ('ongoing' | 'completed' | 'prototype' | 'commercialized') | null;
-          /**
-           * Project description
-           */
-          description?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Project outcomes and impact
-           */
-          outcomes?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Funding source and amount
-           */
-          funding?: string | null;
           projectImages?:
             | {
                 image: string | Media;
@@ -5312,9 +4388,9 @@ export interface Research {
         }[]
       | null;
   };
-  dstFistLab?: {
+  researchCollaborations?: {
     /**
-     * DST FIST Lab overview content
+     * Research collaborations overview content
      */
     content?: {
       root: {
@@ -5331,411 +4407,40 @@ export interface Research {
       };
       [k: string]: unknown;
     } | null;
-    labDetails?: {
-      /**
-       * Name of the DST FIST Lab
-       */
-      labName?: string | null;
-      /**
-       * Department housing the lab
-       */
-      department?: string | null;
-      /**
-       * Lab coordinator name
-       */
-      coordinator?: string | null;
-      /**
-       * DST FIST grant amount in rupees
-       */
-      grantAmount?: number | null;
-      /**
-       * Grant period (e.g., 2020-2025)
-       */
-      grantPeriod?: string | null;
-      /**
-       * FIST grant phase
-       */
-      phase?: ('phase1' | 'phase2' | 'phase3') | null;
-      /**
-       * Objectives of the DST FIST Lab
-       */
-      objectives?: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-      /**
-       * Detailed description of the lab
-       */
-      description?: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-    };
-    infrastructure?: {
-      equipmentList?:
-        | {
-            /**
-             * Name of the equipment
-             */
-            equipmentName: string;
-            /**
-             * Model/specification of the equipment
-             */
-            model?: string | null;
-            /**
-             * Equipment supplier
-             */
-            supplier?: string | null;
-            /**
-             * Cost of the equipment in rupees
-             */
-            cost?: number | null;
-            /**
-             * Date of installation
-             */
-            installationDate?: string | null;
-            /**
-             * Applications and usage of the equipment
-             */
-            applications?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            /**
-             * Current status of the equipment
-             */
-            status?: ('operational' | 'installation' | 'maintenance' | 'procured') | null;
-            id?: string | null;
-          }[]
-        | null;
-      /**
-       * Additional facilities and infrastructure
-       */
-      facilities?: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-    };
-    researchActivities?: {
-      ongoingProjects?:
-        | {
-            /**
-             * Title of the research project
-             */
-            projectTitle: string;
-            /**
-             * Principal investigator name
-             */
-            principalInvestigator?: string | null;
-            /**
-             * Project duration
-             */
-            duration?: string | null;
-            /**
-             * Funding agency
-             */
-            fundingAgency?: string | null;
-            /**
-             * Grant amount
-             */
-            grantAmount?: number | null;
-            id?: string | null;
-          }[]
-        | null;
-      publications?:
-        | {
-            /**
-             * Publication title
-             */
-            title: string;
-            /**
-             * List of authors
-             */
-            authors?: string | null;
-            /**
-             * Journal/Conference name
-             */
-            journal?: string | null;
-            /**
-             * Year of publication
-             */
-            year?: number | null;
-            /**
-             * Impact factor of the journal
-             */
-            impactFactor?: number | null;
-            /**
-             * DOI or link to publication
-             */
-            doi?: string | null;
-            id?: string | null;
-          }[]
-        | null;
-      /**
-       * Student research activities and achievements
-       */
-      studentResearch?: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-    };
-    collaboration?: {
-      industryCollaborations?:
-        | {
-            /**
-             * Name of the collaborating company
-             */
-            companyName: string;
-            /**
-             * Type of collaboration
-             */
-            collaborationType?: string | null;
-            /**
-             * Duration of collaboration
-             */
-            duration?: string | null;
-            id?: string | null;
-          }[]
-        | null;
-      academicCollaborations?:
-        | {
-            /**
-             * Name of the collaborating institution
-             */
-            institutionName: string;
-            /**
-             * Type of collaboration
-             */
-            collaborationType?: string | null;
-            /**
-             * Duration of collaboration
-             */
-            duration?: string | null;
-            id?: string | null;
-          }[]
-        | null;
-    };
-    /**
-     * Key achievements and milestones of the DST FIST Lab
-     */
-    achievements?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    contactInfo?: {
-      /**
-       * Lab contact email
-       */
-      email?: string | null;
-      /**
-       * Lab contact phone
-       */
-      phone?: string | null;
-      /**
-       * Lab location/address
-       */
-      location?: string | null;
-    };
-    labImages?:
-      | {
-          image: string | Media;
-          /**
-           * Image caption
-           */
-          caption?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-    documents?:
+    collaborationsList?:
       | {
           /**
-           * Document title
+           * Name of the collaborating organization
            */
-          title: string;
+          organizationName: string;
           /**
-           * Upload document (PDF)
+           * Type of collaborating organization
            */
-          document: string | Media;
+          organizationType?:
+            | ('academic' | 'research_institute' | 'industry' | 'government' | 'international' | 'ngo' | 'other')
+            | null;
           /**
-           * Brief description of the document
+           * Country of the collaborating organization
            */
-          description?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  /**
-   * Higher numbers appear first
-   */
-  priority?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Manage secondary navigation bar buttons and their content pages
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "secondary-nav".
- */
-export interface SecondaryNav {
-  id: string;
-  /**
-   * Title/Label for the navigation button
-   */
-  title: string;
-  /**
-   * Optional description for admin reference
-   */
-  description?: string | null;
-  /**
-   * URL slug for this navigation item (e.g., admissions-portal, student-resources)
-   */
-  slug: string;
-  /**
-   * Choose whether this creates a content page or links to an external URL
-   */
-  linkType: 'content' | 'external';
-  /**
-   * Full external URL (e.g., https://google.com)
-   */
-  externalUrl?: string | null;
-  /**
-   * Content for the page this navigation button will create
-   */
-  pageContent?: {
-    heroSection?: {
-      /**
-       * Main title for the page (defaults to nav title if empty)
-       */
-      heroTitle?: string | null;
-      /**
-       * Subtitle or tagline for the page
-       */
-      heroSubtitle?: string | null;
-      /**
-       * Hero background image
-       */
-      heroImage?: (string | null) | Media;
-      /**
-       * Rich text content for the hero section
-       */
-      heroContent?: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-    };
-    /**
-     * Main content of the page
-     */
-    mainContent: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    /**
-     * Add multiple content sections to build your page
-     */
-    contentSections?:
-      | {
+          country?: string | null;
           /**
-           * Title for this content section
+           * Type of collaboration
            */
-          sectionTitle: string;
+          collaborationType?:
+            | (
+                | 'joint_research'
+                | 'faculty_exchange'
+                | 'student_exchange'
+                | 'resource_sharing'
+                | 'joint_publications'
+                | 'consultancy'
+                | 'other'
+              )
+            | null;
           /**
-           * Type of content section
+           * Description of the collaboration
            */
-          sectionType: 'text' | 'gallery' | 'cards' | 'list' | 'accordion' | 'contact' | 'downloads';
-          /**
-           * Rich text content for this section
-           */
-          textContent?: {
+          description?: {
             root: {
               type: string;
               children: {
@@ -5751,279 +4456,199 @@ export interface SecondaryNav {
             [k: string]: unknown;
           } | null;
           /**
-           * Collection of images for gallery
+           * Start date of collaboration
            */
-          imageGallery?:
-            | {
-                image: string | Media;
-                /**
-                 * Image caption
-                 */
-                caption?: string | null;
-                /**
-                 * Alt text for accessibility
-                 */
-                altText?: string | null;
-                id?: string | null;
-              }[]
-            | null;
+          startDate?: string | null;
           /**
-           * Feature cards or highlight items
+           * End date of collaboration (if applicable)
            */
-          cardItems?:
-            | {
-                cardTitle: string;
-                cardDescription?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: string;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
-                    version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-                cardImage?: (string | null) | Media;
-                /**
-                 * Optional link for the card
-                 */
-                cardLink?: string | null;
-                /**
-                 * Icon class or emoji for the card
-                 */
-                cardIcon?: string | null;
-                id?: string | null;
-              }[]
-            | null;
+          endDate?: string | null;
           /**
-           * List of items with titles and descriptions
+           * Current status of the collaboration
            */
-          listItems?:
-            | {
-                itemTitle: string;
-                itemDescription?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: string;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
-                    version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-                /**
-                 * Optional link for this item
-                 */
-                itemLink?: string | null;
-                id?: string | null;
-              }[]
-            | null;
+          status?: ('active' | 'completed' | 'proposed' | 'suspended') | null;
           /**
-           * Expandable accordion items (great for FAQs)
+           * Outcomes and achievements from the collaboration
            */
-          accordionItems?:
-            | {
-                /**
-                 * Question or header text
-                 */
-                question: string;
-                /**
-                 * Answer or content that expands
-                 */
-                answer: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: string;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
-                    version: number;
-                  };
-                  [k: string]: unknown;
-                };
-                /**
-                 * Whether this item should be expanded by default
-                 */
-                isOpenByDefault?: boolean | null;
-                id?: string | null;
-              }[]
-            | null;
+          outcomes?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
           /**
-           * Contact details section
+           * Contact person from our institution
            */
-          contactInfo?: {
-            email?: string | null;
-            phone?: string | null;
-            address?: string | null;
-            workingHours?: string | null;
-            /**
-             * Google Maps embed code (iframe)
-             */
-            mapEmbedCode?: string | null;
-          };
+          contactPerson?: string | null;
           /**
-           * Downloadable files and documents
+           * Logo of the collaborating organization
            */
-          downloadLinks?:
-            | {
-                downloadTitle: string;
-                downloadDescription?: string | null;
-                downloadFile: string | Media;
-                /**
-                 * Category for grouping downloads
-                 */
-                downloadCategory?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          /**
-           * Order of this section (higher numbers appear first)
-           */
-          sectionOrder?: number | null;
+          organizationLogo?: (string | null) | Media;
           id?: string | null;
         }[]
       | null;
-    seoSettings?: {
-      /**
-       * Page title for search engines (defaults to page title if empty)
-       */
-      metaTitle?: string | null;
-      /**
-       * Page description for search engines
-       */
-      metaDescription?: string | null;
-      /**
-       * SEO keywords (comma-separated)
-       */
-      keywords?: string | null;
-      /**
-       * Image for social media sharing
-       */
-      ogImage?: (string | null) | Media;
-    };
   };
-  /**
-   * Open external links in a new tab
-   */
-  openInNewTab?: boolean | null;
-  /**
-   * Visual style of the button
-   */
-  buttonStyle?: ('primary' | 'secondary' | 'outline' | 'text' | 'warning' | 'info' | 'success' | 'danger') | null;
-  /**
-   * Optional icon class or emoji for the button (e.g., fa-home, 🏠)
-   */
-  icon?: string | null;
-  /**
-   * Position of the icon relative to text
-   */
-  iconPosition?: ('left' | 'right' | 'none') | null;
-  /**
-   * Whether this button is visible in the navigation
-   */
-  isVisible?: boolean | null;
-  /**
-   * Order of appearance (higher numbers appear first)
-   */
-  order?: number | null;
-  /**
-   * Control on which pages this button should appear
-   */
-  showOnPages?: ('all' | 'home' | 'internal' | 'specific')[] | null;
-  /**
-   * Define specific pages where this button should appear
-   */
-  specificPages?:
-    | {
-        /**
-         * Page path (e.g., /about, /research, /admissions)
-         */
-        pagePath: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Who can see this navigation button
-   */
-  accessLevel?: ('public' | 'students' | 'faculty' | 'admin') | null;
-  scheduleSettings?: {
+  researchPolicies?: {
     /**
-     * Enable time-based visibility for this button
+     * Research policies overview content
      */
-    isScheduled?: boolean | null;
-    /**
-     * Start date for button visibility
-     */
-    startDate?: string | null;
-    /**
-     * End date for button visibility (leave empty for no end date)
-     */
-    endDate?: string | null;
-  };
-  analytics?: {
-    /**
-     * Track clicks on this button for analytics
-     */
-    trackClicks?: boolean | null;
-    /**
-     * Total number of clicks (automatically updated)
-     */
-    clickCount?: number | null;
-    /**
-     * Custom Google Analytics event name for this button
-     */
-    googleAnalyticsEvent?: string | null;
-  };
-  additionalAttributes?: {
-    /**
-     * Additional CSS classes for custom styling
-     */
-    cssClass?: string | null;
-    /**
-     * Tooltip text that appears on hover
-     */
-    tooltip?: string | null;
-    /**
-     * Accessibility label for screen readers
-     */
-    ariaLabel?: string | null;
-    /**
-     * Custom data attributes for the button element
-     */
-    dataAttributes?:
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    policiesList?:
       | {
           /**
-           * Attribute name (without data- prefix)
+           * Title of the research policy
            */
-          key: string;
+          policyTitle: string;
           /**
-           * Attribute value
+           * Type of research policy
            */
-          value: string;
+          policyType?:
+            | ('ethics' | 'ip' | 'publication' | 'data_management' | 'funding' | 'collaboration' | 'other')
+            | null;
+          /**
+           * Description of the policy
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Upload the complete policy document (PDF)
+           */
+          policyDocument: string | Media;
+          /**
+           * Date when the policy became effective
+           */
+          effectiveDate?: string | null;
+          /**
+           * Policy version (e.g., v1.0, v2.1)
+           */
+          version?: string | null;
+          /**
+           * Whether this policy is currently active
+           */
+          isActive?: boolean | null;
           id?: string | null;
         }[]
       | null;
   };
-  /**
-   * Internal notes about this navigation item (not visible to users)
-   */
-  notes?: string | null;
-  updatedAt: string;
-  createdAt: string;
+  researchAchievements?: {
+    /**
+     * Research achievements overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    achievementsList?:
+      | {
+          /**
+           * Title of the achievement
+           */
+          title: string;
+          /**
+           * Type of achievement
+           */
+          achievementType?:
+            | ('award' | 'patent' | 'best_paper' | 'grant' | 'tech_transfer' | 'startup' | 'other')
+            | null;
+          /**
+           * Name of the recipient(s)
+           */
+          recipient: string;
+          /**
+           * Department of the recipient
+           */
+          department?: string | null;
+          /**
+           * Organization/body that gave the award
+           */
+          awardingBody?: string | null;
+          /**
+           * Date when the achievement was received
+           */
+          dateReceived?: string | null;
+          /**
+           * Detailed description of the achievement
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Monetary value (if applicable)
+           */
+          amount?: number | null;
+          /**
+           * Upload certificate or proof document
+           */
+          certificate?: (string | null) | Media;
+          /**
+           * Image related to the achievement
+           */
+          achievementImage?: (string | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -6035,10 +4660,6 @@ export interface Placement {
    * Title for the placement section
    */
   title: string;
-  /**
-   * URL slug for the placement page (e.g., placement-2024-25)
-   */
-  slug: string;
   /**
    * Whether this placement page is active and visible
    */
@@ -6131,6 +4752,12 @@ export interface Placement {
            */
           department?: string | null;
           /**
+           * Role in the placement cell
+           */
+          role?:
+            | ('director' | 'assistant_director' | 'coordinator' | 'officer' | 'student_coordinator' | 'other')
+            | null;
+          /**
            * Email address
            */
           email?: string | null;
@@ -6141,15 +4768,36 @@ export interface Placement {
           /**
            * Photo of the team member
            */
-          photo?: (string | null) | Media;
-          isActive?: boolean | null;
+          image?: (string | null) | Media;
+          /**
+           * Brief biography
+           */
+          bio?: string | null;
           id?: string | null;
         }[]
       | null;
+    contactInfo?: {
+      /**
+       * Official placement cell email
+       */
+      email?: string | null;
+      /**
+       * Official contact number
+       */
+      phone?: string | null;
+      /**
+       * Physical address of placement cell
+       */
+      address?: string | null;
+      /**
+       * Working hours (e.g., 9:00 AM - 5:00 PM)
+       */
+      hours?: string | null;
+    };
   };
-  whyRajalakshmi?: {
+  placementStatistics?: {
     /**
-     * Content explaining why students should choose Rajalakshmi
+     * Placement statistics overview content
      */
     content?: {
       root: {
@@ -6166,14 +4814,198 @@ export interface Placement {
       };
       [k: string]: unknown;
     } | null;
-    strengthsList?:
+    yearwiseData?:
       | {
           /**
-           * Title of the strength
+           * Academic year (e.g., 2023-24)
            */
-          title: string;
+          academicYear: string;
           /**
-           * Description of the strength
+           * Total students eligible for placement
+           */
+          totalStudents?: number | null;
+          /**
+           * Number of students placed
+           */
+          studentsPlaced?: number | null;
+          /**
+           * Placement percentage
+           */
+          placementPercentage?: number | null;
+          /**
+           * Highest salary package (in LPA)
+           */
+          highestPackage?: number | null;
+          /**
+           * Average salary package (in LPA)
+           */
+          averagePackage?: number | null;
+          /**
+           * Median salary package (in LPA)
+           */
+          medianPackage?: number | null;
+          /**
+           * Total number of companies participated
+           */
+          totalCompanies?: number | null;
+          /**
+           * Students with multiple offers
+           */
+          multipleOffers?: number | null;
+          departmentWiseData?:
+            | {
+                /**
+                 * Department name
+                 */
+                department: string;
+                /**
+                 * Total students from this department
+                 */
+                totalStudents?: number | null;
+                /**
+                 * Students placed from this department
+                 */
+                studentsPlaced?: number | null;
+                /**
+                 * Placement percentage for this department
+                 */
+                placementPercentage?: number | null;
+                /**
+                 * Highest package in this department (in LPA)
+                 */
+                highestPackage?: number | null;
+                /**
+                 * Average package in this department (in LPA)
+                 */
+                averagePackage?: number | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  recruitingCompanies?: {
+    /**
+     * Recruiting companies overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    companiesList?:
+      | {
+          /**
+           * Name of the company
+           */
+          companyName: string;
+          /**
+           * Type/category of the company
+           */
+          companyType?:
+            | ('core' | 'dream' | 'super_dream' | 'regular' | 'startup' | 'mnc' | 'government' | 'psu' | 'other')
+            | null;
+          /**
+           * Industry sector
+           */
+          industry?:
+            | (
+                | 'it_software'
+                | 'consulting'
+                | 'financial'
+                | 'manufacturing'
+                | 'automotive'
+                | 'aerospace'
+                | 'telecom'
+                | 'healthcare'
+                | 'energy'
+                | 'education'
+                | 'government'
+                | 'other'
+              )
+            | null;
+          /**
+           * Company website URL
+           */
+          website?: string | null;
+          /**
+           * Brief description of the company
+           */
+          description?: string | null;
+          /**
+           * Years when the company recruited (comma separated)
+           */
+          recruitmentYears?: string | null;
+          /**
+           * Job roles typically offered (comma separated)
+           */
+          rolesOffered?: string | null;
+          /**
+           * Departments eligible for recruitment (comma separated)
+           */
+          eligibleDepartments?: string | null;
+          /**
+           * Salary package range (e.g., 8-12 LPA)
+           */
+          packageRange?: string | null;
+          /**
+           * Work location(s)
+           */
+          location?: string | null;
+          /**
+           * Company logo
+           */
+          companyLogo?: (string | null) | Media;
+          /**
+           * Whether the company is currently recruiting
+           */
+          isActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  placementProcess?: {
+    /**
+     * Placement process overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    processSteps?:
+      | {
+          /**
+           * Step number in the process
+           */
+          stepNumber: number;
+          /**
+           * Title of the process step
+           */
+          stepTitle: string;
+          /**
+           * Detailed description of this step
            */
           description?: {
             root: {
@@ -6190,94 +5022,32 @@ export interface Placement {
             };
             [k: string]: unknown;
           } | null;
-          /**
-           * Icon or image representing this strength
-           */
-          icon?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-    statistics?:
-      | {
-          /**
-           * Metric name (e.g., Placement Rate)
-           */
-          metric: string;
-          /**
-           * Value (e.g., 95%)
-           */
-          value: string;
-          /**
-           * Additional description
-           */
-          description?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  procedure?: {
-    /**
-     * Overview of placement procedure
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    steps?:
-      | {
-          /**
-           * Step number in the process
-           */
-          stepNumber: number;
-          /**
-           * Title of the step
-           */
-          title: string;
-          /**
-           * Detailed description of the step
-           */
-          description: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          };
-          /**
-           * Expected timeline for this step
-           */
-          timeline?: string | null;
           documents?:
             | {
-                document: string | Media;
+                /**
+                 * Name of the required document
+                 */
+                documentName: string;
+                /**
+                 * Description of the document requirement
+                 */
                 description?: string | null;
+                /**
+                 * Whether this document is mandatory
+                 */
+                isMandatory?: boolean | null;
                 id?: string | null;
               }[]
             | null;
+          /**
+           * Deadline or timeline for this step
+           */
+          deadline?: string | null;
           id?: string | null;
         }[]
       | null;
     /**
-     * Eligibility criteria for placement
+     * General eligibility criteria for placements
      */
     eligibilityCriteria?: {
       root: {
@@ -6295,9 +5065,45 @@ export interface Placement {
       [k: string]: unknown;
     } | null;
     /**
-     * Student registration process details
+     * Student registration process for placements
      */
     registrationProcess?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Company selection process and rounds
+     */
+    selectionProcess?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Important placement rules and regulations
+     */
+    placementRules?: {
       root: {
         type: string;
         children: {
@@ -6315,7 +5121,7 @@ export interface Placement {
   };
   trainingPrograms?: {
     /**
-     * Overview of training programs
+     * Training programs overview content
      */
     content?: {
       root: {
@@ -6335,9 +5141,9 @@ export interface Placement {
     programsList?:
       | {
           /**
-           * Name of the training program
+           * Title of the training program
            */
-          programName: string;
+          programTitle: string;
           /**
            * Type of training program
            */
@@ -6345,11 +5151,12 @@ export interface Placement {
             | (
                 | 'technical'
                 | 'soft_skills'
-                | 'aptitude'
-                | 'interview'
-                | 'industry_specific'
                 | 'communication'
-                | 'leadership'
+                | 'interview_prep'
+                | 'aptitude'
+                | 'industry_specific'
+                | 'personality'
+                | 'other'
               )
             | null;
           /**
@@ -6371,13 +5178,53 @@ export interface Placement {
             [k: string]: unknown;
           } | null;
           /**
-           * Duration of the program
+           * Duration of the program (e.g., 2 weeks, 40 hours)
            */
           duration?: string | null;
           /**
-           * Target audience (e.g., Final year students)
+           * Target audience (e.g., Final year students, All students)
            */
           targetAudience?: string | null;
+          /**
+           * Topics covered in the program
+           */
+          topics?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Expected learning outcomes
+           */
+          outcomes?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Program instructor/facilitator
+           */
+          instructor?: string | null;
           /**
            * Program schedule and timings
            */
@@ -6397,140 +5244,9 @@ export interface Placement {
             [k: string]: unknown;
           } | null;
           /**
-           * Trainer/Instructor name
+           * Registration information and process
            */
-          trainer?: string | null;
-          materials?:
-            | {
-                material: string | Media;
-                description?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          isActive?: boolean | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  placementReport?: {
-    /**
-     * Overview of placement reports
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    yearlyReports?:
-      | {
-          /**
-           * Academic year (e.g., 2023-24)
-           */
-          academicYear: string;
-          /**
-           * Total eligible students
-           */
-          totalStudents?: number | null;
-          /**
-           * Number of students placed
-           */
-          studentsPlaced?: number | null;
-          /**
-           * Placement percentage
-           */
-          placementPercentage?: number | null;
-          /**
-           * Average package offered
-           */
-          averagePackage?: string | null;
-          /**
-           * Highest package offered
-           */
-          highestPackage?: string | null;
-          /**
-           * Number of companies visited
-           */
-          companiesVisited?: number | null;
-          departmentWiseData?:
-            | {
-                department: string;
-                totalStudents?: number | null;
-                studentsPlaced?: number | null;
-                placementPercentage?: number | null;
-                id?: string | null;
-              }[]
-            | null;
-          /**
-           * Detailed placement report document (PDF)
-           */
-          reportDocument?: (string | null) | Media;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  recruiters?: {
-    /**
-     * Overview content about recruiters
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    recruitersList?:
-      | {
-          /**
-           * Name of the recruiting company
-           */
-          companyName: string;
-          /**
-           * Company logo
-           */
-          companyLogo?: (string | null) | Media;
-          /**
-           * Industry category
-           */
-          industry?:
-            | (
-                | 'it_software'
-                | 'manufacturing'
-                | 'automotive'
-                | 'banking_finance'
-                | 'consulting'
-                | 'healthcare'
-                | 'education'
-                | 'government'
-                | 'others'
-              )
-            | null;
-          /**
-           * Company website URL
-           */
-          website?: string | null;
-          /**
-           * Brief description about the company
-           */
-          description?: {
+          registrationInfo?: {
             root: {
               type: string;
               children: {
@@ -6546,25 +5262,16 @@ export interface Placement {
             [k: string]: unknown;
           } | null;
           /**
-           * Typical roles offered (comma separated)
+           * Whether this program is currently offered
            */
-          rolesOffered?: string | null;
-          /**
-           * Package range offered
-           */
-          packageRange?: string | null;
-          /**
-           * How frequently they visit for recruitment
-           */
-          visitFrequency?: ('annual' | 'biannual' | 'occasional' | 'regular') | null;
           isActive?: boolean | null;
           id?: string | null;
         }[]
       | null;
   };
-  employabilityTrainingCamp?: {
+  successStories?: {
     /**
-     * Overview of employability training camp
+     * Success stories overview content
      */
     content?: {
       root: {
@@ -6581,205 +5288,109 @@ export interface Placement {
       };
       [k: string]: unknown;
     } | null;
-    campDetails?:
+    storiesList?:
       | {
           /**
-           * Title of the training camp
+           * Name of the student
            */
-          campTitle: string;
+          studentName: string;
           /**
-           * Duration of the camp
-           */
-          duration?: string | null;
-          /**
-           * Start date of the camp
-           */
-          startDate?: string | null;
-          /**
-           * End date of the camp
-           */
-          endDate?: string | null;
-          /**
-           * Objectives and goals of the camp
-           */
-          objectives?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          modules?:
-            | {
-                moduleName: string;
-                description?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: string;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
-                    version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-                duration?: string | null;
-                trainer?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          /**
-           * Target participants (e.g., Final year students)
-           */
-          targetParticipants?: string | null;
-          /**
-           * Expected outcomes and benefits
-           */
-          outcomes?: {
-            root: {
-              type: string;
-              children: {
-                type: string;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          } | null;
-          /**
-           * Registration link for the camp
-           */
-          registrationLink?: string | null;
-          materials?:
-            | {
-                material: string | Media;
-                description?: string | null;
-                id?: string | null;
-              }[]
-            | null;
-          isActive?: boolean | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  placementContact?: {
-    /**
-     * General contact information content
-     */
-    content?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    placementOfficer?: {
-      /**
-       * Name of the placement officer
-       */
-      name?: string | null;
-      /**
-       * Designation/Title
-       */
-      designation?: string | null;
-      /**
-       * Email address
-       */
-      email?: string | null;
-      /**
-       * Phone number
-       */
-      phone?: string | null;
-      /**
-       * Office hours
-       */
-      officeHours?: string | null;
-    };
-    generalContact?: {
-      /**
-       * Physical address of placement cell
-       */
-      address?: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-      /**
-       * General email for placement queries
-       */
-      email?: string | null;
-      /**
-       * General phone number
-       */
-      phone?: string | null;
-      /**
-       * Fax number if available
-       */
-      fax?: string | null;
-      /**
-       * General office hours
-       */
-      officeHours?: string | null;
-    };
-    departmentContacts?:
-      | {
-          /**
-           * Department name
+           * Department/Branch of the student
            */
           department: string;
           /**
-           * Placement coordinator name
+           * Year of graduation
            */
-          coordinatorName?: string | null;
+          passoutYear: string;
           /**
-           * Department coordinator email
+           * Company where placed
            */
-          email?: string | null;
+          companyName: string;
           /**
-           * Department coordinator phone
+           * Job position/role
            */
-          phone?: string | null;
+          position?: string | null;
+          /**
+           * Package offered (in LPA)
+           */
+          packageOffered?: number | null;
+          /**
+           * Current position (if different from initial)
+           */
+          currentPosition?: string | null;
+          /**
+           * Student success story and experience
+           */
+          story: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
+          /**
+           * Notable achievements and recognitions
+           */
+          achievements?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Advice for junior students
+           */
+          advice?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Photo of the student
+           */
+          studentPhoto?: (string | null) | Media;
+          /**
+           * Logo of the company
+           */
+          companyLogo?: (string | null) | Media;
+          /**
+           * Whether to feature this story prominently
+           */
+          isFeatured?: boolean | null;
           id?: string | null;
         }[]
       | null;
   };
-  downloads?: {
+  placementResources?: {
     /**
-     * Overview content for downloads section
+     * Placement resources overview content
      */
     content?: {
       root: {
@@ -6796,20 +5407,29 @@ export interface Placement {
       };
       [k: string]: unknown;
     } | null;
-    downloadsList?:
+    resourcesList?:
       | {
           /**
-           * Title of the download
+           * Title of the resource
            */
-          title: string;
+          resourceTitle: string;
           /**
-           * Category of the download
+           * Type of resource
            */
-          category?:
-            | ('brochure' | 'report' | 'forms' | 'training' | 'guidelines' | 'policies' | 'company_info' | 'others')
+          resourceType?:
+            | (
+                | 'resume_template'
+                | 'interview_guide'
+                | 'aptitude_materials'
+                | 'technical_resources'
+                | 'company_info'
+                | 'previous_questions'
+                | 'video_tutorial'
+                | 'other'
+              )
             | null;
           /**
-           * Description of the file
+           * Description of the resource
            */
           description?: {
             root: {
@@ -6827,25 +5447,49 @@ export interface Placement {
             [k: string]: unknown;
           } | null;
           /**
-           * File to download
+           * Who should use this resource
            */
-          file: string | Media;
+          targetAudience?: string | null;
           /**
-           * File size (e.g., 2.5 MB)
+           * Upload the resource file (PDF, DOC, etc.)
            */
-          fileSize?: string | null;
+          resourceFile?: (string | null) | Media;
           /**
-           * Last updated date
+           * External URL for the resource (if applicable)
            */
-          lastUpdated?: string | null;
+          resourceUrl?: string | null;
+          /**
+           * Number of times downloaded (for tracking)
+           */
+          downloadCount?: number | null;
+          /**
+           * Whether this resource is currently available
+           */
           isActive?: boolean | null;
           id?: string | null;
         }[]
       | null;
   };
-  gallery?: {
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "international-relations".
+ */
+export interface InternationalRelation {
+  id: string;
+  /**
+   * Title for the international relations section
+   */
+  title: string;
+  /**
+   * Whether this international relations page is active and visible
+   */
+  isActive?: boolean | null;
+  introduction?: {
     /**
-     * Overview content for gallery section
+     * Introduction content for international relations
      */
     content?: {
       root: {
@@ -6862,22 +5506,104 @@ export interface Placement {
       };
       [k: string]: unknown;
     } | null;
-    galleryItems?:
+    /**
+     * Vision statement for international relations
+     */
+    vision?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Mission statement for international relations
+     */
+    mission?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    objectives?:
+      | {
+          objective: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Featured image for introduction section
+     */
+    featuredImage?: (string | null) | Media;
+  };
+  services?: {
+    /**
+     * Services overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    servicesList?:
       | {
           /**
-           * Title of the gallery item
+           * Name of the service
            */
-          title: string;
+          serviceName: string;
           /**
-           * Category of the gallery item
+           * Detailed description of the service
            */
-          category?:
-            | ('placement_drive' | 'training' | 'interviews' | 'industry_visits' | 'job_fairs' | 'awards' | 'others')
-            | null;
+          description: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
           /**
-           * Description of the event/activity
+           * Who can avail this service
            */
-          description?: {
+          targetAudience?: ('students' | 'faculty' | 'researchers' | 'international_partners' | 'all') | null;
+          /**
+           * Eligibility criteria for this service
+           */
+          eligibility?: {
             root: {
               type: string;
               children: {
@@ -6893,27 +5619,50 @@ export interface Placement {
             [k: string]: unknown;
           } | null;
           /**
-           * Date of the event/activity
+           * Process to avail this service
            */
-          date?: string | null;
-          images?:
+          process?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          documents?:
             | {
-                image: string | Media;
-                /**
-                 * Image caption
-                 */
-                caption?: string | null;
+                documentName: string;
+                description?: string | null;
+                isMandatory?: boolean | null;
                 id?: string | null;
               }[]
             | null;
+          /**
+           * Contact person for this service
+           */
+          contactPerson?: string | null;
+          /**
+           * Contact email for this service
+           */
+          contactEmail?: string | null;
+          /**
+           * Whether this service is currently available
+           */
           isActive?: boolean | null;
           id?: string | null;
         }[]
       | null;
   };
-  capacityDevelopmentSkillsEnhancement?: {
+  internationalPrograms?: {
     /**
-     * Overview of capacity development and skills enhancement programs
+     * International programs overview content
      */
     content?: {
       root: {
@@ -6930,27 +5679,39 @@ export interface Placement {
       };
       [k: string]: unknown;
     } | null;
-    programs?:
+    programsList?:
       | {
           /**
-           * Name of the development program
+           * Name of the international program
            */
           programName: string;
           /**
-           * Type of development program
+           * Type of international program
            */
           programType?:
             | (
-                | 'technical'
-                | 'soft_skills'
-                | 'leadership'
-                | 'communication'
-                | 'entrepreneurship'
-                | 'industry_readiness'
-                | 'research'
-                | 'others'
+                | 'student_exchange'
+                | 'faculty_exchange'
+                | 'joint_degree'
+                | 'summer_school'
+                | 'research_collaboration'
+                | 'internship'
+                | 'study_abroad'
+                | 'other'
               )
             | null;
+          /**
+           * Name of partner institution/university
+           */
+          partnerInstitution: string;
+          /**
+           * Country of the partner institution
+           */
+          country: string;
+          /**
+           * Duration of the program (e.g., 1 semester, 2 weeks)
+           */
+          duration?: string | null;
           /**
            * Detailed description of the program
            */
@@ -6970,9 +5731,9 @@ export interface Placement {
             [k: string]: unknown;
           } | null;
           /**
-           * Learning objectives and outcomes
+           * Eligibility criteria for participants
            */
-          objectives?: {
+          eligibility?: {
             root: {
               type: string;
               children: {
@@ -6988,17 +5749,9 @@ export interface Placement {
             [k: string]: unknown;
           } | null;
           /**
-           * Duration of the program
+           * Application process and requirements
            */
-          duration?: string | null;
-          /**
-           * Target audience for the program
-           */
-          targetAudience?: string | null;
-          /**
-           * Teaching/training methodology used
-           */
-          methodology?: {
+          applicationProcess?: {
             root: {
               type: string;
               children: {
@@ -7013,19 +5766,155 @@ export interface Placement {
             };
             [k: string]: unknown;
           } | null;
-          facilitators?:
+          /**
+           * Benefits and outcomes of the program
+           */
+          benefits?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Program costs and financial information
+           */
+          costs?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Available scholarships and financial aid
+           */
+          scholarships?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Application deadline
+           */
+          applicationDeadline?: string | null;
+          /**
+           * Program start and end dates
+           */
+          programDates?: string | null;
+          /**
+           * Contact person for this program
+           */
+          contactPerson?: string | null;
+          /**
+           * Contact email for inquiries
+           */
+          contactEmail?: string | null;
+          programImages?:
             | {
-                name: string;
-                designation?: string | null;
-                organization?: string | null;
-                expertise?: string | null;
+                image: string | Media;
+                caption?: string | null;
                 id?: string | null;
               }[]
             | null;
           /**
-           * Program schedule and timeline
+           * Logo of partner institution
            */
-          schedule?: {
+          partnerLogo?: (string | null) | Media;
+          /**
+           * Whether this program is currently offered
+           */
+          isActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  partnerships?: {
+    /**
+     * International partnerships overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    partnersList?:
+      | {
+          /**
+           * Name of partner institution
+           */
+          institutionName: string;
+          /**
+           * Country of partner institution
+           */
+          country: string;
+          /**
+           * Type of partnership
+           */
+          partnershipType?:
+            | (
+                | 'mou'
+                | 'academic'
+                | 'research'
+                | 'student_exchange'
+                | 'faculty_exchange'
+                | 'joint_degree'
+                | 'consortium'
+                | 'other'
+              )
+            | null;
+          /**
+           * Date when partnership was signed
+           */
+          signedDate?: string | null;
+          /**
+           * Validity period of the partnership (e.g., 5 years)
+           */
+          validityPeriod?: string | null;
+          /**
+           * Next renewal date
+           */
+          renewalDate?: string | null;
+          /**
+           * Scope and areas of collaboration
+           */
+          partnershipScope?: {
             root: {
               type: string;
               children: {
@@ -7040,15 +5929,165 @@ export interface Placement {
             };
             [k: string]: unknown;
           } | null;
-          resources?:
-            | {
-                resource: string | Media;
-                description?: string | null;
-                id?: string | null;
-              }[]
+          /**
+           * Activities and programs under this partnership
+           */
+          activities?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Benefits and outcomes achieved
+           */
+          benefits?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Contact person from our institution
+           */
+          contactPerson?: string | null;
+          /**
+           * Contact person from partner institution
+           */
+          partnerContact?: string | null;
+          /**
+           * Partner institution website
+           */
+          website?: string | null;
+          /**
+           * Logo of partner institution
+           */
+          institutionLogo?: (string | null) | Media;
+          /**
+           * Partnership agreement document (PDF)
+           */
+          partnershipDocument?: (string | null) | Media;
+          /**
+           * Current status of the partnership
+           */
+          status?: ('active' | 'expired' | 'under_renewal' | 'suspended') | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  events?: {
+    /**
+     * International events overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    eventsList?:
+      | {
+          /**
+           * Title of the event
+           */
+          eventTitle: string;
+          /**
+           * Type of event
+           */
+          eventType?:
+            | (
+                | 'conference'
+                | 'workshop'
+                | 'seminar'
+                | 'cultural'
+                | 'student_exchange'
+                | 'faculty_visit'
+                | 'delegation_visit'
+                | 'virtual'
+                | 'other'
+              )
             | null;
           /**
-           * Expected outcomes and success metrics
+           * Date of the event
+           */
+          eventDate?: string | null;
+          /**
+           * End date (for multi-day events)
+           */
+          endDate?: string | null;
+          /**
+           * Event venue/location
+           */
+          venue?: string | null;
+          /**
+           * Detailed description of the event
+           */
+          description?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Event organizer/department
+           */
+          organizer?: string | null;
+          /**
+           * Information about participants
+           */
+          participants?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Event outcomes and achievements
            */
           outcomes?: {
             root: {
@@ -7065,10 +6104,80 @@ export interface Placement {
             };
             [k: string]: unknown;
           } | null;
+          internationalGuests?:
+            | {
+                guestName: string;
+                designation?: string | null;
+                institution?: string | null;
+                country?: string | null;
+                guestPhoto?: (string | null) | Media;
+                id?: string | null;
+              }[]
+            | null;
+          eventImages?:
+            | {
+                image: string | Media;
+                caption?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
-           * Participant feedback and testimonials
+           * Upload event report document (PDF)
            */
-          feedback?: {
+          eventReport?: (string | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  studyAbroad?: {
+    /**
+     * Study abroad opportunities overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    opportunitiesList?:
+      | {
+          /**
+           * Name of the study abroad program
+           */
+          programName: string;
+          /**
+           * Host university/institution
+           */
+          university: string;
+          /**
+           * Country of study
+           */
+          country: string;
+          /**
+           * Level of the program
+           */
+          programLevel?: ('undergraduate' | 'postgraduate' | 'doctoral' | 'certificate' | 'exchange' | 'summer') | null;
+          /**
+           * Program duration (e.g., 1 semester, 2 years)
+           */
+          duration?: string | null;
+          /**
+           * Field of study/subject area
+           */
+          fieldOfStudy?: string | null;
+          /**
+           * Detailed program description
+           */
+          description?: {
             root: {
               type: string;
               children: {
@@ -7084,9 +6193,9 @@ export interface Placement {
             [k: string]: unknown;
           } | null;
           /**
-           * Registration process and requirements
+           * Eligibility criteria
            */
-          registrationInfo?: {
+          eligibility?: {
             root: {
               type: string;
               children: {
@@ -7101,659 +6210,622 @@ export interface Placement {
             };
             [k: string]: unknown;
           } | null;
+          /**
+           * Application process and requirements
+           */
+          applicationProcess?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Tuition fees and costs
+           */
+          tuitionFees?: string | null;
+          /**
+           * Available scholarships and financial aid
+           */
+          scholarships?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * Application deadline
+           */
+          applicationDeadline?: string | null;
+          /**
+           * Intake months (e.g., September, January)
+           */
+          intakeMonths?: string | null;
+          /**
+           * Language proficiency requirements
+           */
+          languageRequirements?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * University ranking (if applicable)
+           */
+          universityRanking?: string | null;
+          /**
+           * University website URL
+           */
+          universityWebsite?: string | null;
+          /**
+           * Contact person for inquiries
+           */
+          contactPerson?: string | null;
+          /**
+           * Contact email for inquiries
+           */
+          contactEmail?: string | null;
+          universityImages?:
+            | {
+                image: string | Media;
+                caption?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          /**
+           * Whether this opportunity is currently available
+           */
           isActive?: boolean | null;
           id?: string | null;
         }[]
       | null;
-    skillAssessment?: {
-      /**
-       * Overview of skills assessment process
-       */
-      overview?: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-      assessmentTools?:
-        | {
-            toolName: string;
-            description?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            /**
-             * Skills assessed by this tool
-             */
-            skillsAssessed?: string | null;
-            /**
-             * Link to access the assessment tool
-             */
-            accessLink?: string | null;
-            id?: string | null;
-          }[]
-        | null;
-    };
-    certifications?: {
-      /**
-       * Overview of certification programs
-       */
-      overview?: {
-        root: {
-          type: string;
-          children: {
-            type: string;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      } | null;
-      certificationList?:
-        | {
-            certificationName: string;
-            /**
-             * Certification provider/organization
-             */
-            provider?: string | null;
-            description?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            /**
-             * Eligibility criteria
-             */
-            eligibility?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            duration?: string | null;
-            /**
-             * Certification fee if any
-             */
-            fee?: string | null;
-            /**
-             * Registration link
-             */
-            registrationLink?: string | null;
-            isActive?: boolean | null;
-            id?: string | null;
-          }[]
-        | null;
-    };
   };
+  contactInfo?: {
+    /**
+     * Physical location of International Relations office
+     */
+    officeLocation?: string | null;
+    /**
+     * Office hours (e.g., Mon-Fri: 9:00 AM - 5:00 PM)
+     */
+    officeHours?: string | null;
+    /**
+     * Contact phone number
+     */
+    phone?: string | null;
+    /**
+     * General contact email
+     */
+    email?: string | null;
+    staffMembers?:
+      | {
+          /**
+           * Name of staff member
+           */
+          name: string;
+          /**
+           * Designation/Position
+           */
+          designation: string;
+          /**
+           * Key responsibilities
+           */
+          responsibilities?: string | null;
+          /**
+           * Email address
+           */
+          email?: string | null;
+          /**
+           * Direct phone number
+           */
+          phone?: string | null;
+          /**
+           * Individual office hours
+           */
+          officeHours?: string | null;
+          /**
+           * Photo of staff member
+           */
+          staffPhoto?: (string | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "iqac".
+ */
+export interface Iqac {
+  id: string;
   /**
-   * Higher numbers appear first
+   * Title for the IQAC page section
    */
-  priority?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-locked-documents".
- */
-export interface PayloadLockedDocument {
-  id: string;
-  document?:
-    | ({
-        relationTo: 'users';
-        value: string | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: string | Media;
-      } | null)
-    | ({
-        relationTo: 'announcements';
-        value: string | Announcement;
-      } | null)
-    | ({
-        relationTo: 'home-slider';
-        value: string | HomeSlider;
-      } | null)
-    | ({
-        relationTo: 'blog-posts';
-        value: string | BlogPost;
-      } | null)
-    | ({
-        relationTo: 'testimonials';
-        value: string | Testimonial;
-      } | null)
-    | ({
-        relationTo: 'coe';
-        value: string | Coe;
-      } | null)
-    | ({
-        relationTo: 'coe-categories';
-        value: string | CoeCategory;
-      } | null)
-    | ({
-        relationTo: 'regulations';
-        value: string | Regulation;
-      } | null)
-    | ({
-        relationTo: 'regulation-categories';
-        value: string | RegulationCategory;
-      } | null)
-    | ({
-        relationTo: 'departments';
-        value: string | Department;
-      } | null)
-    | ({
-        relationTo: 'department-sections';
-        value: string | DepartmentSection;
-      } | null)
-    | ({
-        relationTo: 'about';
-        value: string | About;
-      } | null)
-    | ({
-        relationTo: 'iqac';
-        value: string | Iqac;
-      } | null)
-    | ({
-        relationTo: 'international-relations';
-        value: string | InternationalRelation;
-      } | null)
-    | ({
-        relationTo: 'naac';
-        value: string | Naac;
-      } | null)
-    | ({
-        relationTo: 'admissions';
-        value: string | Admission;
-      } | null)
-    | ({
-        relationTo: 'research';
-        value: string | Research;
-      } | null)
-    | ({
-        relationTo: 'secondary-nav';
-        value: string | SecondaryNav;
-      } | null)
-    | ({
-        relationTo: 'placement';
-        value: string | Placement;
-      } | null);
-  globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: string | User;
+  title: string;
+  /**
+   * Whether this IQAC page is active and visible
+   */
+  isActive?: boolean | null;
+  coordinatorMessage?: {
+    /**
+     * IQAC Coordinator's message content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Name of the IQAC Coordinator
+     */
+    coordinatorName?: string | null;
+    /**
+     * Designation of the IQAC Coordinator
+     */
+    coordinatorDesignation?: string | null;
+    /**
+     * Photo of the IQAC Coordinator
+     */
+    coordinatorImage?: (string | null) | Media;
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-preferences".
- */
-export interface PayloadPreference {
-  id: string;
-  user: {
-    relationTo: 'users';
-    value: string | User;
+  members?: {
+    /**
+     * IQAC members overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    memberList?:
+      | {
+          /**
+           * Full name of the IQAC member
+           */
+          name: string;
+          /**
+           * Designation of the member
+           */
+          designation?: string | null;
+          /**
+           * Department/Organization of the member
+           */
+          department?: string | null;
+          /**
+           * Role of the member in IQAC
+           */
+          role?:
+            | (
+                | 'chairperson'
+                | 'coordinator'
+                | 'member_secretary'
+                | 'faculty_member'
+                | 'student_rep'
+                | 'alumni_rep'
+                | 'industry_rep'
+                | 'external_expert'
+                | 'member'
+              )
+            | null;
+          /**
+           * Contact email of the member
+           */
+          contactEmail?: string | null;
+          /**
+           * Photo of the member
+           */
+          memberImage?: (string | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
   };
-  key?: string | null;
-  value?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-migrations".
- */
-export interface PayloadMigration {
-  id: string;
-  name?: string | null;
-  batch?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
- */
-export interface UsersSelect<T extends boolean = true> {
-  role?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
+  minutes?: {
+    /**
+     * IQAC minutes overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  uploadedBy?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "announcements_select".
- */
-export interface AnnouncementsSelect<T extends boolean = true> {
-  title?: T;
-  content?: T;
-  link?: T;
-  linkText?: T;
-  isActive?: T;
-  priority?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home-slider_select".
- */
-export interface HomeSliderSelect<T extends boolean = true> {
-  title?: T;
-  desktopImage?: T;
-  mobileImage?: T;
-  link?: T;
-  isActive?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog-posts_select".
- */
-export interface BlogPostsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  excerpt?: T;
-  content?: T;
-  featuredImage?: T;
-  author?: T;
-  isPublished?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials_select".
- */
-export interface TestimonialsSelect<T extends boolean = true> {
-  quote?: T;
-  authorName?: T;
-  authorTitle?: T;
-  authorImage?: T;
-  isActive?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "coe_select".
- */
-export interface CoeSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  category?: T;
-  pdfFile?: T;
-  isActive?: T;
-  priority?: T;
-  downloadCount?: T;
-  tags?:
-    | T
-    | {
-        tag?: T;
-        id?: T;
+      [k: string]: unknown;
+    } | null;
+    minutesList?:
+      | {
+          /**
+           * Title of the meeting
+           */
+          title: string;
+          /**
+           * Date of the meeting
+           */
+          meetingDate: string;
+          /**
+           * Type of the meeting
+           */
+          meetingType?: ('regular' | 'special' | 'review' | 'planning') | null;
+          /**
+           * Meeting agenda
+           */
+          agenda?: string | null;
+          /**
+           * Upload the minutes document (PDF)
+           */
+          minutesDocument: string | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  accreditation?: {
+    /**
+     * Accreditation overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
       };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "coe-categories_select".
- */
-export interface CoeCategoriesSelect<T extends boolean = true> {
-  name?: T;
-  description?: T;
-  icon?: T;
-  isActive?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "regulations_select".
- */
-export interface RegulationsSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  category?: T;
-  pdfFile?: T;
-  isActive?: T;
-  priority?: T;
-  downloadCount?: T;
-  tags?:
-    | T
-    | {
-        tag?: T;
-        id?: T;
+      [k: string]: unknown;
+    } | null;
+    accreditationList?:
+      | {
+          /**
+           * Name of the accrediting body (e.g., NAAC, NBA)
+           */
+          accreditingBody: string;
+          /**
+           * Type of accreditation
+           */
+          accreditationType?: ('naac' | 'nba' | 'nirf' | 'iso' | 'other') | null;
+          /**
+           * Grade/Rating received
+           */
+          grade?: string | null;
+          /**
+           * Accreditation valid from date
+           */
+          validFrom?: string | null;
+          /**
+           * Accreditation valid until date
+           */
+          validUntil?: string | null;
+          /**
+           * Upload the accreditation certificate
+           */
+          certificate?: (string | null) | Media;
+          /**
+           * Upload the accreditation report
+           */
+          report?: (string | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  aqar?: {
+    /**
+     * AQAR overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
       };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "regulation-categories_select".
- */
-export interface RegulationCategoriesSelect<T extends boolean = true> {
-  name?: T;
-  description?: T;
-  icon?: T;
-  isActive?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "departments_select".
- */
-export interface DepartmentsSelect<T extends boolean = true> {
-  name?: T;
-  code?: T;
-  slug?: T;
-  shortName?: T;
-  description?: T;
-  isActive?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "department-sections_select".
- */
-export interface DepartmentSectionsSelect<T extends boolean = true> {
-  department?: T;
-  title?: T;
-  isActive?: T;
-  heroSection?:
-    | T
-    | {
-        heroTitle?: T;
-        heroSubtitle?: T;
-        heroImage?: T;
-        heroContent?: T;
+      [k: string]: unknown;
+    } | null;
+    aqarList?:
+      | {
+          /**
+           * Academic year (e.g., 2023-24)
+           */
+          academicYear: string;
+          /**
+           * Title of the AQAR report
+           */
+          title: string;
+          /**
+           * Date of submission to NAAC
+           */
+          submissionDate?: string | null;
+          /**
+           * Status of the AQAR report
+           */
+          status?: ('draft' | 'submitted' | 'approved' | 'under_review') | null;
+          /**
+           * Upload the AQAR document (PDF)
+           */
+          document: string | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  auditedStatement?: {
+    /**
+     * Audited statement overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
       };
-  introduction?:
-    | T
-    | {
-        content?: T;
-        image?: T;
+      [k: string]: unknown;
+    } | null;
+    statementList?:
+      | {
+          /**
+           * Financial year (e.g., 2023-24)
+           */
+          financialYear: string;
+          /**
+           * Title of the audited statement
+           */
+          title: string;
+          /**
+           * Name of the auditing firm/auditor
+           */
+          auditorName?: string | null;
+          /**
+           * Date of audit completion
+           */
+          auditDate?: string | null;
+          /**
+           * Upload the audited statement document (PDF)
+           */
+          document: string | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  iqacPolicy?: {
+    /**
+     * IQAC policy overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
       };
-  peos?:
-    | T
-    | {
-        content?: T;
-        objectives?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              id?: T;
+      [k: string]: unknown;
+    } | null;
+    policyList?:
+      | {
+          /**
+           * Title of the policy
+           */
+          title: string;
+          /**
+           * Brief description of the policy
+           */
+          description?: string | null;
+          /**
+           * Category of the policy
+           */
+          category?:
+            | (
+                | 'quality_policy'
+                | 'academic_policy'
+                | 'research_policy'
+                | 'assessment_policy'
+                | 'feedback_policy'
+                | 'other'
+              )
+            | null;
+          /**
+           * Date from which the policy is effective
+           */
+          effectiveDate?: string | null;
+          /**
+           * Version of the policy document
+           */
+          version?: string | null;
+          /**
+           * Upload the policy document (PDF)
+           */
+          document: string | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  studentSurvey?: {
+    /**
+     * Student survey overview content
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    surveyList?:
+      | {
+          /**
+           * Title of the survey
+           */
+          title: string;
+          /**
+           * Academic year of the survey (e.g., 2023-24)
+           */
+          academicYear: string;
+          /**
+           * Type of student survey
+           */
+          surveyType?:
+            | (
+                | 'course_feedback'
+                | 'faculty_feedback'
+                | 'infrastructure_feedback'
+                | 'overall_satisfaction'
+                | 'exit_survey'
+                | 'alumni_survey'
+                | 'other'
+              )
+            | null;
+          /**
+           * Semester for which the survey was conducted
+           */
+          semester?: ('sem1' | 'sem2' | 'sem3' | 'sem4' | 'sem5' | 'sem6' | 'sem7' | 'sem8' | 'all') | null;
+          /**
+           * Department (if survey is department-specific)
+           */
+          department?: string | null;
+          /**
+           * Number of student responses received
+           */
+          responseCount?: number | null;
+          surveyPeriod?: {
+            /**
+             * Survey start date
+             */
+            startDate?: string | null;
+            /**
+             * Survey end date
+             */
+            endDate?: string | null;
+          };
+          /**
+           * Upload the survey analysis report (PDF)
+           */
+          analysisReport?: (string | null) | Media;
+          /**
+           * Action taken based on survey feedback
+           */
+          actionTaken?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
             };
-      };
-  pos?:
-    | T
-    | {
-        content?: T;
-        outcomes?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              id?: T;
-            };
-      };
-  opportunities?:
-    | T
-    | {
-        content?: T;
-        opportunityList?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              image?: T;
-              id?: T;
-            };
-      };
-  labFacility?:
-    | T
-    | {
-        content?: T;
-        labs?:
-          | T
-          | {
-              name?: T;
-              description?: T;
-              equipment?: T;
-              images?:
-                | T
-                | {
-                    image?: T;
-                    id?: T;
-                  };
-              id?: T;
-            };
-      };
-  faculty?:
-    | T
-    | {
-        content?: T;
-        facultyMembers?:
-          | T
-          | {
-              name?: T;
-              designation?: T;
-              qualification?: T;
-              specialization?: T;
-              experience?: T;
-              email?: T;
-              phone?: T;
-              image?: T;
-              bio?: T;
-              id?: T;
-            };
-      };
-  achievements?:
-    | T
-    | {
-        content?: T;
-        achievementList?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              date?: T;
-              category?: T;
-              image?: T;
-              id?: T;
-            };
-      };
-  classroom?:
-    | T
-    | {
-        content?: T;
-        classrooms?:
-          | T
-          | {
-              name?: T;
-              capacity?: T;
-              facilities?: T;
-              images?:
-                | T
-                | {
-                    image?: T;
-                    id?: T;
-                  };
-              id?: T;
-            };
-      };
-  facultyPublications?:
-    | T
-    | {
-        content?: T;
-        publications?:
-          | T
-          | {
-              title?: T;
-              authors?: T;
-              journal?: T;
-              conference?: T;
-              year?: T;
-              type?: T;
-              doi?: T;
-              id?: T;
-            };
-      };
-  guestLectures?:
-    | T
-    | {
-        content?: T;
-        lectures?:
-          | T
-          | {
-              title?: T;
-              speaker?: T;
-              speakerDesignation?: T;
-              organization?: T;
-              date?: T;
-              description?: T;
-              image?: T;
-              id?: T;
-            };
-      };
-  mous?:
-    | T
-    | {
-        content?: T;
-        mouList?:
-          | T
-          | {
-              organization?: T;
-              purpose?: T;
-              dateOfSigning?: T;
-              duration?: T;
-              status?: T;
-              document?: T;
-              id?: T;
-            };
-      };
-  universityRankHolders?:
-    | T
-    | {
-        content?: T;
-        rankHolders?:
-          | T
-          | {
-              studentName?: T;
-              rank?: T;
-              academicYear?: T;
-              course?: T;
-              cgpa?: T;
-              photo?: T;
-              currentPosition?: T;
-              id?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
+            [k: string]: unknown;
+          } | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about_select".
  */
 export interface AboutSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  isActive?: T;
+  heroTitle?: T;
+  heroSubtitle?: T;
+  heroImage?: T;
+  sections?:
+    | T
+    | {
+        title?: T;
+        content?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
+        id?: T;
+      };
   profile?:
     | T
     | {
@@ -7990,335 +7062,7 @@ export interface AboutSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "iqac_select".
- */
-export interface IqacSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  isActive?: T;
-  coordinatorMessage?:
-    | T
-    | {
-        content?: T;
-        coordinatorName?: T;
-        coordinatorDesignation?: T;
-        coordinatorImage?: T;
-      };
-  members?:
-    | T
-    | {
-        content?: T;
-        memberList?:
-          | T
-          | {
-              name?: T;
-              designation?: T;
-              department?: T;
-              role?: T;
-              contactEmail?: T;
-              memberImage?: T;
-              id?: T;
-            };
-      };
-  minutes?:
-    | T
-    | {
-        content?: T;
-        minutesList?:
-          | T
-          | {
-              title?: T;
-              meetingDate?: T;
-              meetingType?: T;
-              agenda?: T;
-              minutesDocument?: T;
-              id?: T;
-            };
-      };
-  accreditation?:
-    | T
-    | {
-        content?: T;
-        accreditationList?:
-          | T
-          | {
-              accreditingBody?: T;
-              accreditationType?: T;
-              grade?: T;
-              validFrom?: T;
-              validUntil?: T;
-              certificate?: T;
-              report?: T;
-              id?: T;
-            };
-      };
-  aqar?:
-    | T
-    | {
-        content?: T;
-        aqarList?:
-          | T
-          | {
-              academicYear?: T;
-              title?: T;
-              submissionDate?: T;
-              status?: T;
-              document?: T;
-              id?: T;
-            };
-      };
-  auditedStatement?:
-    | T
-    | {
-        content?: T;
-        statementList?:
-          | T
-          | {
-              financialYear?: T;
-              title?: T;
-              auditorName?: T;
-              auditDate?: T;
-              document?: T;
-              id?: T;
-            };
-      };
-  iqacPolicy?:
-    | T
-    | {
-        content?: T;
-        policyList?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              category?: T;
-              effectiveDate?: T;
-              version?: T;
-              document?: T;
-              id?: T;
-            };
-      };
-  studentSurvey?:
-    | T
-    | {
-        content?: T;
-        surveyList?:
-          | T
-          | {
-              title?: T;
-              academicYear?: T;
-              surveyType?: T;
-              semester?: T;
-              department?: T;
-              responseCount?: T;
-              surveyPeriod?:
-                | T
-                | {
-                    startDate?: T;
-                    endDate?: T;
-                  };
-              analysisReport?: T;
-              actionTaken?: T;
-              id?: T;
-            };
-      };
-  priority?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "international-relations_select".
- */
-export interface InternationalRelationsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  isActive?: T;
-  introduction?:
-    | T
-    | {
-        content?: T;
-        vision?: T;
-        mission?: T;
-        objectives?:
-          | T
-          | {
-              objective?: T;
-              id?: T;
-            };
-        featuredImage?: T;
-      };
-  services?:
-    | T
-    | {
-        content?: T;
-        servicesList?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              category?: T;
-              icon?: T;
-              isActive?: T;
-              id?: T;
-            };
-      };
-  admissions?:
-    | T
-    | {
-        content?: T;
-        programs?:
-          | T
-          | {
-              programName?: T;
-              description?: T;
-              duration?: T;
-              eligibility?: T;
-              applicationProcess?: T;
-              fees?: T;
-              intake?: T;
-              brochure?: T;
-              id?: T;
-            };
-        requirements?:
-          | T
-          | {
-              requirement?: T;
-              description?: T;
-              id?: T;
-            };
-        applicationForm?: T;
-      };
-  approvalsAccreditations?:
-    | T
-    | {
-        content?: T;
-        approvals?:
-          | T
-          | {
-              name?: T;
-              approvingBody?: T;
-              description?: T;
-              dateOfApproval?: T;
-              validityPeriod?: T;
-              certificate?: T;
-              id?: T;
-            };
-        accreditations?:
-          | T
-          | {
-              name?: T;
-              accreditingBody?: T;
-              grade?: T;
-              validFrom?: T;
-              validTo?: T;
-              certificate?: T;
-              logo?: T;
-              id?: T;
-            };
-        honours?:
-          | T
-          | {
-              title?: T;
-              awardingBody?: T;
-              description?: T;
-              dateReceived?: T;
-              category?: T;
-              certificate?: T;
-              id?: T;
-            };
-      };
-  research?:
-    | T
-    | {
-        content?: T;
-        researchAreas?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              collaborations?:
-                | T
-                | {
-                    institution?: T;
-                    country?: T;
-                    collaborationType?: T;
-                    startDate?: T;
-                    endDate?: T;
-                    status?: T;
-                    id?: T;
-                  };
-              id?: T;
-            };
-        publications?:
-          | T
-          | {
-              title?: T;
-              authors?: T;
-              journal?: T;
-              conference?: T;
-              publishedDate?: T;
-              doi?: T;
-              abstract?: T;
-              document?: T;
-              id?: T;
-            };
-      };
-  mous?:
-    | T
-    | {
-        content?: T;
-        mouList?:
-          | T
-          | {
-              institution?: T;
-              country?: T;
-              purpose?: T;
-              dateOfSigning?: T;
-              duration?: T;
-              status?: T;
-              category?: T;
-              keyActivities?:
-                | T
-                | {
-                    activity?: T;
-                    id?: T;
-                  };
-              benefits?: T;
-              document?: T;
-              institutionLogo?: T;
-              contactPerson?: T;
-              contactEmail?: T;
-              id?: T;
-            };
-      };
-  testimonials?:
-    | T
-    | {
-        content?: T;
-        testimonialsList?:
-          | T
-          | {
-              name?: T;
-              designation?: T;
-              institution?: T;
-              country?: T;
-              testimonial?: T;
-              category?: T;
-              program?: T;
-              year?: T;
-              rating?: T;
-              image?: T;
-              isActive?: T;
-              isFeatured?: T;
-              id?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -8326,7 +7070,6 @@ export interface InternationalRelationsSelect<T extends boolean = true> {
  */
 export interface NaacSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   isActive?: T;
   dvvClarifications?:
     | T
@@ -8559,9 +7302,9 @@ export interface NaacSelect<T extends boolean = true> {
         institutionSeal?: T;
         dateOfSubmission?: T;
       };
-  priority?: T;
   updatedAt?: T;
   createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -8569,7 +7312,6 @@ export interface NaacSelect<T extends boolean = true> {
  */
 export interface AdmissionsSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   isActive?: T;
   programmesOffered?:
     | T
@@ -8685,9 +7427,9 @@ export interface AdmissionsSelect<T extends boolean = true> {
               feeDocument?: T;
             };
       };
-  priority?: T;
   updatedAt?: T;
   createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -8695,7 +7437,6 @@ export interface AdmissionsSelect<T extends boolean = true> {
  */
 export interface ResearchSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   isActive?: T;
   researchCentre?:
     | T
@@ -8762,70 +7503,31 @@ export interface ResearchSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  recognitionAndFocus?:
+  researchPublications?:
     | T
     | {
         content?: T;
-        recognitionsList?:
+        publicationsList?:
           | T
           | {
               title?: T;
-              awardingBody?: T;
-              category?: T;
-              recipient?: T;
-              year?: T;
-              description?: T;
-              certificate?: T;
-              id?: T;
-            };
-        focusAreas?:
-          | T
-          | {
-              areaName?: T;
-              department?: T;
-              description?: T;
-              keyProjects?:
-                | T
-                | {
-                    projectTitle?: T;
-                    principalInvestigator?: T;
-                    status?: T;
-                    id?: T;
-                  };
+              authors?: T;
+              publicationType?: T;
+              journal?: T;
+              volume?: T;
+              issue?: T;
+              pages?: T;
+              publishedDate?: T;
+              doi?: T;
+              abstract?: T;
+              keywords?: T;
+              impactFactor?: T;
+              url?: T;
+              document?: T;
               id?: T;
             };
       };
-  industryInstituteCollaborations?:
-    | T
-    | {
-        content?: T;
-        collaborationsList?:
-          | T
-          | {
-              partnerName?: T;
-              partnerType?: T;
-              collaborationType?: T;
-              startDate?: T;
-              endDate?: T;
-              duration?: T;
-              status?: T;
-              description?: T;
-              objectives?: T;
-              outcomes?: T;
-              contactPerson?:
-                | T
-                | {
-                    name?: T;
-                    designation?: T;
-                    email?: T;
-                    phone?: T;
-                  };
-              mou?: T;
-              partnerLogo?: T;
-              id?: T;
-            };
-      };
-  externallyFundedProjects?:
+  researchProjects?:
     | T
     | {
         content?: T;
@@ -8834,257 +7536,19 @@ export interface ResearchSelect<T extends boolean = true> {
           | {
               projectTitle?: T;
               principalInvestigator?: T;
-              coInvestigators?:
-                | T
-                | {
-                    name?: T;
-                    designation?: T;
-                    department?: T;
-                    id?: T;
-                  };
+              coInvestigators?: T;
+              department?: T;
               fundingAgency?: T;
-              fundingScheme?: T;
-              grantAmount?: T;
+              fundingAmount?: T;
+              projectDuration?: T;
               startDate?: T;
               endDate?: T;
-              duration?: T;
               status?: T;
-              abstract?: T;
+              description?: T;
               objectives?: T;
               methodology?: T;
-              expectedOutcomes?: T;
-              achievements?: T;
-              publications?:
-                | T
-                | {
-                    title?: T;
-                    authors?: T;
-                    journal?: T;
-                    year?: T;
-                    doi?: T;
-                    id?: T;
-                  };
-              projectDocument?: T;
-              id?: T;
-            };
-      };
-  internallyFundedProjects?:
-    | T
-    | {
-        content?: T;
-        projectsList?:
-          | T
-          | {
-              projectTitle?: T;
-              principalInvestigator?: T;
-              department?: T;
-              fundingSource?: T;
-              grantAmount?: T;
-              startDate?: T;
-              endDate?: T;
-              duration?: T;
-              status?: T;
-              abstract?: T;
-              objectives?: T;
               outcomes?: T;
-              projectDocument?: T;
-              id?: T;
-            };
-      };
-  listOfDoctorates?:
-    | T
-    | {
-        content?: T;
-        doctoratesList?:
-          | T
-          | {
-              candidateName?: T;
-              thesisTitle?: T;
-              supervisor?: T;
-              coSupervisor?: T;
-              department?: T;
-              researchArea?: T;
-              university?: T;
-              degreeAwarded?: T;
-              registrationNumber?: T;
-              abstract?: T;
-              publications?:
-                | T
-                | {
-                    title?: T;
-                    journal?: T;
-                    year?: T;
-                    id?: T;
-                  };
-              thesisDocument?: T;
-              certificateDocument?: T;
-              id?: T;
-            };
-      };
-  facultyPursuingDoctorate?:
-    | T
-    | {
-        content?: T;
-        facultyList?:
-          | T
-          | {
-              facultyName?: T;
-              designation?: T;
-              department?: T;
-              researchTitle?: T;
-              supervisor?: T;
-              university?: T;
-              registrationDate?: T;
-              expectedCompletion?: T;
-              researchArea?: T;
-              status?: T;
-              abstract?: T;
-              facultyImage?: T;
-              id?: T;
-            };
-      };
-  recognizedResearchSupervisors?:
-    | T
-    | {
-        content?: T;
-        supervisorsList?:
-          | T
-          | {
-              supervisorName?: T;
-              designation?: T;
-              department?: T;
-              qualification?: T;
-              specialization?: T;
-              researchAreas?:
-                | T
-                | {
-                    area?: T;
-                    id?: T;
-                  };
-              recognizingUniversities?:
-                | T
-                | {
-                    universityName?: T;
-                    recognitionDate?: T;
-                    validUntil?: T;
-                    recognitionDocument?: T;
-                    id?: T;
-                  };
-              scholarsSupervised?:
-                | T
-                | {
-                    completed?: T;
-                    ongoing?: T;
-                  };
-              experience?: T;
               publications?: T;
-              email?: T;
-              supervisorImage?: T;
-              isActive?: T;
-              id?: T;
-            };
-      };
-  centresOfExcellence?:
-    | T
-    | {
-        content?: T;
-        centresList?:
-          | T
-          | {
-              centreName?: T;
-              establishedYear?: T;
-              fundingAgency?: T;
-              director?: T;
-              department?: T;
-              focusAreas?:
-                | T
-                | {
-                    area?: T;
-                    id?: T;
-                  };
-              objectives?: T;
-              description?: T;
-              facilities?: T;
-              achievements?: T;
-              researchPrograms?:
-                | T
-                | {
-                    programName?: T;
-                    description?: T;
-                    duration?: T;
-                    id?: T;
-                  };
-              industryPartners?:
-                | T
-                | {
-                    partnerName?: T;
-                    collaborationType?: T;
-                    id?: T;
-                  };
-              contactInfo?:
-                | T
-                | {
-                    email?: T;
-                    phone?: T;
-                    location?: T;
-                  };
-              centreImages?:
-                | T
-                | {
-                    image?: T;
-                    caption?: T;
-                    id?: T;
-                  };
-              isActive?: T;
-              id?: T;
-            };
-      };
-  projectsAndPatents?:
-    | T
-    | {
-        content?: T;
-        patentsList?:
-          | T
-          | {
-              patentTitle?: T;
-              inventors?:
-                | T
-                | {
-                    name?: T;
-                    designation?: T;
-                    department?: T;
-                    id?: T;
-                  };
-              patentNumber?: T;
-              applicationDate?: T;
-              grantDate?: T;
-              status?: T;
-              patentOffice?: T;
-              abstract?: T;
-              technicalField?: T;
-              commercialization?: T;
-              patentDocument?: T;
-              id?: T;
-            };
-        innovationProjects?:
-          | T
-          | {
-              projectTitle?: T;
-              projectLeader?: T;
-              teamMembers?:
-                | T
-                | {
-                    name?: T;
-                    role?: T;
-                    id?: T;
-                  };
-              department?: T;
-              startDate?: T;
-              completionDate?: T;
-              status?: T;
-              description?: T;
-              outcomes?: T;
-              funding?: T;
               projectImages?:
                 | T
                 | {
@@ -9095,250 +7559,67 @@ export interface ResearchSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  dstFistLab?:
+  researchCollaborations?:
     | T
     | {
         content?: T;
-        labDetails?:
+        collaborationsList?:
           | T
           | {
-              labName?: T;
-              department?: T;
-              coordinator?: T;
-              grantAmount?: T;
-              grantPeriod?: T;
-              phase?: T;
-              objectives?: T;
+              organizationName?: T;
+              organizationType?: T;
+              country?: T;
+              collaborationType?: T;
               description?: T;
-            };
-        infrastructure?:
-          | T
-          | {
-              equipmentList?:
-                | T
-                | {
-                    equipmentName?: T;
-                    model?: T;
-                    supplier?: T;
-                    cost?: T;
-                    installationDate?: T;
-                    applications?: T;
-                    status?: T;
-                    id?: T;
-                  };
-              facilities?: T;
-            };
-        researchActivities?:
-          | T
-          | {
-              ongoingProjects?:
-                | T
-                | {
-                    projectTitle?: T;
-                    principalInvestigator?: T;
-                    duration?: T;
-                    fundingAgency?: T;
-                    grantAmount?: T;
-                    id?: T;
-                  };
-              publications?:
-                | T
-                | {
-                    title?: T;
-                    authors?: T;
-                    journal?: T;
-                    year?: T;
-                    impactFactor?: T;
-                    doi?: T;
-                    id?: T;
-                  };
-              studentResearch?: T;
-            };
-        collaboration?:
-          | T
-          | {
-              industryCollaborations?:
-                | T
-                | {
-                    companyName?: T;
-                    collaborationType?: T;
-                    duration?: T;
-                    id?: T;
-                  };
-              academicCollaborations?:
-                | T
-                | {
-                    institutionName?: T;
-                    collaborationType?: T;
-                    duration?: T;
-                    id?: T;
-                  };
-            };
-        achievements?: T;
-        contactInfo?:
-          | T
-          | {
-              email?: T;
-              phone?: T;
-              location?: T;
-            };
-        labImages?:
-          | T
-          | {
-              image?: T;
-              caption?: T;
+              startDate?: T;
+              endDate?: T;
+              status?: T;
+              outcomes?: T;
+              contactPerson?: T;
+              organizationLogo?: T;
               id?: T;
             };
-        documents?:
+      };
+  researchPolicies?:
+    | T
+    | {
+        content?: T;
+        policiesList?:
+          | T
+          | {
+              policyTitle?: T;
+              policyType?: T;
+              description?: T;
+              policyDocument?: T;
+              effectiveDate?: T;
+              version?: T;
+              isActive?: T;
+              id?: T;
+            };
+      };
+  researchAchievements?:
+    | T
+    | {
+        content?: T;
+        achievementsList?:
           | T
           | {
               title?: T;
-              document?: T;
+              achievementType?: T;
+              recipient?: T;
+              department?: T;
+              awardingBody?: T;
+              dateReceived?: T;
               description?: T;
+              amount?: T;
+              certificate?: T;
+              achievementImage?: T;
               id?: T;
             };
       };
-  priority?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "secondary-nav_select".
- */
-export interface SecondaryNavSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  slug?: T;
-  linkType?: T;
-  externalUrl?: T;
-  pageContent?:
-    | T
-    | {
-        heroSection?:
-          | T
-          | {
-              heroTitle?: T;
-              heroSubtitle?: T;
-              heroImage?: T;
-              heroContent?: T;
-            };
-        mainContent?: T;
-        contentSections?:
-          | T
-          | {
-              sectionTitle?: T;
-              sectionType?: T;
-              textContent?: T;
-              imageGallery?:
-                | T
-                | {
-                    image?: T;
-                    caption?: T;
-                    altText?: T;
-                    id?: T;
-                  };
-              cardItems?:
-                | T
-                | {
-                    cardTitle?: T;
-                    cardDescription?: T;
-                    cardImage?: T;
-                    cardLink?: T;
-                    cardIcon?: T;
-                    id?: T;
-                  };
-              listItems?:
-                | T
-                | {
-                    itemTitle?: T;
-                    itemDescription?: T;
-                    itemLink?: T;
-                    id?: T;
-                  };
-              accordionItems?:
-                | T
-                | {
-                    question?: T;
-                    answer?: T;
-                    isOpenByDefault?: T;
-                    id?: T;
-                  };
-              contactInfo?:
-                | T
-                | {
-                    email?: T;
-                    phone?: T;
-                    address?: T;
-                    workingHours?: T;
-                    mapEmbedCode?: T;
-                  };
-              downloadLinks?:
-                | T
-                | {
-                    downloadTitle?: T;
-                    downloadDescription?: T;
-                    downloadFile?: T;
-                    downloadCategory?: T;
-                    id?: T;
-                  };
-              sectionOrder?: T;
-              id?: T;
-            };
-        seoSettings?:
-          | T
-          | {
-              metaTitle?: T;
-              metaDescription?: T;
-              keywords?: T;
-              ogImage?: T;
-            };
-      };
-  openInNewTab?: T;
-  buttonStyle?: T;
-  icon?: T;
-  iconPosition?: T;
-  isVisible?: T;
-  order?: T;
-  showOnPages?: T;
-  specificPages?:
-    | T
-    | {
-        pagePath?: T;
-        id?: T;
-      };
-  accessLevel?: T;
-  scheduleSettings?:
-    | T
-    | {
-        isScheduled?: T;
-        startDate?: T;
-        endDate?: T;
-      };
-  analytics?:
-    | T
-    | {
-        trackClicks?: T;
-        clickCount?: T;
-        googleAnalyticsEvent?: T;
-      };
-  additionalAttributes?:
-    | T
-    | {
-        cssClass?: T;
-        tooltip?: T;
-        ariaLabel?: T;
-        dataAttributes?:
-          | T
-          | {
-              key?: T;
-              value?: T;
-              id?: T;
-            };
-      };
-  notes?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -9346,7 +7627,6 @@ export interface SecondaryNavSelect<T extends boolean = true> {
  */
 export interface PlacementSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   isActive?: T;
   placementCell?:
     | T
@@ -9361,56 +7641,99 @@ export interface PlacementSelect<T extends boolean = true> {
               name?: T;
               designation?: T;
               department?: T;
+              role?: T;
               email?: T;
               phone?: T;
-              photo?: T;
-              isActive?: T;
+              image?: T;
+              bio?: T;
               id?: T;
             };
+        contactInfo?:
+          | T
+          | {
+              email?: T;
+              phone?: T;
+              address?: T;
+              hours?: T;
+            };
       };
-  whyRajalakshmi?:
+  placementStatistics?:
     | T
     | {
         content?: T;
-        strengthsList?:
+        yearwiseData?:
           | T
           | {
-              title?: T;
-              description?: T;
-              icon?: T;
-              id?: T;
-            };
-        statistics?:
-          | T
-          | {
-              metric?: T;
-              value?: T;
-              description?: T;
-              id?: T;
-            };
-      };
-  procedure?:
-    | T
-    | {
-        content?: T;
-        steps?:
-          | T
-          | {
-              stepNumber?: T;
-              title?: T;
-              description?: T;
-              timeline?: T;
-              documents?:
+              academicYear?: T;
+              totalStudents?: T;
+              studentsPlaced?: T;
+              placementPercentage?: T;
+              highestPackage?: T;
+              averagePackage?: T;
+              medianPackage?: T;
+              totalCompanies?: T;
+              multipleOffers?: T;
+              departmentWiseData?:
                 | T
                 | {
-                    document?: T;
-                    description?: T;
+                    department?: T;
+                    totalStudents?: T;
+                    studentsPlaced?: T;
+                    placementPercentage?: T;
+                    highestPackage?: T;
+                    averagePackage?: T;
                     id?: T;
                   };
               id?: T;
             };
+      };
+  recruitingCompanies?:
+    | T
+    | {
+        content?: T;
+        companiesList?:
+          | T
+          | {
+              companyName?: T;
+              companyType?: T;
+              industry?: T;
+              website?: T;
+              description?: T;
+              recruitmentYears?: T;
+              rolesOffered?: T;
+              eligibleDepartments?: T;
+              packageRange?: T;
+              location?: T;
+              companyLogo?: T;
+              isActive?: T;
+              id?: T;
+            };
+      };
+  placementProcess?:
+    | T
+    | {
+        content?: T;
+        processSteps?:
+          | T
+          | {
+              stepNumber?: T;
+              stepTitle?: T;
+              description?: T;
+              documents?:
+                | T
+                | {
+                    documentName?: T;
+                    description?: T;
+                    isMandatory?: T;
+                    id?: T;
+                  };
+              deadline?: T;
+              id?: T;
+            };
         eligibilityCriteria?: T;
         registrationProcess?: T;
+        selectionProcess?: T;
+        placementRules?: T;
       };
   trainingPrograms?:
     | T
@@ -9419,166 +7742,234 @@ export interface PlacementSelect<T extends boolean = true> {
         programsList?:
           | T
           | {
-              programName?: T;
+              programTitle?: T;
               programType?: T;
               description?: T;
               duration?: T;
               targetAudience?: T;
-              schedule?: T;
-              trainer?: T;
-              materials?:
-                | T
-                | {
-                    material?: T;
-                    description?: T;
-                    id?: T;
-                  };
-              isActive?: T;
-              id?: T;
-            };
-      };
-  placementReport?:
-    | T
-    | {
-        content?: T;
-        yearlyReports?:
-          | T
-          | {
-              academicYear?: T;
-              totalStudents?: T;
-              studentsPlaced?: T;
-              placementPercentage?: T;
-              averagePackage?: T;
-              highestPackage?: T;
-              companiesVisited?: T;
-              departmentWiseData?:
-                | T
-                | {
-                    department?: T;
-                    totalStudents?: T;
-                    studentsPlaced?: T;
-                    placementPercentage?: T;
-                    id?: T;
-                  };
-              reportDocument?: T;
-              id?: T;
-            };
-      };
-  recruiters?:
-    | T
-    | {
-        content?: T;
-        recruitersList?:
-          | T
-          | {
-              companyName?: T;
-              companyLogo?: T;
-              industry?: T;
-              website?: T;
-              description?: T;
-              rolesOffered?: T;
-              packageRange?: T;
-              visitFrequency?: T;
-              isActive?: T;
-              id?: T;
-            };
-      };
-  employabilityTrainingCamp?:
-    | T
-    | {
-        content?: T;
-        campDetails?:
-          | T
-          | {
-              campTitle?: T;
-              duration?: T;
-              startDate?: T;
-              endDate?: T;
-              objectives?: T;
-              modules?:
-                | T
-                | {
-                    moduleName?: T;
-                    description?: T;
-                    duration?: T;
-                    trainer?: T;
-                    id?: T;
-                  };
-              targetParticipants?: T;
+              topics?: T;
               outcomes?: T;
-              registrationLink?: T;
-              materials?:
+              instructor?: T;
+              schedule?: T;
+              registrationInfo?: T;
+              isActive?: T;
+              id?: T;
+            };
+      };
+  successStories?:
+    | T
+    | {
+        content?: T;
+        storiesList?:
+          | T
+          | {
+              studentName?: T;
+              department?: T;
+              passoutYear?: T;
+              companyName?: T;
+              position?: T;
+              packageOffered?: T;
+              currentPosition?: T;
+              story?: T;
+              achievements?: T;
+              advice?: T;
+              studentPhoto?: T;
+              companyLogo?: T;
+              isFeatured?: T;
+              id?: T;
+            };
+      };
+  placementResources?:
+    | T
+    | {
+        content?: T;
+        resourcesList?:
+          | T
+          | {
+              resourceTitle?: T;
+              resourceType?: T;
+              description?: T;
+              targetAudience?: T;
+              resourceFile?: T;
+              resourceUrl?: T;
+              downloadCount?: T;
+              isActive?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "international-relations_select".
+ */
+export interface InternationalRelationsSelect<T extends boolean = true> {
+  title?: T;
+  isActive?: T;
+  introduction?:
+    | T
+    | {
+        content?: T;
+        vision?: T;
+        mission?: T;
+        objectives?:
+          | T
+          | {
+              objective?: T;
+              id?: T;
+            };
+        featuredImage?: T;
+      };
+  services?:
+    | T
+    | {
+        content?: T;
+        servicesList?:
+          | T
+          | {
+              serviceName?: T;
+              description?: T;
+              targetAudience?: T;
+              eligibility?: T;
+              process?: T;
+              documents?:
                 | T
                 | {
-                    material?: T;
+                    documentName?: T;
                     description?: T;
+                    isMandatory?: T;
                     id?: T;
                   };
+              contactPerson?: T;
+              contactEmail?: T;
               isActive?: T;
               id?: T;
             };
       };
-  placementContact?:
+  internationalPrograms?:
     | T
     | {
         content?: T;
-        placementOfficer?:
+        programsList?:
           | T
           | {
-              name?: T;
-              designation?: T;
-              email?: T;
-              phone?: T;
-              officeHours?: T;
-            };
-        generalContact?:
-          | T
-          | {
-              address?: T;
-              email?: T;
-              phone?: T;
-              fax?: T;
-              officeHours?: T;
-            };
-        departmentContacts?:
-          | T
-          | {
-              department?: T;
-              coordinatorName?: T;
-              email?: T;
-              phone?: T;
-              id?: T;
-            };
-      };
-  downloads?:
-    | T
-    | {
-        content?: T;
-        downloadsList?:
-          | T
-          | {
-              title?: T;
-              category?: T;
+              programName?: T;
+              programType?: T;
+              partnerInstitution?: T;
+              country?: T;
+              duration?: T;
               description?: T;
-              file?: T;
-              fileSize?: T;
-              lastUpdated?: T;
+              eligibility?: T;
+              applicationProcess?: T;
+              benefits?: T;
+              costs?: T;
+              scholarships?: T;
+              applicationDeadline?: T;
+              programDates?: T;
+              contactPerson?: T;
+              contactEmail?: T;
+              programImages?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              partnerLogo?: T;
               isActive?: T;
               id?: T;
             };
       };
-  gallery?:
+  partnerships?:
     | T
     | {
         content?: T;
-        galleryItems?:
+        partnersList?:
           | T
           | {
-              title?: T;
-              category?: T;
+              institutionName?: T;
+              country?: T;
+              partnershipType?: T;
+              signedDate?: T;
+              validityPeriod?: T;
+              renewalDate?: T;
+              partnershipScope?: T;
+              activities?: T;
+              benefits?: T;
+              contactPerson?: T;
+              partnerContact?: T;
+              website?: T;
+              institutionLogo?: T;
+              partnershipDocument?: T;
+              status?: T;
+              id?: T;
+            };
+      };
+  events?:
+    | T
+    | {
+        content?: T;
+        eventsList?:
+          | T
+          | {
+              eventTitle?: T;
+              eventType?: T;
+              eventDate?: T;
+              endDate?: T;
+              venue?: T;
               description?: T;
-              date?: T;
-              images?:
+              organizer?: T;
+              participants?: T;
+              outcomes?: T;
+              internationalGuests?:
+                | T
+                | {
+                    guestName?: T;
+                    designation?: T;
+                    institution?: T;
+                    country?: T;
+                    guestPhoto?: T;
+                    id?: T;
+                  };
+              eventImages?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              eventReport?: T;
+              id?: T;
+            };
+      };
+  studyAbroad?:
+    | T
+    | {
+        content?: T;
+        opportunitiesList?:
+          | T
+          | {
+              programName?: T;
+              university?: T;
+              country?: T;
+              programLevel?: T;
+              duration?: T;
+              fieldOfStudy?: T;
+              description?: T;
+              eligibility?: T;
+              applicationProcess?: T;
+              tuitionFees?: T;
+              scholarships?: T;
+              applicationDeadline?: T;
+              intakeMonths?: T;
+              languageRequirements?: T;
+              universityRanking?: T;
+              universityWebsite?: T;
+              contactPerson?: T;
+              contactEmail?: T;
+              universityImages?:
                 | T
                 | {
                     image?: T;
@@ -9589,111 +7980,166 @@ export interface PlacementSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  capacityDevelopmentSkillsEnhancement?:
+  contactInfo?:
+    | T
+    | {
+        officeLocation?: T;
+        officeHours?: T;
+        phone?: T;
+        email?: T;
+        staffMembers?:
+          | T
+          | {
+              name?: T;
+              designation?: T;
+              responsibilities?: T;
+              email?: T;
+              phone?: T;
+              officeHours?: T;
+              staffPhoto?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "iqac_select".
+ */
+export interface IqacSelect<T extends boolean = true> {
+  title?: T;
+  isActive?: T;
+  coordinatorMessage?:
     | T
     | {
         content?: T;
-        programs?:
+        coordinatorName?: T;
+        coordinatorDesignation?: T;
+        coordinatorImage?: T;
+      };
+  members?:
+    | T
+    | {
+        content?: T;
+        memberList?:
           | T
           | {
-              programName?: T;
-              programType?: T;
-              description?: T;
-              objectives?: T;
-              duration?: T;
-              targetAudience?: T;
-              methodology?: T;
-              facilitators?:
-                | T
-                | {
-                    name?: T;
-                    designation?: T;
-                    organization?: T;
-                    expertise?: T;
-                    id?: T;
-                  };
-              schedule?: T;
-              resources?:
-                | T
-                | {
-                    resource?: T;
-                    description?: T;
-                    id?: T;
-                  };
-              outcomes?: T;
-              feedback?: T;
-              registrationInfo?: T;
-              isActive?: T;
+              name?: T;
+              designation?: T;
+              department?: T;
+              role?: T;
+              contactEmail?: T;
+              memberImage?: T;
               id?: T;
             };
-        skillAssessment?:
+      };
+  minutes?:
+    | T
+    | {
+        content?: T;
+        minutesList?:
           | T
           | {
-              overview?: T;
-              assessmentTools?:
-                | T
-                | {
-                    toolName?: T;
-                    description?: T;
-                    skillsAssessed?: T;
-                    accessLink?: T;
-                    id?: T;
-                  };
-            };
-        certifications?:
-          | T
-          | {
-              overview?: T;
-              certificationList?:
-                | T
-                | {
-                    certificationName?: T;
-                    provider?: T;
-                    description?: T;
-                    eligibility?: T;
-                    duration?: T;
-                    fee?: T;
-                    registrationLink?: T;
-                    isActive?: T;
-                    id?: T;
-                  };
+              title?: T;
+              meetingDate?: T;
+              meetingType?: T;
+              agenda?: T;
+              minutesDocument?: T;
+              id?: T;
             };
       };
-  priority?: T;
+  accreditation?:
+    | T
+    | {
+        content?: T;
+        accreditationList?:
+          | T
+          | {
+              accreditingBody?: T;
+              accreditationType?: T;
+              grade?: T;
+              validFrom?: T;
+              validUntil?: T;
+              certificate?: T;
+              report?: T;
+              id?: T;
+            };
+      };
+  aqar?:
+    | T
+    | {
+        content?: T;
+        aqarList?:
+          | T
+          | {
+              academicYear?: T;
+              title?: T;
+              submissionDate?: T;
+              status?: T;
+              document?: T;
+              id?: T;
+            };
+      };
+  auditedStatement?:
+    | T
+    | {
+        content?: T;
+        statementList?:
+          | T
+          | {
+              financialYear?: T;
+              title?: T;
+              auditorName?: T;
+              auditDate?: T;
+              document?: T;
+              id?: T;
+            };
+      };
+  iqacPolicy?:
+    | T
+    | {
+        content?: T;
+        policyList?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              category?: T;
+              effectiveDate?: T;
+              version?: T;
+              document?: T;
+              id?: T;
+            };
+      };
+  studentSurvey?:
+    | T
+    | {
+        content?: T;
+        surveyList?:
+          | T
+          | {
+              title?: T;
+              academicYear?: T;
+              surveyType?: T;
+              semester?: T;
+              department?: T;
+              responseCount?: T;
+              surveyPeriod?:
+                | T
+                | {
+                    startDate?: T;
+                    endDate?: T;
+                  };
+              analysisReport?: T;
+              actionTaken?: T;
+              id?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-locked-documents_select".
- */
-export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T;
-  globalSlug?: T;
-  user?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-preferences_select".
- */
-export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T;
-  key?: T;
-  value?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-migrations_select".
- */
-export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T;
-  batch?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

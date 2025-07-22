@@ -1,39 +1,89 @@
-import { CollectionConfig } from 'payload'
-import { universalAccess } from '../access'
+import { GlobalConfig } from 'payload'
+import { globalAccess } from '../access'
 
-export const About: CollectionConfig = {
+export const About: GlobalConfig = {
   slug: 'about',
   admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'isActive', 'updatedAt'],
+    group: 'Content',
   },
-  access: universalAccess,
+  access: globalAccess,
   fields: [
+    // Hero Section
     {
-      name: 'title',
+      name: 'heroTitle',
       type: 'text',
       required: true,
       admin: {
-        description: 'Title for the about page section',
+        description: 'Main hero title for the about page',
       },
     },
     {
-      name: 'slug',
+      name: 'heroSubtitle',
       type: 'text',
-      required: true,
-      unique: true,
       admin: {
-        description: 'URL slug for the about page (e.g., about-college)',
+        description: 'Hero subtitle displayed below the main title',
       },
     },
     {
-      name: 'isActive',
-      type: 'checkbox',
-      defaultValue: true,
+      name: 'heroImage',
+      type: 'upload',
+      relationTo: 'media',
       admin: {
-        description: 'Whether this about page is active and visible',
+        description: 'Hero banner image for the about page',
       },
     },
+
+    // Dynamic Sections Array
+    {
+      name: 'sections',
+      type: 'array',
+      label: 'About Sections',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+          admin: {
+            description: 'Title of the about section',
+          },
+        },
+        {
+          name: 'content',
+          type: 'richText',
+          required: true,
+          admin: {
+            description: 'Content for this about section',
+          },
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Optional image for this section',
+          },
+        },
+        {
+          name: 'order',
+          type: 'number',
+          defaultValue: 0,
+          admin: {
+            description: 'Order of display (lower numbers appear first)',
+          },
+        },
+        {
+          name: 'isActive',
+          type: 'checkbox',
+          defaultValue: true,
+          admin: {
+            description: 'Whether this section is active and visible',
+          },
+        },
+      ],
+    },
+
+    // === LEGACY COMPREHENSIVE SECTIONS ===
+    // These maintain all the detailed structured data from the original About collection
 
     // Profile Section
     {
@@ -915,5 +965,4 @@ export const About: CollectionConfig = {
       ],
     },
   ],
-  timestamps: true,
 }

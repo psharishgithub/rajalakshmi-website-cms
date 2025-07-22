@@ -19,17 +19,36 @@ import { Regulations } from './collections/Regulations'
 import { RegulationCategories } from './collections/RegulationCategories'
 import { Departments } from './collections/Departments'
 import { DepartmentSections } from './collections/DepartmentSections'
-import { About } from './collections/About'
-import { IQAC } from './collections/IQAC'
-import { InternationalRelations } from './collections/InternationalRelations'
-import { NAAC } from './collections/NAAC'
-import { Admissions } from './collections/Admissions'
-import { Research } from './collections/Research'
 import { SecondaryNav } from './collections/SecondaryNav'
-import { Placement } from './collections/Placement'
+
+// Import globals
+import { About } from './globals/About'
+import { NAAC } from './globals/NAAC'
+import { Admissions } from './globals/Admissions'
+import { Research } from './globals/Research'
+import { Placement } from './globals/Placement'
+import { InternationalRelations } from './globals/InternationalRelations'
+import { IQAC } from './globals/IQAC'
 
 // Import endpoints
 import { departmentsNavEndpoint, departmentContentEndpoint, departmentBySectionEndpoint } from './endpoints/departments'
+import { 
+  aboutSectionsEndpoint,
+  aboutSectionContentEndpoint,
+  naacSectionsEndpoint,
+  naacSectionContentEndpoint,
+  researchSectionsEndpoint,
+  researchSectionContentEndpoint,
+  placementSectionsEndpoint,
+  placementSectionContentEndpoint,
+  admissionsSectionsEndpoint,
+  admissionsSectionContentEndpoint,
+  iqacSectionsEndpoint,
+  iqacSectionContentEndpoint,
+  internationalRelationsSectionsEndpoint,
+  internationalRelationsSectionContentEndpoint,
+  globalPagesOverviewEndpoint,
+} from './endpoints/globals'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -41,7 +60,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, Departments, DepartmentSections, About, IQAC, InternationalRelations, NAAC, Admissions, Research, SecondaryNav, Placement],
+  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, Departments, DepartmentSections, SecondaryNav],
+  globals: [About, NAAC, Admissions, Research, Placement, InternationalRelations, IQAC],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -76,5 +96,28 @@ export default buildConfig({
     departmentsNavEndpoint,
     departmentContentEndpoint,
     departmentBySectionEndpoint,
+    // Global pages endpoints
+    globalPagesOverviewEndpoint,
+    // About endpoints
+    aboutSectionsEndpoint,
+    aboutSectionContentEndpoint,
+    // NAAC endpoints
+    naacSectionsEndpoint,
+    naacSectionContentEndpoint,
+    // Research endpoints
+    researchSectionsEndpoint,
+    researchSectionContentEndpoint,
+    // Placement endpoints
+    placementSectionsEndpoint,
+    placementSectionContentEndpoint,
+    // Admissions endpoints
+    admissionsSectionsEndpoint,
+    admissionsSectionContentEndpoint,
+    // IQAC endpoints
+    iqacSectionsEndpoint,
+    iqacSectionContentEndpoint,
+    // International Relations endpoints
+    internationalRelationsSectionsEndpoint,
+    internationalRelationsSectionContentEndpoint,
   ],
 })

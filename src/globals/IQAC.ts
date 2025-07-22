@@ -1,13 +1,12 @@
-import { CollectionConfig } from 'payload'
-import { universalAccess } from '../access'
+import { GlobalConfig } from 'payload'
+import { globalAccess } from '../access'
 
-export const IQAC: CollectionConfig = {
+export const IQAC: GlobalConfig = {
   slug: 'iqac',
   admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'isActive', 'updatedAt'],
+    group: 'Content',
   },
-  access: universalAccess,
+  access: globalAccess,
   fields: [
     {
       name: 'title',
@@ -15,15 +14,6 @@ export const IQAC: CollectionConfig = {
       required: true,
       admin: {
         description: 'Title for the IQAC page section',
-      },
-    },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      admin: {
-        description: 'URL slug for the IQAC page (e.g., 2024-25)',
       },
     },
     {
@@ -628,15 +618,5 @@ export const IQAC: CollectionConfig = {
         },
       ],
     },
-
-    {
-      name: 'priority',
-      type: 'number',
-      defaultValue: 0,
-      admin: {
-        description: 'Higher numbers appear first',
-      },
-    },
   ],
-  timestamps: true,
 }
