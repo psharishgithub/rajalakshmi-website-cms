@@ -77,7 +77,7 @@ export default buildConfig({
     'http://localhost:4200',
     'https://reccms.flashserver.in',
     'https://cmsrec.flashserver.in',
-    'http://192.250.228.70:3000',
+    'https://recwebsite.flashserver.in',
   ],
   csrf: [
     'http://localhost:3000',
@@ -86,7 +86,7 @@ export default buildConfig({
     'http://localhost:4200',
     'https://reccms.flashserver.in',
     'https://cmsrec.flashserver.in',
-    'http://192.250.228.70:3000',
+    'https://recwebsite.flashserver.in',
   ],
   sharp,
   plugins: [
