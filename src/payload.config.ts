@@ -23,32 +23,13 @@ import { SecondaryNav } from './collections/SecondaryNav'
 
 // Import globals
 import { About } from './globals/About'
-import { NAAC } from './globals/NAAC'
 import { Admissions } from './globals/Admissions'
 import { Research } from './globals/Research'
 import { Placement } from './globals/Placement'
 import { InternationalRelations } from './globals/InternationalRelations'
-import { IQAC } from './globals/IQAC'
 
 // Import endpoints
 import { departmentsNavEndpoint, departmentContentEndpoint, departmentBySectionEndpoint } from './endpoints/departments'
-import { 
-  aboutSectionsEndpoint,
-  aboutSectionContentEndpoint,
-  naacSectionsEndpoint,
-  naacSectionContentEndpoint,
-  researchSectionsEndpoint,
-  researchSectionContentEndpoint,
-  placementSectionsEndpoint,
-  placementSectionContentEndpoint,
-  admissionsSectionsEndpoint,
-  admissionsSectionContentEndpoint,
-  iqacSectionsEndpoint,
-  iqacSectionContentEndpoint,
-  internationalRelationsSectionsEndpoint,
-  internationalRelationsSectionContentEndpoint,
-  globalPagesOverviewEndpoint,
-} from './endpoints/globals'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -61,7 +42,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, Departments, DepartmentSections, SecondaryNav],
-  globals: [About, NAAC, Admissions, Research, Placement, InternationalRelations, IQAC],
+  globals: [About, Admissions, Research, Placement, InternationalRelations],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -96,28 +77,5 @@ export default buildConfig({
     departmentsNavEndpoint,
     departmentContentEndpoint,
     departmentBySectionEndpoint,
-    // Global pages endpoints
-    globalPagesOverviewEndpoint,
-    // About endpoints
-    aboutSectionsEndpoint,
-    aboutSectionContentEndpoint,
-    // NAAC endpoints
-    naacSectionsEndpoint,
-    naacSectionContentEndpoint,
-    // Research endpoints
-    researchSectionsEndpoint,
-    researchSectionContentEndpoint,
-    // Placement endpoints
-    placementSectionsEndpoint,
-    placementSectionContentEndpoint,
-    // Admissions endpoints
-    admissionsSectionsEndpoint,
-    admissionsSectionContentEndpoint,
-    // IQAC endpoints
-    iqacSectionsEndpoint,
-    iqacSectionContentEndpoint,
-    // International Relations endpoints
-    internationalRelationsSectionsEndpoint,
-    internationalRelationsSectionContentEndpoint,
   ],
 })
