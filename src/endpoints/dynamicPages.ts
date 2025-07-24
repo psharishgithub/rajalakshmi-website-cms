@@ -58,6 +58,71 @@ export const dynamicPagesEndpoint: Endpoint = {
 
 // Get a single dynamic page by slug
 export const dynamicPageBySlugEndpoint: Endpoint = {
+  path: '/:slug',
+  method: 'get',
+  handler: async (req) => {
+    const { payload, routeParams } = req
+    const { slug } = routeParams || {}
+
+    if (!slug) {
+      return Response.json(
+        {
+          success: false,
+          error: 'Slug parameter is required',
+        },
+        { status: 400 }
+      )
+    }
+
+    try {
+      const pages = await payload.find({
+        collection: 'dynamic-pages',
+        where: {
+          and: [
+            {
+              slug: {
+                equals: slug,
+              },
+            },
+            {
+              isPublished: {
+                equals: true,
+              },
+            },
+          ],
+        },
+        limit: 1,
+      })
+
+      if (pages.docs.length === 0) {
+        return Response.json(
+          {
+            success: false,
+            error: 'Page not found',
+          },
+          { status: 404 }
+        )
+      }
+
+      return Response.json({
+        success: true,
+        data: pages.docs[0],
+      })
+    } catch (error) {
+      console.error('Error fetching dynamic page:', error)
+      return Response.json(
+        {
+          success: false,
+          error: 'Failed to fetch page',
+        },
+        { status: 500 }
+      )
+    }
+  },
+}
+
+// Get a single dynamic page by slug with globals pattern
+export const globalsDynamicPageEndpoint: Endpoint = {
   path: '/globals/:slug',
   method: 'get',
   handler: async (req) => {
