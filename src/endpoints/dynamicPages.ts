@@ -58,7 +58,7 @@ export const dynamicPagesEndpoint: Endpoint = {
 
 // Get a single dynamic page by slug
 export const dynamicPageBySlugEndpoint: Endpoint = {
-  path: '/:slug',
+  path: '/globals/:slug',
   method: 'get',
   handler: async (req) => {
     const { payload, routeParams } = req
