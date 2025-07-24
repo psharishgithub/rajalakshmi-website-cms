@@ -20,6 +20,7 @@ import { RegulationCategories } from './collections/RegulationCategories'
 import { Departments } from './collections/Departments'
 import { DepartmentSections } from './collections/DepartmentSections'
 import { SecondaryNav } from './collections/SecondaryNav'
+import { DynamicPages } from './collections/DynamicPages'
 
 // Import globals
 import { About } from './globals/About'
@@ -30,6 +31,7 @@ import { InternationalRelations } from './globals/InternationalRelations'
 
 // Import endpoints
 import { departmentsNavEndpoint, departmentContentEndpoint, departmentBySectionEndpoint } from './endpoints/departments'
+import { dynamicPagesEndpoint, dynamicPageBySlugEndpoint, dynamicPagesByCategoryEndpoint, allDynamicPagesEndpoint } from './endpoints/dynamicPages'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -41,7 +43,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, Departments, DepartmentSections, SecondaryNav],
+  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, Departments, DepartmentSections, SecondaryNav, DynamicPages],
   globals: [About, Admissions, Research, Placement, InternationalRelations],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -77,5 +79,9 @@ export default buildConfig({
     departmentsNavEndpoint,
     departmentContentEndpoint,
     departmentBySectionEndpoint,
+    dynamicPagesEndpoint,
+    dynamicPageBySlugEndpoint,
+    dynamicPagesByCategoryEndpoint,
+    allDynamicPagesEndpoint,
   ],
 })

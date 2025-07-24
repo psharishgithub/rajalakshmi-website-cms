@@ -80,6 +80,7 @@ export interface Config {
     departments: Department;
     'department-sections': DepartmentSection;
     'secondary-nav': SecondaryNav;
+    'dynamic-pages': DynamicPage;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -99,6 +100,7 @@ export interface Config {
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     'department-sections': DepartmentSectionsSelect<false> | DepartmentSectionsSelect<true>;
     'secondary-nav': SecondaryNavSelect<false> | SecondaryNavSelect<true>;
+    'dynamic-pages': DynamicPagesSelect<false> | DynamicPagesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -2428,6 +2430,184 @@ export interface SecondaryNav {
   createdAt: string;
 }
 /**
+ * Create and manage multiple dynamic pages with flexible content types
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dynamic-pages".
+ */
+export interface DynamicPage {
+  id: string;
+  /**
+   * Title of the page (used for admin display)
+   */
+  pageTitle: string;
+  /**
+   * URL slug for this page (e.g., "about-us", "contact")
+   */
+  slug: string;
+  /**
+   * Category to help organize and filter pages
+   */
+  category?:
+    | (
+        | 'general'
+        | 'academic'
+        | 'administrative'
+        | 'student-resources'
+        | 'faculty-resources'
+        | 'research'
+        | 'events-news'
+        | 'other'
+      )
+    | null;
+  /**
+   * Whether this page is published and accessible
+   */
+  isPublished?: boolean | null;
+  /**
+   * Priority for ordering pages (higher numbers appear first)
+   */
+  priority?: number | null;
+  seo?: {
+    /**
+     * Meta title for SEO (defaults to page title if empty)
+     */
+    metaTitle?: string | null;
+    /**
+     * Meta description for SEO
+     */
+    metaDescription?: string | null;
+    /**
+     * SEO keywords (comma-separated)
+     */
+    keywords?: string | null;
+    /**
+     * Open Graph image for social media sharing
+     */
+    ogImage?: (string | null) | Media;
+  };
+  /**
+   * Main hero title for the page
+   */
+  heroTitle: string;
+  /**
+   * Hero subtitle displayed below the main title
+   */
+  heroSubtitle?: string | null;
+  /**
+   * Hero banner image for the page
+   */
+  heroImage?: (string | null) | Media;
+  sections?:
+    | {
+        /**
+         * Title of the section
+         */
+        title: string;
+        /**
+         * Choose the type of content for this section
+         */
+        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        /**
+         * Rich text content for this section
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
+         * Table data with labels and links
+         */
+        tableData?:
+          | {
+              /**
+               * Display text for the table row
+               */
+              label: string;
+              /**
+               * URL or file path for the link
+               */
+              link: string;
+              /**
+               * Check if this is an external link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Configure a custom table with multiple columns
+         */
+        dynamicTableConfig?: {
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          rows: {
+            /**
+             * Row data as JSON object. Keys should match column keys.
+             */
+            data?:
+              | {
+                  [k: string]: unknown;
+                }
+              | unknown[]
+              | string
+              | number
+              | boolean
+              | null;
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+        };
+        /**
+         * Optional custom title for the table (defaults to "Table Title")
+         */
+        tableTitle?: string | null;
+        /**
+         * Optional image for this section
+         */
+        image?: (string | null) | Media;
+        /**
+         * Order of display (lower numbers appear first)
+         */
+        order?: number | null;
+        /**
+         * Whether this section is active and visible
+         */
+        isActive?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -2485,6 +2665,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'secondary-nav';
         value: string | SecondaryNav;
+      } | null)
+    | ({
+        relationTo: 'dynamic-pages';
+        value: string | DynamicPage;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -3479,6 +3663,69 @@ export interface SecondaryNavSelect<T extends boolean = true> {
             };
       };
   notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dynamic-pages_select".
+ */
+export interface DynamicPagesSelect<T extends boolean = true> {
+  pageTitle?: T;
+  slug?: T;
+  category?: T;
+  isPublished?: T;
+  priority?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        keywords?: T;
+        ogImage?: T;
+      };
+  heroTitle?: T;
+  heroSubtitle?: T;
+  heroImage?: T;
+  sections?:
+    | T
+    | {
+        title?: T;
+        contentType?: T;
+        content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
