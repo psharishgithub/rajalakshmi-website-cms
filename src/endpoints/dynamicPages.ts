@@ -123,7 +123,7 @@ export const dynamicPageBySlugEndpoint: Endpoint = {
 
 // Get a single dynamic page by slug with globals pattern
 export const globalsDynamicPageEndpoint: Endpoint = {
-  path: '/globals/:slug',
+  path: '/globals-dynamic/:slug',
   method: 'get',
   handler: async (req) => {
     const { payload, routeParams } = req
@@ -169,10 +169,22 @@ export const globalsDynamicPageEndpoint: Endpoint = {
         )
       }
 
-      return Response.json({
-        success: true,
-        data: pages.docs[0],
-      })
+      // Return the page data directly, matching the global pages format
+      const pageData = pages.docs[0]
+      
+      // Transform the dynamic page data to match global page structure exactly
+      const globalPageFormat = {
+        createdAt: pageData.createdAt,
+        updatedAt: pageData.updatedAt,
+        globalType: pageData.slug, // Use slug as globalType to match global pages pattern
+        heroTitle: pageData.heroTitle,
+        heroSubtitle: pageData.heroSubtitle,
+        heroImage: pageData.heroImage,
+        sections: pageData.sections || [],
+        id: pageData.id
+      }
+
+      return Response.json(globalPageFormat)
     } catch (error) {
       console.error('Error fetching dynamic page:', error)
       return Response.json(
