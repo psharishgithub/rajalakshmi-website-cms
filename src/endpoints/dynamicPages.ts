@@ -304,3 +304,48 @@ export const allDynamicPagesEndpoint: Endpoint = {
     }
   },
 }
+
+// Endpoint that matches the exact global pages pattern: /api/globals/:slug
+export const globalsPatternEndpoint: Endpoint = {
+  path: '/globals/:slug',
+  method: 'get',
+  handler: async (req) => {
+    const { slug } = req.routeParams as { slug: string }
+    
+    try {
+      const dynamicPage = await req.payload.find({
+        collection: 'dynamic-pages',
+        where: {
+          and: [
+            { slug: { equals: slug } },
+            { isPublished: { equals: true } }
+          ]
+        },
+        limit: 1
+      })
+
+      if (dynamicPage.docs.length === 0) {
+        return Response.json({ error: 'Dynamic page not found' }, { status: 404 })
+      }
+
+      const page = dynamicPage.docs[0]
+      
+      // Transform the response to match global pages format exactly
+      const transformedPage = {
+        createdAt: page.createdAt,
+        updatedAt: page.updatedAt,
+        globalType: page.slug, // Use slug as globalType to match global pages pattern
+        heroTitle: page.heroTitle || page.pageTitle,
+        heroSubtitle: page.heroSubtitle || '',
+        heroImage: page.heroImage || null,
+        sections: page.sections || [],
+        id: page.id
+      }
+
+      return Response.json(transformedPage)
+    } catch (error) {
+      console.error('Error fetching dynamic page:', error)
+      return Response.json({ error: 'Internal server error' }, { status: 500 })
+    }
+  }
+}

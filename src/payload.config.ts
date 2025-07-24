@@ -31,7 +31,8 @@ import { InternationalRelations } from './globals/InternationalRelations'
 
 // Import endpoints
 import { departmentsNavEndpoint, departmentContentEndpoint, departmentBySectionEndpoint } from './endpoints/departments'
-import { dynamicPagesEndpoint, dynamicPageBySlugEndpoint, globalsDynamicPageEndpoint, dynamicPagesByCategoryEndpoint, allDynamicPagesEndpoint } from './endpoints/dynamicPages'
+import { dynamicPagesEndpoint, dynamicPageBySlugEndpoint, globalsDynamicPageEndpoint, dynamicPagesByCategoryEndpoint, allDynamicPagesEndpoint, globalsPatternEndpoint } from './endpoints/dynamicPages'
+import { unifiedPageEndpoint, unifiedPageQueryEndpoint } from './endpoints/unifiedPages'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -76,6 +77,9 @@ export default buildConfig({
     payloadCloudPlugin(),
   ],
   endpoints: [
+    unifiedPageEndpoint,
+    unifiedPageQueryEndpoint,
+    globalsPatternEndpoint,
     departmentsNavEndpoint,
     departmentContentEndpoint,
     departmentBySectionEndpoint,
