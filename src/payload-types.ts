@@ -511,6 +511,115 @@ export interface DepartmentSection {
    * Whether this section is active and visible
    */
   isActive?: boolean | null;
+  /**
+   * Create custom sections with rich text, tables, or dynamic tables
+   */
+  dynamicSections?:
+    | {
+        /**
+         * Title of the section
+         */
+        title: string;
+        /**
+         * Choose the type of content for this section
+         */
+        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        /**
+         * Rich text content for this section
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
+         * Table data with labels and links
+         */
+        tableData?:
+          | {
+              /**
+               * Display text for the table row
+               */
+              label: string;
+              /**
+               * URL or file path for the link
+               */
+              link: string;
+              /**
+               * Check if this is an external link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Configure a custom table with multiple columns
+         */
+        dynamicTableConfig?: {
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          rows: {
+            /**
+             * Row data as JSON object. Keys should match column keys.
+             */
+            data?:
+              | {
+                  [k: string]: unknown;
+                }
+              | unknown[]
+              | string
+              | number
+              | boolean
+              | null;
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+        };
+        /**
+         * Optional custom title for the table (defaults to "Table Title")
+         */
+        tableTitle?: string | null;
+        /**
+         * Optional image for this section
+         */
+        image?: (string | null) | Media;
+        /**
+         * Order of display (lower numbers appear first)
+         */
+        order?: number | null;
+        /**
+         * Whether this section is active and visible
+         */
+        isActive?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
   heroSection?: {
     /**
      * Main title for department page (defaults to department name)
@@ -543,9 +652,17 @@ export interface DepartmentSection {
       [k: string]: unknown;
     } | null;
   };
-  introduction?: {
+  introduction: {
     /**
-     * Introduction content for the department
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -563,13 +680,92 @@ export interface DepartmentSection {
       [k: string]: unknown;
     } | null;
     /**
-     * Featured image for introduction section
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
      */
     image?: (string | null) | Media;
-  };
-  peos?: {
     /**
-     * Program Educational Objectives content
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
+  };
+  peos: {
+    /**
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -586,6 +782,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     objectives?:
       | {
           title: string;
@@ -594,9 +865,17 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  pos?: {
+  pos: {
     /**
-     * Program Outcomes content
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -613,6 +892,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     outcomes?:
       | {
           title: string;
@@ -621,9 +975,17 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  opportunities?: {
+  opportunities: {
     /**
-     * Career opportunities content
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -640,6 +1002,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     opportunityList?:
       | {
           title: string;
@@ -649,9 +1086,17 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  labFacility?: {
+  labFacility: {
     /**
-     * Lab facilities overview content
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -668,6 +1113,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     labs?:
       | {
           name: string;
@@ -686,9 +1206,17 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  faculty?: {
+  faculty: {
     /**
-     * Faculty overview content
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -705,6 +1233,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     facultyMembers?:
       | {
           name: string;
@@ -720,9 +1323,17 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  achievements?: {
+  achievements: {
     /**
-     * Achievements overview content
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -739,6 +1350,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     achievementList?:
       | {
           title: string;
@@ -750,9 +1436,17 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  classroom?: {
+  classroom: {
     /**
-     * Classroom facilities content
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -769,6 +1463,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     classrooms?:
       | {
           name: string;
@@ -787,9 +1556,17 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  facultyPublications?: {
+  facultyPublications: {
     /**
-     * Faculty publications overview content
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -806,6 +1583,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     publications?:
       | {
           title: string;
@@ -822,9 +1674,17 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  guestLectures?: {
+  guestLectures: {
     /**
-     * Guest lectures overview content
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -841,6 +1701,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     lectures?:
       | {
           title: string;
@@ -854,9 +1789,17 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  mous?: {
+  mous: {
     /**
-     * MoUs overview content
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -873,6 +1816,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     mouList?:
       | {
           organization: string;
@@ -891,9 +1909,17 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  universityRankHolders?: {
+  universityRankHolders: {
     /**
-     * University rank holders overview content
+     * Title of the section
+     */
+    title: string;
+    /**
+     * Choose the type of content for this section
+     */
+    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    /**
+     * Rich text content for this section
      */
     content?: {
       root: {
@@ -910,6 +1936,81 @@ export interface DepartmentSection {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Table data with labels and links
+     */
+    tableData?:
+      | {
+          /**
+           * Display text for the table row
+           */
+          label: string;
+          /**
+           * URL or file path for the link
+           */
+          link: string;
+          /**
+           * Check if this is an external link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Configure a custom table with multiple columns
+     */
+    dynamicTableConfig?: {
+      columns: {
+        /**
+         * Unique identifier for this column (no spaces, use camelCase)
+         */
+        key: string;
+        /**
+         * Display label for the column header
+         */
+        label: string;
+        /**
+         * Optional CSS width (e.g., "w-20", "w-1/4")
+         */
+        width?: string | null;
+        id?: string | null;
+      }[];
+      rows: {
+        /**
+         * Row data as JSON object. Keys should match column keys.
+         */
+        data?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[];
+      /**
+       * Visual style of the table
+       */
+      variant?: ('default' | 'bordered' | 'striped') | null;
+    };
+    /**
+     * Optional custom title for the table (defaults to "Table Title")
+     */
+    tableTitle?: string | null;
+    /**
+     * Optional image for this section
+     */
+    image?: (string | null) | Media;
+    /**
+     * Order of display (lower numbers appear first)
+     */
+    order?: number | null;
+    /**
+     * Whether this section is active and visible
+     */
+    isActive?: boolean | null;
     rankHolders?:
       | {
           studentName: string;
@@ -1616,6 +2717,45 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   department?: T;
   title?: T;
   isActive?: T;
+  dynamicSections?:
+    | T
+    | {
+        title?: T;
+        contentType?: T;
+        content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
+        id?: T;
+      };
   heroSection?:
     | T
     | {
@@ -1627,13 +2767,78 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   introduction?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
         image?: T;
+        order?: T;
+        isActive?: T;
       };
   peos?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         objectives?:
           | T
           | {
@@ -1645,7 +2850,40 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   pos?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         outcomes?:
           | T
           | {
@@ -1657,7 +2895,40 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   opportunities?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         opportunityList?:
           | T
           | {
@@ -1670,7 +2941,40 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   labFacility?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         labs?:
           | T
           | {
@@ -1689,7 +2993,40 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   faculty?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         facultyMembers?:
           | T
           | {
@@ -1708,7 +3045,40 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   achievements?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         achievementList?:
           | T
           | {
@@ -1723,7 +3093,40 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   classroom?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         classrooms?:
           | T
           | {
@@ -1742,7 +3145,40 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   facultyPublications?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         publications?:
           | T
           | {
@@ -1759,7 +3195,40 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   guestLectures?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         lectures?:
           | T
           | {
@@ -1776,7 +3245,40 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   mous?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         mouList?:
           | T
           | {
@@ -1792,7 +3294,40 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
   universityRankHolders?:
     | T
     | {
+        title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    data?: T;
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
         rankHolders?:
           | T
           | {

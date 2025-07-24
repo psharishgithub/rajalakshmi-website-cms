@@ -1,5 +1,6 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, Field } from 'payload'
 import { universalAccess } from '../access'
+import { createGlobalSectionFields } from '../globals/shared/globalConfig'
 
 export const DepartmentSections: CollectionConfig = {
   slug: 'department-sections',
@@ -33,6 +34,17 @@ export const DepartmentSections: CollectionConfig = {
       admin: {
         description: 'Whether this section is active and visible',
       },
+    },
+
+    // Dynamic Sections Array - New Feature
+    {
+      name: 'dynamicSections',
+      type: 'array',
+      label: 'Dynamic Sections',
+      admin: {
+        description: 'Create custom sections with rich text, tables, or dynamic tables',
+      },
+      fields: createGlobalSectionFields(),
     },
 
     // Hero Section for Department Page
@@ -78,23 +90,7 @@ export const DepartmentSections: CollectionConfig = {
       name: 'introduction',
       type: 'group',
       label: 'Introduction',
-      fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'Introduction content for the department',
-          },
-        },
-        {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          admin: {
-            description: 'Featured image for introduction section',
-          },
-        },
-      ],
+      fields: createGlobalSectionFields(),
     },
 
     // PEOs Section
@@ -103,13 +99,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'Program Educational Objectives (PEOs)',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'Program Educational Objectives content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'objectives',
           type: 'array',
@@ -136,13 +126,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'Program Outcomes (POs)',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'Program Outcomes content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'outcomes',
           type: 'array',
@@ -169,13 +153,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'Career Opportunities',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'Career opportunities content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'opportunityList',
           type: 'array',
@@ -206,13 +184,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'Lab Facilities',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'Lab facilities overview content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'labs',
           type: 'array',
@@ -259,13 +231,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'Faculty Members',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'Faculty overview content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'facultyMembers',
           type: 'array',
@@ -321,13 +287,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'Department Achievements',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'Achievements overview content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'achievementList',
           type: 'array',
@@ -375,13 +335,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'Classroom Facilities',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'Classroom facilities content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'classrooms',
           type: 'array',
@@ -427,13 +381,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'Faculty Publications',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'Faculty publications overview content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'publications',
           type: 'array',
@@ -493,13 +441,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'Guest Lectures',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'Guest lectures overview content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'lectures',
           type: 'array',
@@ -548,13 +490,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'Memorandums of Understanding (MoUs)',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'MoUs overview content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'mouList',
           type: 'array',
@@ -610,13 +546,7 @@ export const DepartmentSections: CollectionConfig = {
       type: 'group',
       label: 'University Rank Holders',
       fields: [
-        {
-          name: 'content',
-          type: 'richText',
-          admin: {
-            description: 'University rank holders overview content',
-          },
-        },
+        ...createGlobalSectionFields(),
         {
           name: 'rankHolders',
           type: 'array',
