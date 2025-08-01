@@ -583,19 +583,36 @@ export interface DepartmentSection {
             width?: string | null;
             id?: string | null;
           }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
           rows: {
             /**
-             * Row data as JSON object. Keys should match column keys.
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
              */
-            data?:
-              | {
-                  [k: string]: unknown;
-                }
-              | unknown[]
-              | string
-              | number
-              | boolean
-              | null;
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
             id?: string | null;
           }[];
           /**
@@ -720,19 +737,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -823,19 +857,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -933,19 +984,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -1043,19 +1111,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -1154,19 +1239,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -1274,19 +1376,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -1391,19 +1510,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -1504,19 +1640,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -1624,19 +1777,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -1742,19 +1912,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -1857,19 +2044,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -1977,19 +2181,36 @@ export interface DepartmentSection {
         width?: string | null;
         id?: string | null;
       }[];
+      /**
+       * Add rows to your table. Each row should have data for all columns.
+       */
       rows: {
         /**
-         * Row data as JSON object. Keys should match column keys.
+         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
          */
-        data?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        rowData: {
+          /**
+           * Column key (should match one of your column keys above)
+           */
+          columnKey: string;
+          /**
+           * Cell content/value
+           */
+          value: string;
+          /**
+           * Make this cell a clickable link
+           */
+          isLink?: boolean | null;
+          /**
+           * URL for the link
+           */
+          linkUrl?: string | null;
+          /**
+           * External link (opens in new tab)
+           */
+          isExternal?: boolean | null;
+          id?: string | null;
+        }[];
         id?: string | null;
       }[];
       /**
@@ -2929,7 +3150,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -2976,7 +3206,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3014,7 +3253,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3059,7 +3307,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3104,7 +3361,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3150,7 +3416,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3202,7 +3477,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3254,7 +3538,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3302,7 +3595,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3354,7 +3656,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3404,7 +3715,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3454,7 +3774,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3503,7 +3832,16 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -3848,19 +4186,36 @@ export interface About {
             width?: string | null;
             id?: string | null;
           }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
           rows: {
             /**
-             * Row data as JSON object. Keys should match column keys.
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
              */
-            data?:
-              | {
-                  [k: string]: unknown;
-                }
-              | unknown[]
-              | string
-              | number
-              | boolean
-              | null;
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
             id?: string | null;
           }[];
           /**
@@ -4037,19 +4392,36 @@ export interface Research {
             width?: string | null;
             id?: string | null;
           }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
           rows: {
             /**
-             * Row data as JSON object. Keys should match column keys.
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
              */
-            data?:
-              | {
-                  [k: string]: unknown;
-                }
-              | unknown[]
-              | string
-              | number
-              | boolean
-              | null;
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
             id?: string | null;
           }[];
           /**
@@ -4166,19 +4538,36 @@ export interface Placement {
             width?: string | null;
             id?: string | null;
           }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
           rows: {
             /**
-             * Row data as JSON object. Keys should match column keys.
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
              */
-            data?:
-              | {
-                  [k: string]: unknown;
-                }
-              | unknown[]
-              | string
-              | number
-              | boolean
-              | null;
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
             id?: string | null;
           }[];
           /**
@@ -4304,7 +4693,16 @@ export interface AboutSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -4377,7 +4775,16 @@ export interface ResearchSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;
@@ -4428,7 +4835,16 @@ export interface PlacementSelect<T extends boolean = true> {
               rows?:
                 | T
                 | {
-                    data?: T;
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               variant?: T;

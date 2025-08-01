@@ -120,13 +120,64 @@ export const createGlobalSectionFields = (): Field[] => [
         type: 'array',
         label: 'Table Rows',
         required: true,
+        admin: {
+          description: 'Add rows to your table. Each row should have data for all columns.',
+        },
         fields: [
           {
-            name: 'data',
-            type: 'json',
+            name: 'rowData',
+            type: 'array',
+            label: 'Row Cells',
+            required: true,
             admin: {
-              description: 'Row data as JSON object. Keys should match column keys.',
+              description: 'Add data for each column in this row. Make sure to add cells in the same order as your columns.',
             },
+            fields: [
+              {
+                name: 'columnKey',
+                type: 'text',
+                required: true,
+                admin: {
+                  description: 'Column key (should match one of your column keys above)',
+                  placeholder: 'e.g., name, email, department',
+                },
+              },
+              {
+                name: 'value',
+                type: 'text',
+                required: true,
+                admin: {
+                  description: 'Cell content/value',
+                  placeholder: 'Enter the cell content',
+                },
+              },
+              {
+                name: 'isLink',
+                type: 'checkbox',
+                defaultValue: false,
+                admin: {
+                  description: 'Make this cell a clickable link',
+                },
+              },
+              {
+                name: 'linkUrl',
+                type: 'text',
+                admin: {
+                  condition: (data, siblingData) => siblingData?.isLink === true,
+                  description: 'URL for the link',
+                  placeholder: 'https://example.com or /internal-page',
+                },
+              },
+              {
+                name: 'isExternal',
+                type: 'checkbox',
+                defaultValue: false,
+                admin: {
+                  condition: (data, siblingData) => siblingData?.isLink === true,
+                  description: 'External link (opens in new tab)',
+                },
+              },
+            ],
           },
         ],
       },
