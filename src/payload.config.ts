@@ -62,6 +62,7 @@ export default buildConfig({
     'https://reccms.flashserver.in',
     'https://cmsrec.flashserver.in',
     'https://recwebsite.flashserver.in',
+    'https://rajalakshmi-website.vercel.app/',
   ],
   csrf: [
     'http://localhost:3000',
@@ -71,6 +72,7 @@ export default buildConfig({
     'https://reccms.flashserver.in',
     'https://cmsrec.flashserver.in',
     'https://recwebsite.flashserver.in',
+    'https://rajalakshmi-website.vercel.app/',
   ],
   sharp,
   plugins: [
