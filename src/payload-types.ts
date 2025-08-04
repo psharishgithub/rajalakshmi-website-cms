@@ -639,38 +639,6 @@ export interface DepartmentSection {
         id?: string | null;
       }[]
     | null;
-  heroSection?: {
-    /**
-     * Main title for department page (defaults to department name)
-     */
-    heroTitle?: string | null;
-    /**
-     * Subtitle or tagline
-     */
-    heroSubtitle?: string | null;
-    /**
-     * Hero background image
-     */
-    heroImage?: (string | null) | Media;
-    /**
-     * Brief intro content for hero section
-     */
-    heroContent?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-  };
   introduction: {
     /**
      * Title of the section
@@ -2304,10 +2272,6 @@ export interface SecondaryNav {
        */
       heroSubtitle?: string | null;
       /**
-       * Hero background image
-       */
-      heroImage?: (string | null) | Media;
-      /**
        * Rich text content for the hero section
        */
       heroContent?: {
@@ -2691,21 +2655,45 @@ export interface DynamicPage {
   priority?: number | null;
   seo?: {
     /**
-     * Meta title for SEO (defaults to page title if empty)
+     * Meta title for SEO (defaults to hero title if empty). Recommended: 50-60 characters
      */
     metaTitle?: string | null;
     /**
-     * Meta description for SEO
+     * Meta description for SEO and social media previews. Recommended: 150-160 characters
      */
     metaDescription?: string | null;
     /**
-     * SEO keywords (comma-separated)
+     * SEO keywords (comma-separated). Focus on 3-5 relevant keywords
      */
     keywords?: string | null;
     /**
-     * Open Graph image for social media sharing
+     * Open Graph title for social media sharing (defaults to meta title if empty)
+     */
+    ogTitle?: string | null;
+    /**
+     * Open Graph description for social media sharing (defaults to meta description if empty)
+     */
+    ogDescription?: string | null;
+    /**
+     * Open Graph image for social media sharing (recommended: 1200x630px)
      */
     ogImage?: (string | null) | Media;
+    /**
+     * Twitter card type for Twitter sharing
+     */
+    twitterCard?: ('summary' | 'summary_large_image') | null;
+    /**
+     * Prevent search engines from indexing this page
+     */
+    noIndex?: boolean | null;
+    /**
+     * Prevent search engines from following links on this page
+     */
+    noFollow?: boolean | null;
+    /**
+     * Canonical URL for this page (leave empty to use current page URL)
+     */
+    canonicalUrl?: string | null;
   };
   /**
    * Main hero title for the page
@@ -2715,10 +2703,6 @@ export interface DynamicPage {
    * Hero subtitle displayed below the main title
    */
   heroSubtitle?: string | null;
-  /**
-   * Hero banner image for the page
-   */
-  heroImage?: (string | null) | Media;
   sections?:
     | {
         /**
@@ -3169,14 +3153,6 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         order?: T;
         isActive?: T;
         id?: T;
-      };
-  heroSection?:
-    | T
-    | {
-        heroTitle?: T;
-        heroSubtitle?: T;
-        heroImage?: T;
-        heroContent?: T;
       };
   introduction?:
     | T
@@ -3884,7 +3860,6 @@ export interface SecondaryNavSelect<T extends boolean = true> {
           | {
               heroTitle?: T;
               heroSubtitle?: T;
-              heroImage?: T;
               heroContent?: T;
             };
         mainContent?: T;
@@ -4020,11 +3995,16 @@ export interface DynamicPagesSelect<T extends boolean = true> {
         metaTitle?: T;
         metaDescription?: T;
         keywords?: T;
+        ogTitle?: T;
+        ogDescription?: T;
         ogImage?: T;
+        twitterCard?: T;
+        noIndex?: T;
+        noFollow?: T;
+        canonicalUrl?: T;
       };
   heroTitle?: T;
   heroSubtitle?: T;
-  heroImage?: T;
   sections?:
     | T
     | {
@@ -4107,6 +4087,48 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface About {
   id: string;
+  seo?: {
+    /**
+     * Meta title for SEO (defaults to hero title if empty). Recommended: 50-60 characters
+     */
+    metaTitle?: string | null;
+    /**
+     * Meta description for SEO and social media previews. Recommended: 150-160 characters
+     */
+    metaDescription?: string | null;
+    /**
+     * SEO keywords (comma-separated). Focus on 3-5 relevant keywords
+     */
+    keywords?: string | null;
+    /**
+     * Open Graph title for social media sharing (defaults to meta title if empty)
+     */
+    ogTitle?: string | null;
+    /**
+     * Open Graph description for social media sharing (defaults to meta description if empty)
+     */
+    ogDescription?: string | null;
+    /**
+     * Open Graph image for social media sharing (recommended: 1200x630px)
+     */
+    ogImage?: (string | null) | Media;
+    /**
+     * Twitter card type for Twitter sharing
+     */
+    twitterCard?: ('summary' | 'summary_large_image') | null;
+    /**
+     * Prevent search engines from indexing this page
+     */
+    noIndex?: boolean | null;
+    /**
+     * Prevent search engines from following links on this page
+     */
+    noFollow?: boolean | null;
+    /**
+     * Canonical URL for this page (leave empty to use current page URL)
+     */
+    canonicalUrl?: string | null;
+  };
   /**
    * Main hero title for the about page
    */
@@ -4115,10 +4137,6 @@ export interface About {
    * Hero subtitle displayed below the main title
    */
   heroSubtitle?: string | null;
-  /**
-   * Hero banner image for the about page
-   */
-  heroImage?: (string | null) | Media;
   sections?:
     | {
         /**
@@ -4251,6 +4269,48 @@ export interface About {
  */
 export interface Admission {
   id: string;
+  seo?: {
+    /**
+     * Meta title for SEO (defaults to hero title if empty). Recommended: 50-60 characters
+     */
+    metaTitle?: string | null;
+    /**
+     * Meta description for SEO and social media previews. Recommended: 150-160 characters
+     */
+    metaDescription?: string | null;
+    /**
+     * SEO keywords (comma-separated). Focus on 3-5 relevant keywords
+     */
+    keywords?: string | null;
+    /**
+     * Open Graph title for social media sharing (defaults to meta title if empty)
+     */
+    ogTitle?: string | null;
+    /**
+     * Open Graph description for social media sharing (defaults to meta description if empty)
+     */
+    ogDescription?: string | null;
+    /**
+     * Open Graph image for social media sharing (recommended: 1200x630px)
+     */
+    ogImage?: (string | null) | Media;
+    /**
+     * Twitter card type for Twitter sharing
+     */
+    twitterCard?: ('summary' | 'summary_large_image') | null;
+    /**
+     * Prevent search engines from indexing this page
+     */
+    noIndex?: boolean | null;
+    /**
+     * Prevent search engines from following links on this page
+     */
+    noFollow?: boolean | null;
+    /**
+     * Canonical URL for this page (leave empty to use current page URL)
+     */
+    canonicalUrl?: string | null;
+  };
   /**
    * Main hero title for the about page
    */
@@ -4259,10 +4319,6 @@ export interface Admission {
    * Hero subtitle displayed below the main title
    */
   heroSubtitle?: string | null;
-  /**
-   * Hero banner image for the about page
-   */
-  heroImage?: (string | null) | Media;
   sections?:
     | {
         /**
@@ -4313,6 +4369,48 @@ export interface Admission {
  */
 export interface Research {
   id: string;
+  seo?: {
+    /**
+     * Meta title for SEO (defaults to hero title if empty). Recommended: 50-60 characters
+     */
+    metaTitle?: string | null;
+    /**
+     * Meta description for SEO and social media previews. Recommended: 150-160 characters
+     */
+    metaDescription?: string | null;
+    /**
+     * SEO keywords (comma-separated). Focus on 3-5 relevant keywords
+     */
+    keywords?: string | null;
+    /**
+     * Open Graph title for social media sharing (defaults to meta title if empty)
+     */
+    ogTitle?: string | null;
+    /**
+     * Open Graph description for social media sharing (defaults to meta description if empty)
+     */
+    ogDescription?: string | null;
+    /**
+     * Open Graph image for social media sharing (recommended: 1200x630px)
+     */
+    ogImage?: (string | null) | Media;
+    /**
+     * Twitter card type for Twitter sharing
+     */
+    twitterCard?: ('summary' | 'summary_large_image') | null;
+    /**
+     * Prevent search engines from indexing this page
+     */
+    noIndex?: boolean | null;
+    /**
+     * Prevent search engines from following links on this page
+     */
+    noFollow?: boolean | null;
+    /**
+     * Canonical URL for this page (leave empty to use current page URL)
+     */
+    canonicalUrl?: string | null;
+  };
   /**
    * Main hero title for the research page
    */
@@ -4321,10 +4419,6 @@ export interface Research {
    * Hero subtitle displayed below the main title
    */
   heroSubtitle?: string | null;
-  /**
-   * Hero banner image for the research page
-   */
-  heroImage?: (string | null) | Media;
   sections?:
     | {
         /**
@@ -4459,6 +4553,48 @@ export interface Research {
  */
 export interface Placement {
   id: string;
+  seo?: {
+    /**
+     * Meta title for SEO (defaults to hero title if empty). Recommended: 50-60 characters
+     */
+    metaTitle?: string | null;
+    /**
+     * Meta description for SEO and social media previews. Recommended: 150-160 characters
+     */
+    metaDescription?: string | null;
+    /**
+     * SEO keywords (comma-separated). Focus on 3-5 relevant keywords
+     */
+    keywords?: string | null;
+    /**
+     * Open Graph title for social media sharing (defaults to meta title if empty)
+     */
+    ogTitle?: string | null;
+    /**
+     * Open Graph description for social media sharing (defaults to meta description if empty)
+     */
+    ogDescription?: string | null;
+    /**
+     * Open Graph image for social media sharing (recommended: 1200x630px)
+     */
+    ogImage?: (string | null) | Media;
+    /**
+     * Twitter card type for Twitter sharing
+     */
+    twitterCard?: ('summary' | 'summary_large_image') | null;
+    /**
+     * Prevent search engines from indexing this page
+     */
+    noIndex?: boolean | null;
+    /**
+     * Prevent search engines from following links on this page
+     */
+    noFollow?: boolean | null;
+    /**
+     * Canonical URL for this page (leave empty to use current page URL)
+     */
+    canonicalUrl?: string | null;
+  };
   /**
    * Main hero title for the placement page
    */
@@ -4467,10 +4603,6 @@ export interface Placement {
    * Hero subtitle displayed below the main title
    */
   heroSubtitle?: string | null;
-  /**
-   * Hero banner image for the placement page
-   */
-  heroImage?: (string | null) | Media;
   sections?:
     | {
         /**
@@ -4603,6 +4735,48 @@ export interface Placement {
  */
 export interface InternationalRelation {
   id: string;
+  seo?: {
+    /**
+     * Meta title for SEO (defaults to hero title if empty). Recommended: 50-60 characters
+     */
+    metaTitle?: string | null;
+    /**
+     * Meta description for SEO and social media previews. Recommended: 150-160 characters
+     */
+    metaDescription?: string | null;
+    /**
+     * SEO keywords (comma-separated). Focus on 3-5 relevant keywords
+     */
+    keywords?: string | null;
+    /**
+     * Open Graph title for social media sharing (defaults to meta title if empty)
+     */
+    ogTitle?: string | null;
+    /**
+     * Open Graph description for social media sharing (defaults to meta description if empty)
+     */
+    ogDescription?: string | null;
+    /**
+     * Open Graph image for social media sharing (recommended: 1200x630px)
+     */
+    ogImage?: (string | null) | Media;
+    /**
+     * Twitter card type for Twitter sharing
+     */
+    twitterCard?: ('summary' | 'summary_large_image') | null;
+    /**
+     * Prevent search engines from indexing this page
+     */
+    noIndex?: boolean | null;
+    /**
+     * Prevent search engines from following links on this page
+     */
+    noFollow?: boolean | null;
+    /**
+     * Canonical URL for this page (leave empty to use current page URL)
+     */
+    canonicalUrl?: string | null;
+  };
   /**
    * Main hero title for the about page
    */
@@ -4611,10 +4785,6 @@ export interface InternationalRelation {
    * Hero subtitle displayed below the main title
    */
   heroSubtitle?: string | null;
-  /**
-   * Hero banner image for the about page
-   */
-  heroImage?: (string | null) | Media;
   sections?:
     | {
         /**
@@ -4662,9 +4832,22 @@ export interface InternationalRelation {
  * via the `definition` "about_select".
  */
 export interface AboutSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        keywords?: T;
+        ogTitle?: T;
+        ogDescription?: T;
+        ogImage?: T;
+        twitterCard?: T;
+        noIndex?: T;
+        noFollow?: T;
+        canonicalUrl?: T;
+      };
   heroTitle?: T;
   heroSubtitle?: T;
-  heroImage?: T;
   sections?:
     | T
     | {
@@ -4722,9 +4905,22 @@ export interface AboutSelect<T extends boolean = true> {
  * via the `definition` "admissions_select".
  */
 export interface AdmissionsSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        keywords?: T;
+        ogTitle?: T;
+        ogDescription?: T;
+        ogImage?: T;
+        twitterCard?: T;
+        noIndex?: T;
+        noFollow?: T;
+        canonicalUrl?: T;
+      };
   heroTitle?: T;
   heroSubtitle?: T;
-  heroImage?: T;
   sections?:
     | T
     | {
@@ -4744,9 +4940,22 @@ export interface AdmissionsSelect<T extends boolean = true> {
  * via the `definition` "research_select".
  */
 export interface ResearchSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        keywords?: T;
+        ogTitle?: T;
+        ogDescription?: T;
+        ogImage?: T;
+        twitterCard?: T;
+        noIndex?: T;
+        noFollow?: T;
+        canonicalUrl?: T;
+      };
   heroTitle?: T;
   heroSubtitle?: T;
-  heroImage?: T;
   sections?:
     | T
     | {
@@ -4804,9 +5013,22 @@ export interface ResearchSelect<T extends boolean = true> {
  * via the `definition` "placement_select".
  */
 export interface PlacementSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        keywords?: T;
+        ogTitle?: T;
+        ogDescription?: T;
+        ogImage?: T;
+        twitterCard?: T;
+        noIndex?: T;
+        noFollow?: T;
+        canonicalUrl?: T;
+      };
   heroTitle?: T;
   heroSubtitle?: T;
-  heroImage?: T;
   sections?:
     | T
     | {
@@ -4864,9 +5086,22 @@ export interface PlacementSelect<T extends boolean = true> {
  * via the `definition` "international-relations_select".
  */
 export interface InternationalRelationsSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        keywords?: T;
+        ogTitle?: T;
+        ogDescription?: T;
+        ogImage?: T;
+        twitterCard?: T;
+        noIndex?: T;
+        noFollow?: T;
+        canonicalUrl?: T;
+      };
   heroTitle?: T;
   heroSubtitle?: T;
-  heroImage?: T;
   sections?:
     | T
     | {

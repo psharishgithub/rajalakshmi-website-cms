@@ -1,5 +1,6 @@
 import { GlobalConfig } from 'payload'
 import { globalAccess } from '../access'
+import { createSEOFields } from './shared/globalConfig'
 
 export const Admissions: GlobalConfig = {
   slug: 'admissions',
@@ -8,6 +9,8 @@ export const Admissions: GlobalConfig = {
   },
   access: globalAccess,
   fields: [
+    // SEO Fields
+    ...createSEOFields(),
     // Hero Section
     {
       name: 'heroTitle',
@@ -22,14 +25,6 @@ export const Admissions: GlobalConfig = {
       type: 'text',
       admin: {
         description: 'Hero subtitle displayed below the main title',
-      },
-    },
-    {
-      name: 'heroImage',
-      type: 'upload',
-      relationTo: 'media',
-      admin: {
-        description: 'Hero banner image for the about page',
       },
     },
     {

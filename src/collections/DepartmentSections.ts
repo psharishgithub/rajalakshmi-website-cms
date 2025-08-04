@@ -7,6 +7,7 @@ export const DepartmentSections: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['department', 'title', 'isActive', 'updatedAt'],
+    group: 'Departments',
   },
   access: universalAccess,
   fields: [
@@ -45,44 +46,6 @@ export const DepartmentSections: CollectionConfig = {
         description: 'Create custom sections with rich text, tables, or dynamic tables',
       },
       fields: createGlobalSectionFields(),
-    },
-
-    // Hero Section for Department Page
-    {
-      name: 'heroSection',
-      type: 'group',
-      label: 'Hero Section',
-      fields: [
-        {
-          name: 'heroTitle',
-          type: 'text',
-          admin: {
-            description: 'Main title for department page (defaults to department name)',
-          },
-        },
-        {
-          name: 'heroSubtitle',
-          type: 'text',
-          admin: {
-            description: 'Subtitle or tagline',
-          },
-        },
-        {
-          name: 'heroImage',
-          type: 'upload',
-          relationTo: 'media',
-          admin: {
-            description: 'Hero background image',
-          },
-        },
-        {
-          name: 'heroContent',
-          type: 'richText',
-          admin: {
-            description: 'Brief intro content for hero section',
-          },
-        },
-      ],
     },
     
     // Introduction Section

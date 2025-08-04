@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { universalAccessPublished } from '../access'
+import { createSEOFields } from '../globals/shared/globalConfig'
 
 export const DynamicPages: CollectionConfig = {
   slug: 'dynamic-pages',
@@ -74,42 +75,7 @@ export const DynamicPages: CollectionConfig = {
       },
     },
     // SEO Fields
-    {
-      name: 'seo',
-      type: 'group',
-      label: 'SEO Settings',
-      fields: [
-        {
-          name: 'metaTitle',
-          type: 'text',
-          admin: {
-            description: 'Meta title for SEO (defaults to page title if empty)',
-          },
-        },
-        {
-          name: 'metaDescription',
-          type: 'textarea',
-          admin: {
-            description: 'Meta description for SEO',
-          },
-        },
-        {
-          name: 'keywords',
-          type: 'text',
-          admin: {
-            description: 'SEO keywords (comma-separated)',
-          },
-        },
-        {
-          name: 'ogImage',
-          type: 'upload',
-          relationTo: 'media',
-          admin: {
-            description: 'Open Graph image for social media sharing',
-          },
-        },
-      ],
-    },
+    ...createSEOFields(),
     // Hero Section
     {
       name: 'heroTitle',
@@ -124,14 +90,6 @@ export const DynamicPages: CollectionConfig = {
       type: 'text',
       admin: {
         description: 'Hero subtitle displayed below the main title',
-      },
-    },
-    {
-      name: 'heroImage',
-      type: 'upload',
-      relationTo: 'media',
-      admin: {
-        description: 'Hero banner image for the page',
       },
     },
     {

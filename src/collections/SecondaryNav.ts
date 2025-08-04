@@ -7,6 +7,7 @@ export const SecondaryNav: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'linkType', 'isVisible', 'order', 'updatedAt'],
     description: 'Manage secondary navigation bar buttons and their content pages',
+    group: 'Landing Page Components',
   },
   access: universalAccessVisible,
   fields: [
@@ -88,14 +89,6 @@ export const SecondaryNav: CollectionConfig = {
               type: 'text',
               admin: {
                 description: 'Subtitle or tagline for the page',
-              },
-            },
-            {
-              name: 'heroImage',
-              type: 'upload',
-              relationTo: 'media',
-              admin: {
-                description: 'Hero background image',
               },
             },
             {

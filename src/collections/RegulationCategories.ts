@@ -6,6 +6,7 @@ export const RegulationCategories: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'isActive', 'order', 'updatedAt'],
+    group: 'Regulations',
   },
   access: universalAccess,
   fields: [

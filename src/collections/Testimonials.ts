@@ -5,6 +5,7 @@ export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
   admin: {
     useAsTitle: 'authorName',
+    group: 'Landing Page Components',
   },
   access: universalAccess,
   fields: [

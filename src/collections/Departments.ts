@@ -7,6 +7,7 @@ export const Departments: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'code', 'isActive', 'order', 'updatedAt'],
     description: 'Manage departments for navigation dropdown',
+    group: 'Departments',
   },
   access: universalAccess,
   fields: [

@@ -1,6 +1,112 @@
 import { Field, GlobalConfig } from 'payload'
 import { CollectionSlug } from 'payload'
 
+export const createSEOFields = (): Field[] => [
+  {
+    name: 'seo',
+    type: 'group',
+    label: 'SEO Settings',
+    fields: [
+      {
+        name: 'metaTitle',
+        type: 'text',
+        admin: {
+          description: 'Meta title for SEO (defaults to hero title if empty). Recommended: 50-60 characters',
+        },
+        validate: (val: string | undefined | null) => {
+          if (val && val.length > 60) {
+            return 'Meta title should be 60 characters or less for optimal SEO'
+          }
+          return true
+        },
+      },
+      {
+        name: 'metaDescription',
+        type: 'textarea',
+        admin: {
+          description: 'Meta description for SEO and social media previews. Recommended: 150-160 characters',
+        },
+        validate: (val: string | undefined | null) => {
+          if (val && val.length > 160) {
+            return 'Meta description should be 160 characters or less for optimal SEO'
+          }
+          return true
+        },
+      },
+      {
+        name: 'keywords',
+        type: 'text',
+        admin: {
+          description: 'SEO keywords (comma-separated). Focus on 3-5 relevant keywords',
+        },
+      },
+      {
+        name: 'ogTitle',
+        type: 'text',
+        admin: {
+          description: 'Open Graph title for social media sharing (defaults to meta title if empty)',
+        },
+      },
+      {
+        name: 'ogDescription',
+        type: 'textarea',
+        admin: {
+          description: 'Open Graph description for social media sharing (defaults to meta description if empty)',
+        },
+      },
+      {
+        name: 'ogImage',
+        type: 'upload',
+        relationTo: 'media',
+        admin: {
+          description: 'Open Graph image for social media sharing (recommended: 1200x630px)',
+        },
+      },
+      {
+        name: 'twitterCard',
+        type: 'select',
+        options: [
+          { label: 'Summary', value: 'summary' },
+          { label: 'Summary Large Image', value: 'summary_large_image' },
+        ],
+        defaultValue: 'summary_large_image',
+        admin: {
+          description: 'Twitter card type for Twitter sharing',
+        },
+      },
+      {
+        name: 'noIndex',
+        type: 'checkbox',
+        defaultValue: false,
+        admin: {
+          description: 'Prevent search engines from indexing this page',
+        },
+      },
+      {
+        name: 'noFollow',
+        type: 'checkbox',
+        defaultValue: false,
+        admin: {
+          description: 'Prevent search engines from following links on this page',
+        },
+      },
+      {
+        name: 'canonicalUrl',
+        type: 'text',
+        admin: {
+          description: 'Canonical URL for this page (leave empty to use current page URL)',
+        },
+        validate: (val: string | undefined | null) => {
+          if (val && !val.startsWith('http')) {
+            return 'Canonical URL must be a complete URL starting with http:// or https://'
+          }
+          return true
+        },
+      },
+    ],
+  },
+]
+
 export const createGlobalSectionFields = (): Field[] => [
   {
     name: 'title',
@@ -241,6 +347,8 @@ export const createGlobalPageConfig = (slug: string, title: string, description?
     description: description || `Manage ${title} page content`,
   },
   fields: [
+    // SEO Fields
+    ...createSEOFields(),
     // Hero Section
     {
       name: 'heroTitle',
@@ -255,14 +363,6 @@ export const createGlobalPageConfig = (slug: string, title: string, description?
       type: 'text',
       admin: {
         description: 'Hero subtitle displayed below the main title',
-      },
-    },
-    {
-      name: 'heroImage',
-      type: 'upload',
-      relationTo: 'media' as CollectionSlug,
-      admin: {
-        description: `Hero banner image for the ${title.toLowerCase()} page`,
       },
     },
     {

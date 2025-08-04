@@ -43,6 +43,11 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    // Define collection groups order
+    meta: {
+      titleSuffix: '- Rajalakshmi CMS',
+      description: 'Content Management System for Rajalakshmi Engineering College',
+    },
   },
   collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, Departments, DepartmentSections, SecondaryNav, DynamicPages],
   globals: [About, Admissions, Research, Placement, InternationalRelations],

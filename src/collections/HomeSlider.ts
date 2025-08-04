@@ -5,6 +5,7 @@ export const HomeSlider: CollectionConfig = {
   slug: 'home-slider',
   admin: {
     useAsTitle: 'title',
+    group: 'Landing Page Components',
   },
   access: universalAccess,
   fields: [

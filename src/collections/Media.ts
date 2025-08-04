@@ -7,6 +7,7 @@ export const Media: CollectionConfig = {
   admin: {
     // In admin panel, show media based on user role
     defaultColumns: ['filename', 'alt', 'uploadedBy', 'updatedAt'],
+    group: 'Assets',
   },
   hooks: {
     beforeChange: [

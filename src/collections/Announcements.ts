@@ -5,6 +5,7 @@ export const Announcements: CollectionConfig = {
   slug: 'announcements',
   admin: {
     useAsTitle: 'title',
+    group: 'Landing Page Components',
   },
   access: universalAccess,
   fields: [

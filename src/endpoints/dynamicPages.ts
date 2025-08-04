@@ -179,7 +179,6 @@ export const globalsDynamicPageEndpoint: Endpoint = {
         globalType: pageData.slug, // Use slug as globalType to match global pages pattern
         heroTitle: pageData.heroTitle,
         heroSubtitle: pageData.heroSubtitle,
-        heroImage: pageData.heroImage,
         sections: pageData.sections || [],
         id: pageData.id
       }
@@ -337,7 +336,6 @@ export const globalsPatternEndpoint: Endpoint = {
         globalType: page.slug, // Use slug as globalType to match global pages pattern
         heroTitle: page.heroTitle || page.pageTitle,
         heroSubtitle: page.heroSubtitle || '',
-        heroImage: page.heroImage || null,
         sections: page.sections || [],
         id: page.id
       }

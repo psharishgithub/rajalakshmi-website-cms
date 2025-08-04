@@ -6,6 +6,7 @@ export const COECategories: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'isActive', 'order', 'updatedAt'],
+    group: 'COE',
   },
   access: universalAccess,
   fields: [
