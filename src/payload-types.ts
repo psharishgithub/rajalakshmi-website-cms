@@ -568,6 +568,10 @@ export interface DepartmentSection {
          * Configure a custom table with multiple columns
          */
         dynamicTableConfig?: {
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
           columns: {
             /**
              * Unique identifier for this column (no spaces, use camelCase)
@@ -690,6 +694,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -810,6 +818,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -937,6 +949,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -1064,6 +1080,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -1192,6 +1212,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -1329,6 +1353,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -1463,6 +1491,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -1593,6 +1625,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -1730,6 +1766,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -1865,6 +1905,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -1997,6 +2041,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -2134,6 +2182,10 @@ export interface DepartmentSection {
      * Configure a custom table with multiple columns
      */
     dynamicTableConfig?: {
+      /**
+       * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+       */
+      csvInput?: string | null;
       columns: {
         /**
          * Unique identifier for this column (no spaces, use camelCase)
@@ -3123,6 +3175,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3171,6 +3224,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3218,6 +3272,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3272,6 +3327,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3326,6 +3382,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3381,6 +3438,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3442,6 +3500,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3503,6 +3562,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3560,6 +3620,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3621,6 +3682,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3680,6 +3742,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3739,6 +3802,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -3797,6 +3861,7 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -4189,6 +4254,10 @@ export interface About {
          * Configure a custom table with multiple columns
          */
         dynamicTableConfig?: {
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
           columns: {
             /**
              * Unique identifier for this column (no spaces, use camelCase)
@@ -4264,6 +4333,8 @@ export interface About {
   createdAt?: string | null;
 }
 /**
+ * Manage Admissions page content
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "admissions".
  */
@@ -4312,7 +4383,7 @@ export interface Admission {
     canonicalUrl?: string | null;
   };
   /**
-   * Main hero title for the about page
+   * Main hero title for the admissions page
    */
   heroTitle: string;
   /**
@@ -4322,13 +4393,17 @@ export interface Admission {
   sections?:
     | {
         /**
-         * Title of the about section
+         * Title of the section
          */
         title: string;
         /**
-         * Content for this about section
+         * Choose the type of content for this section
          */
-        content: {
+        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        /**
+         * Rich text content for this section
+         */
+        content?: {
           root: {
             type: string;
             children: {
@@ -4342,7 +4417,91 @@ export interface Admission {
             version: number;
           };
           [k: string]: unknown;
+        } | null;
+        /**
+         * Table data with labels and links
+         */
+        tableData?:
+          | {
+              /**
+               * Display text for the table row
+               */
+              label: string;
+              /**
+               * URL or file path for the link
+               */
+              link: string;
+              /**
+               * Check if this is an external link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Configure a custom table with multiple columns
+         */
+        dynamicTableConfig?: {
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
         };
+        /**
+         * Optional custom title for the table (defaults to "Table Title")
+         */
+        tableTitle?: string | null;
         /**
          * Optional image for this section
          */
@@ -4471,6 +4630,10 @@ export interface Research {
          * Configure a custom table with multiple columns
          */
         dynamicTableConfig?: {
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
           columns: {
             /**
              * Unique identifier for this column (no spaces, use camelCase)
@@ -4655,6 +4818,10 @@ export interface Placement {
          * Configure a custom table with multiple columns
          */
         dynamicTableConfig?: {
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
           columns: {
             /**
              * Unique identifier for this column (no spaces, use camelCase)
@@ -4865,6 +5032,7 @@ export interface AboutSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -4925,7 +5093,46 @@ export interface AdmissionsSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        contentType?: T;
         content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        tableTitle?: T;
         image?: T;
         order?: T;
         isActive?: T;
@@ -4973,6 +5180,7 @@ export interface ResearchSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {
@@ -5046,6 +5254,7 @@ export interface PlacementSelect<T extends boolean = true> {
         dynamicTableConfig?:
           | T
           | {
+              csvInput?: T;
               columns?:
                 | T
                 | {

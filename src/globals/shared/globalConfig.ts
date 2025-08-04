@@ -1,6 +1,40 @@
 import { Field, GlobalConfig } from 'payload'
 import { CollectionSlug } from 'payload'
 
+// Helper function to parse CSV data and convert to table structure
+const parseCSVToTableData = (csvText: string) => {
+  if (!csvText || csvText.trim() === '') return { columns: [], rows: [] }
+  
+  const lines = csvText.trim().split('\n')
+  if (lines.length === 0) return { columns: [], rows: [] }
+  
+  // First line is headers/columns
+  const headers = lines[0].split(',').map(header => header.trim().replace(/['"]/g, ''))
+  
+  // Generate columns array
+  const columns = headers.map((header, index) => ({
+    key: header.toLowerCase().replace(/[^a-zA-Z0-9]/g, ''), // Convert to camelCase-like key
+    label: header,
+    width: '', // Optional width
+  }))
+  
+  // Generate rows array
+  const rows = lines.slice(1).map(line => {
+    const values = line.split(',').map(value => value.trim().replace(/['"]/g, ''))
+    const rowData = headers.map((header, index) => ({
+      columnKey: header.toLowerCase().replace(/[^a-zA-Z0-9]/g, ''),
+      value: values[index] || '',
+      isLink: false,
+      linkUrl: '',
+      isExternal: false,
+    }))
+    
+    return { rowData }
+  })
+  
+  return { columns, rows }
+}
+
 export const createSEOFields = (): Field[] => [
   {
     name: 'seo',
@@ -190,6 +224,32 @@ export const createGlobalSectionFields = (): Field[] => [
       description: 'Configure a custom table with multiple columns',
     },
     fields: [
+      {
+        name: 'csvInput',
+        type: 'textarea',
+        admin: {
+          description: 'Paste CSV data here to automatically populate the table. Data will be processed when you save.',
+          placeholder: 'Paste your CSV data here...\nExample:\nName,Email,Department\nJohn Doe,john@example.com,Engineering\nJane Smith,jane@example.com,Marketing',
+          rows: 6,
+        },
+        hooks: {
+          beforeChange: [
+            ({ value, siblingData, data }) => {
+              // If CSV input has data, parse it and populate columns/rows
+              if (value && value.trim() !== '') {
+                const parsedData = parseCSVToTableData(value)
+                
+                // Update the sibling fields with parsed data
+                if (siblingData) {
+                  siblingData.columns = parsedData.columns
+                  siblingData.rows = parsedData.rows
+                }
+              }
+              return value
+            }
+          ]
+        }
+      },
       {
         name: 'columns',
         type: 'array',
