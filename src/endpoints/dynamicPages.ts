@@ -1,61 +1,5 @@
 import type { Endpoint } from 'payload'
 
-// Get all published dynamic pages
-export const dynamicPagesEndpoint: Endpoint = {
-  path: '/dynamic-pages',
-  method: 'get',
-  handler: async (req) => {
-    const { payload } = req
-    const { searchParams } = new URL(req.url!)
-    const category = searchParams.get('category')
-    const limit = parseInt(searchParams.get('limit') || '100')
-    const page = parseInt(searchParams.get('page') || '1')
-
-    try {
-      const whereClause: any = {
-        isPublished: {
-          equals: true,
-        },
-      }
-
-      // Add category filter if provided
-      if (category && category !== 'all') {
-        whereClause.category = {
-          equals: category,
-        }
-      }
-
-      const pages = await payload.find({
-        collection: 'dynamic-pages',
-        where: whereClause,
-        sort: '-priority',
-        limit,
-        page,
-      })
-
-      return Response.json({
-        success: true,
-        data: pages.docs,
-        totalDocs: pages.totalDocs,
-        totalPages: pages.totalPages,
-        page: pages.page,
-        limit: pages.limit,
-        hasNextPage: pages.hasNextPage,
-        hasPrevPage: pages.hasPrevPage,
-      })
-    } catch (error) {
-      console.error('Error fetching dynamic pages:', error)
-      return Response.json(
-        {
-          success: false,
-          error: 'Failed to fetch dynamic pages',
-        },
-        { status: 500 }
-      )
-    }
-  },
-}
-
 // Get a single dynamic page by slug
 export const dynamicPageBySlugEndpoint: Endpoint = {
   path: '/:slug',
@@ -106,7 +50,104 @@ export const dynamicPageBySlugEndpoint: Endpoint = {
 
       return Response.json({
         success: true,
-        data: pages.docs[0],
+        data: {
+          ...pages.docs[0],
+          // Transform sections to ensure compatibility
+          sections: (pages.docs[0].sections || []).map((section: any) => {
+            const transformedSection = {
+              ...section,
+              id: section.id || Math.random().toString(36),
+              title: section.title || '',
+              content: section.content || { root: { children: [] } },
+              contentType: section.contentType || 'richText',
+              order: section.order || 0,
+              isActive: section.isActive !== false,
+              tableData: section.tableData || [],
+              tableTitle: section.tableTitle || '',
+            }
+
+            // Transform dynamicTableConfig if it exists
+            if (section.dynamicTableConfig && (section.contentType === 'dynamicTable' || section.contentType === 'mixedDynamic')) {
+              const { columns = [], rows = [] } = section.dynamicTableConfig
+              
+              // Check if we have rowData format (already transformed) vs raw data format
+              const hasRowDataFormat = rows.length > 0 && rows[0].rowData && Array.isArray(rows[0].rowData);
+              
+              if (hasRowDataFormat) {
+                // Data is already in rowData format, use as-is
+                transformedSection.dynamicTableConfig = {
+                  columns: columns.map((col: any) => ({
+                    key: col.key,
+                    label: col.label,
+                    width: col.width || ''
+                  })),
+                  rows: rows,
+                  variant: section.dynamicTableConfig.variant || 'default'
+                }
+              } else {
+                // Transform rows from dynamic pages format to global pages format
+                const transformedRows = rows.map((row: any, index: number) => {
+                  const rowData: any[] = []
+                  
+                  // Handle multiple data formats:
+                  // 1. CSV-parsed format: row.data contains key-value pairs
+                  // 2. Manual format: row contains direct key-value pairs  
+                  // 3. JSON format: row.data as JSON object
+                  let dataSource = null;
+                  
+                  if (row.data) {
+                    if (typeof row.data === 'string') {
+                      try {
+                        // Handle JSON string format
+                        dataSource = JSON.parse(row.data);
+                      } catch (e) {
+                        // If not valid JSON, treat as object
+                        dataSource = row.data;
+                      }
+                    } else if (typeof row.data === 'object') {
+                      // Handle object format (CSV parsed)
+                      dataSource = row.data;
+                    }
+                  } else {
+                    // Handle direct row properties
+                    dataSource = row;
+                  }
+                  
+                  if (dataSource && typeof dataSource === 'object') {
+                    columns.forEach((column: any) => {
+                      const cellValue = dataSource[column.key] || '';
+                      rowData.push({
+                        columnKey: column.key,
+                        value: String(cellValue),
+                        isLink: false,
+                        linkUrl: '',
+                        isExternal: false,
+                        id: `${row.id || index}_${column.key}`
+                      })
+                    })
+                  }
+                  
+                  return {
+                    rowData,
+                    id: row.id || `row_${index}`
+                  }
+                })
+                
+                transformedSection.dynamicTableConfig = {
+                  columns: columns.map((col: any) => ({
+                    key: col.key,
+                    label: col.label,
+                    width: col.width || ''
+                  })),
+                  rows: transformedRows,
+                  variant: section.dynamicTableConfig.variant || 'default'
+                }
+              }
+            }
+
+            return transformedSection
+          })
+        },
       })
     } catch (error) {
       console.error('Error fetching dynamic page:', error)
@@ -114,189 +155,6 @@ export const dynamicPageBySlugEndpoint: Endpoint = {
         {
           success: false,
           error: 'Failed to fetch page',
-        },
-        { status: 500 }
-      )
-    }
-  },
-}
-
-// Get a single dynamic page by slug with globals pattern
-export const globalsDynamicPageEndpoint: Endpoint = {
-  path: '/globals-dynamic/:slug',
-  method: 'get',
-  handler: async (req) => {
-    const { payload, routeParams } = req
-    const { slug } = routeParams || {}
-
-    if (!slug) {
-      return Response.json(
-        {
-          success: false,
-          error: 'Slug parameter is required',
-        },
-        { status: 400 }
-      )
-    }
-
-    try {
-      const pages = await payload.find({
-        collection: 'dynamic-pages',
-        where: {
-          and: [
-            {
-              slug: {
-                equals: slug,
-              },
-            },
-            {
-              isPublished: {
-                equals: true,
-              },
-            },
-          ],
-        },
-        limit: 1,
-      })
-
-      if (pages.docs.length === 0) {
-        return Response.json(
-          {
-            success: false,
-            error: 'Page not found',
-          },
-          { status: 404 }
-        )
-      }
-
-      // Return the page data directly, matching the global pages format
-      const pageData = pages.docs[0]
-      
-      // Transform the dynamic page data to match global page structure exactly
-      const globalPageFormat = {
-        createdAt: pageData.createdAt,
-        updatedAt: pageData.updatedAt,
-        globalType: pageData.slug, // Use slug as globalType to match global pages pattern
-        heroTitle: pageData.heroTitle,
-        heroSubtitle: pageData.heroSubtitle,
-        sections: pageData.sections || [],
-        id: pageData.id
-      }
-
-      return Response.json(globalPageFormat)
-    } catch (error) {
-      console.error('Error fetching dynamic page:', error)
-      return Response.json(
-        {
-          success: false,
-          error: 'Failed to fetch page',
-        },
-        { status: 500 }
-      )
-    }
-  },
-}
-
-// Get dynamic pages by category
-export const dynamicPagesByCategoryEndpoint: Endpoint = {
-  path: '/dynamic-pages/category/:category',
-  method: 'get',
-  handler: async (req) => {
-    const { payload, routeParams } = req
-    const { category } = routeParams || {}
-    const { searchParams } = new URL(req.url!)
-    const limit = parseInt(searchParams.get('limit') || '50')
-    const page = parseInt(searchParams.get('page') || '1')
-
-    if (!category) {
-      return Response.json(
-        {
-          success: false,
-          error: 'Category parameter is required',
-        },
-        { status: 400 }
-      )
-    }
-
-    try {
-      const pages = await payload.find({
-        collection: 'dynamic-pages',
-        where: {
-          and: [
-            {
-              category: {
-                equals: category,
-              },
-            },
-            {
-              isPublished: {
-                equals: true,
-              },
-            },
-          ],
-        },
-        sort: '-priority',
-        limit,
-        page,
-      })
-
-      return Response.json({
-        success: true,
-        data: pages.docs,
-        totalDocs: pages.totalDocs,
-        totalPages: pages.totalPages,
-        page: pages.page,
-        limit: pages.limit,
-        hasNextPage: pages.hasNextPage,
-        hasPrevPage: pages.hasPrevPage,
-        category,
-      })
-    } catch (error) {
-      console.error('Error fetching dynamic pages by category:', error)
-      return Response.json(
-        {
-          success: false,
-          error: 'Failed to fetch dynamic pages by category',
-        },
-        { status: 500 }
-      )
-    }
-  },
-}
-
-// Debug endpoint - Get all dynamic pages (including unpublished)
-export const allDynamicPagesEndpoint: Endpoint = {
-  path: '/dynamic-pages/all',
-  method: 'get',
-  handler: async (req) => {
-    const { payload } = req
-
-    try {
-      const pages = await payload.find({
-        collection: 'dynamic-pages',
-        limit: 100,
-        sort: '-updatedAt',
-      })
-
-      return Response.json({
-        success: true,
-        data: pages.docs.map((page: any) => ({
-          id: page.id,
-          pageTitle: page.pageTitle,
-          slug: page.slug,
-          isPublished: page.isPublished,
-          category: page.category,
-          priority: page.priority,
-          updatedAt: page.updatedAt,
-        })),
-        totalDocs: pages.totalDocs,
-      })
-    } catch (error) {
-      console.error('Error fetching all dynamic pages:', error)
-      return Response.json(
-        {
-          success: false,
-          error: 'Failed to fetch all dynamic pages',
         },
         { status: 500 }
       )
@@ -329,6 +187,123 @@ export const globalsPatternEndpoint: Endpoint = {
 
       const page = dynamicPage.docs[0]
       
+      // Transform sections to match global pages format
+      const transformedSections = (page.sections || []).map((section: any) => {
+        const transformedSection = {
+          ...section,
+          id: section.id || Math.random().toString(36),
+          title: section.title || '',
+          content: section.content || { root: { children: [] } },
+          contentType: section.contentType || 'richText',
+          order: section.order || 0,
+          isActive: section.isActive !== false,
+          tableData: section.tableData || [],
+          tableTitle: section.tableTitle || '',
+        }
+
+        // Transform dynamicTableConfig if it exists
+        if (section.dynamicTableConfig && (section.contentType === 'dynamicTable' || section.contentType === 'mixedDynamic')) {
+          const { columns = [], rows = [] } = section.dynamicTableConfig
+          
+          // Check if we have rowData format (already transformed) vs raw data format
+          const hasRowDataFormat = rows.length > 0 && rows[0].rowData && Array.isArray(rows[0].rowData);
+          
+          if (hasRowDataFormat) {
+            // Data is already in rowData format, but check if values are meaningful
+            const hasEmptyValues = rows.some((row: any) => 
+              row.rowData.some((cell: any) => 
+                cell.columnKey !== 'id' && (!cell.value || cell.value === '')
+              )
+            );
+            
+            if (hasEmptyValues) {
+              console.log('Detected empty values in rowData format - data may be corrupted');
+              // Keep the existing structure but note the issue
+              transformedSection.dynamicTableConfig = {
+                columns: columns.map((col: any) => ({
+                  key: col.key,
+                  label: col.label,
+                  width: col.width || ''
+                })),
+                rows: rows,
+                variant: section.dynamicTableConfig.variant || 'default'
+              }
+            } else {
+              // Data looks good, use as-is
+              transformedSection.dynamicTableConfig = {
+                columns: columns.map((col: any) => ({
+                  key: col.key,
+                  label: col.label,
+                  width: col.width || ''
+                })),
+                rows: rows,
+                variant: section.dynamicTableConfig.variant || 'default'
+              }
+            }
+          } else {
+            // Transform rows from dynamic pages format to global pages format
+            const transformedRows = rows.map((row: any, index: number) => {
+              const rowData: any[] = []
+              
+              // Handle multiple data formats:
+              // 1. CSV-parsed format: row.data contains key-value pairs
+              // 2. Manual format: row contains direct key-value pairs
+              // 3. JSON format: row.data as JSON object
+              let dataSource = null;
+              
+              if (row.data) {
+                if (typeof row.data === 'string') {
+                  try {
+                    // Handle JSON string format
+                    dataSource = JSON.parse(row.data);
+                  } catch (e) {
+                    // If not valid JSON, treat as object
+                    dataSource = row.data;
+                  }
+                } else if (typeof row.data === 'object') {
+                  // Handle object format (CSV parsed)
+                  dataSource = row.data;
+                }
+              } else {
+                // Handle direct row properties
+                dataSource = row;
+              }
+              
+              if (dataSource && typeof dataSource === 'object') {
+                columns.forEach((column: any) => {
+                  const cellValue = dataSource[column.key] || '';
+                  rowData.push({
+                    columnKey: column.key,
+                    value: String(cellValue),
+                    isLink: false,
+                    linkUrl: '',
+                    isExternal: false,
+                    id: `${row.id || index}_${column.key}`
+                  })
+                })
+              }
+              
+              return {
+                rowData,
+                id: row.id || `row_${index}`
+              }
+            })
+            
+            transformedSection.dynamicTableConfig = {
+              columns: columns.map((col: any) => ({
+                key: col.key,
+                label: col.label,
+                width: col.width || ''
+              })),
+              rows: transformedRows,
+              variant: section.dynamicTableConfig.variant || 'default'
+            }
+          }
+        }
+
+        return transformedSection
+      })
+      
       // Transform the response to match global pages format exactly
       const transformedPage = {
         createdAt: page.createdAt,
@@ -336,14 +311,23 @@ export const globalsPatternEndpoint: Endpoint = {
         globalType: page.slug, // Use slug as globalType to match global pages pattern
         heroTitle: page.heroTitle || page.pageTitle,
         heroSubtitle: page.heroSubtitle || '',
-        sections: page.sections || [],
-        id: page.id
+        sections: transformedSections,
+        seo: page.seo || {},
+        id: page.id,
+        pageType: 'dynamic',
+        source: 'dynamic-pages'
       }
 
-      return Response.json(transformedPage)
+      return Response.json({
+        success: true,
+        data: transformedPage
+      })
     } catch (error) {
       console.error('Error fetching dynamic page:', error)
-      return Response.json({ error: 'Internal server error' }, { status: 500 })
+      return Response.json({ 
+        success: false,
+        error: 'Internal server error' 
+      }, { status: 500 })
     }
   }
 }

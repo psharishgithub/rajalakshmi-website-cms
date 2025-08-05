@@ -2,7 +2,7 @@ import { GlobalConfig } from 'payload'
 import { globalAccess } from '../access'
 import { createGlobalPageConfig } from './shared/globalConfig'
 
-export const InternationalRelations: GlobalConfig = {
-  ...createGlobalPageConfig('international-relations', 'International Relations'),
+export const Academics: GlobalConfig = {
+  ...createGlobalPageConfig('academics', 'Academics'),
   access: globalAccess,
 }

@@ -31,8 +31,8 @@ import { InternationalRelations } from './globals/InternationalRelations'
 
 // Import endpoints
 import { departmentsNavEndpoint, departmentContentEndpoint, departmentBySectionEndpoint } from './endpoints/departments'
-import { dynamicPagesEndpoint, dynamicPageBySlugEndpoint, globalsDynamicPageEndpoint, dynamicPagesByCategoryEndpoint, allDynamicPagesEndpoint, globalsPatternEndpoint } from './endpoints/dynamicPages'
-import { unifiedPageEndpoint, unifiedPageQueryEndpoint } from './endpoints/unifiedPages'
+import { dynamicPageBySlugEndpoint, globalsPatternEndpoint } from './endpoints/dynamicPages'
+import { Academics } from './globals/Academics'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -50,7 +50,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, Departments, DepartmentSections, SecondaryNav, DynamicPages],
-  globals: [About, Admissions, Research, Placement, InternationalRelations],
+  globals: [About, Admissions, Research, Placement, InternationalRelations, Academics],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -84,16 +84,10 @@ export default buildConfig({
     payloadCloudPlugin(),
   ],
   endpoints: [
-    unifiedPageEndpoint,
-    unifiedPageQueryEndpoint,
     globalsPatternEndpoint,
     departmentsNavEndpoint,
     departmentContentEndpoint,
     departmentBySectionEndpoint,
-    dynamicPagesEndpoint,
     dynamicPageBySlugEndpoint,
-    globalsDynamicPageEndpoint,
-    dynamicPagesByCategoryEndpoint,
-    allDynamicPagesEndpoint,
   ],
 })
