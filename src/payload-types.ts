@@ -527,7 +527,17 @@ export interface DepartmentSection {
         /**
          * Choose the type of content for this section
          */
-        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        contentType?:
+          | (
+              | 'richText'
+              | 'table'
+              | 'dynamicTable'
+              | 'multipleTables'
+              | 'mixed'
+              | 'mixedDynamic'
+              | 'mixedMultipleTables'
+            )
+          | null;
         /**
          * Rich text content for this section
          */
@@ -627,6 +637,73 @@ export interface DepartmentSection {
           variant?: ('default' | 'bordered' | 'striped') | null;
         };
         /**
+         * Configure multiple custom tables with CSV input support
+         */
+        multipleTablesConfig?:
+          | {
+              /**
+               * Title for this table
+               */
+              tableTitle?: string | null;
+              /**
+               * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+               */
+              csvInput?: string | null;
+              columns: {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key: string;
+                /**
+                 * Display label for the column header
+                 */
+                label: string;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[];
+              /**
+               * Add rows to your table. Each row should have data for all columns.
+               */
+              rows: {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData: {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey: string;
+                  /**
+                   * Cell content/value
+                   */
+                  value: string;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[];
+                id?: string | null;
+              }[];
+              /**
+               * Visual style of the table
+               */
+              variant?: ('default' | 'bordered' | 'striped') | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
          * Optional custom title for the table (defaults to "Table Title")
          */
         tableTitle?: string | null;
@@ -653,7 +730,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -752,6 +831,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -777,7 +923,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -876,6 +1024,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -908,7 +1123,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -1007,6 +1224,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -1039,7 +1323,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -1138,6 +1424,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -1171,7 +1524,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -1270,6 +1625,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -1312,7 +1734,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -1411,6 +1835,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -1450,7 +1941,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -1549,6 +2042,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -1584,7 +2144,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -1683,6 +2245,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -1725,7 +2354,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -1824,6 +2455,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -1864,7 +2562,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -1963,6 +2663,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -2000,7 +2767,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -2099,6 +2868,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -2141,7 +2977,9 @@ export interface DepartmentSection {
     /**
      * Choose the type of content for this section
      */
-    contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+    contentType?:
+      | ('richText' | 'table' | 'dynamicTable' | 'multipleTables' | 'mixed' | 'mixedDynamic' | 'mixedMultipleTables')
+      | null;
     /**
      * Rich text content for this section
      */
@@ -2240,6 +3078,73 @@ export interface DepartmentSection {
        */
       variant?: ('default' | 'bordered' | 'striped') | null;
     };
+    /**
+     * Configure multiple custom tables with CSV input support
+     */
+    multipleTablesConfig?:
+      | {
+          /**
+           * Title for this table
+           */
+          tableTitle?: string | null;
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+          id?: string | null;
+        }[]
+      | null;
     /**
      * Optional custom title for the table (defaults to "Table Title")
      */
@@ -2409,7 +3314,17 @@ export interface DynamicPage {
         /**
          * Choose the type of content for this section
          */
-        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        contentType?:
+          | (
+              | 'richText'
+              | 'table'
+              | 'dynamicTable'
+              | 'multipleTables'
+              | 'mixed'
+              | 'mixedDynamic'
+              | 'mixedMultipleTables'
+            )
+          | null;
         /**
          * Rich text content for this section
          */
@@ -2508,6 +3423,73 @@ export interface DynamicPage {
            */
           variant?: ('default' | 'bordered' | 'striped') | null;
         };
+        /**
+         * Configure multiple custom tables with CSV input support
+         */
+        multipleTablesConfig?:
+          | {
+              /**
+               * Title for this table
+               */
+              tableTitle?: string | null;
+              /**
+               * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+               */
+              csvInput?: string | null;
+              columns: {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key: string;
+                /**
+                 * Display label for the column header
+                 */
+                label: string;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[];
+              /**
+               * Add rows to your table. Each row should have data for all columns.
+               */
+              rows: {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData: {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey: string;
+                  /**
+                   * Cell content/value
+                   */
+                  value: string;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[];
+                id?: string | null;
+              }[];
+              /**
+               * Visual style of the table
+               */
+              variant?: ('default' | 'bordered' | 'striped') | null;
+              id?: string | null;
+            }[]
+          | null;
         /**
          * Optional custom title for the table (defaults to "Table Title")
          */
@@ -2867,6 +3849,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                   };
               variant?: T;
             };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
         tableTitle?: T;
         image?: T;
         order?: T;
@@ -2916,6 +3929,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                   };
               variant?: T;
             };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
         tableTitle?: T;
         image?: T;
         order?: T;
@@ -2963,6 +4007,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                     id?: T;
                   };
               variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
             };
         tableTitle?: T;
         image?: T;
@@ -3019,6 +4094,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                   };
               variant?: T;
             };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
         tableTitle?: T;
         image?: T;
         order?: T;
@@ -3073,6 +4179,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                     id?: T;
                   };
               variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
             };
         tableTitle?: T;
         image?: T;
@@ -3129,6 +4266,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                     id?: T;
                   };
               variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
             };
         tableTitle?: T;
         image?: T;
@@ -3192,6 +4360,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                   };
               variant?: T;
             };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
         tableTitle?: T;
         image?: T;
         order?: T;
@@ -3254,6 +4453,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                   };
               variant?: T;
             };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
         tableTitle?: T;
         image?: T;
         order?: T;
@@ -3311,6 +4541,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                     id?: T;
                   };
               variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
             };
         tableTitle?: T;
         image?: T;
@@ -3374,6 +4635,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                   };
               variant?: T;
             };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
         tableTitle?: T;
         image?: T;
         order?: T;
@@ -3433,6 +4725,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                     id?: T;
                   };
               variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
             };
         tableTitle?: T;
         image?: T;
@@ -3494,6 +4817,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                   };
               variant?: T;
             };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
         tableTitle?: T;
         image?: T;
         order?: T;
@@ -3552,6 +4906,37 @@ export interface DepartmentSectionsSelect<T extends boolean = true> {
                     id?: T;
                   };
               variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
             };
         tableTitle?: T;
         image?: T;
@@ -3653,6 +5038,37 @@ export interface DynamicPagesSelect<T extends boolean = true> {
                     id?: T;
                   };
               variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
             };
         tableTitle?: T;
         image?: T;
@@ -3762,7 +5178,17 @@ export interface About {
         /**
          * Choose the type of content for this section
          */
-        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        contentType?:
+          | (
+              | 'richText'
+              | 'table'
+              | 'dynamicTable'
+              | 'multipleTables'
+              | 'mixed'
+              | 'mixedDynamic'
+              | 'mixedMultipleTables'
+            )
+          | null;
         /**
          * Rich text content for this section
          */
@@ -3861,6 +5287,73 @@ export interface About {
            */
           variant?: ('default' | 'bordered' | 'striped') | null;
         };
+        /**
+         * Configure multiple custom tables with CSV input support
+         */
+        multipleTablesConfig?:
+          | {
+              /**
+               * Title for this table
+               */
+              tableTitle?: string | null;
+              /**
+               * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+               */
+              csvInput?: string | null;
+              columns: {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key: string;
+                /**
+                 * Display label for the column header
+                 */
+                label: string;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[];
+              /**
+               * Add rows to your table. Each row should have data for all columns.
+               */
+              rows: {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData: {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey: string;
+                  /**
+                   * Cell content/value
+                   */
+                  value: string;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[];
+                id?: string | null;
+              }[];
+              /**
+               * Visual style of the table
+               */
+              variant?: ('default' | 'bordered' | 'striped') | null;
+              id?: string | null;
+            }[]
+          | null;
         /**
          * Optional custom title for the table (defaults to "Table Title")
          */
@@ -3950,7 +5443,17 @@ export interface Admission {
         /**
          * Choose the type of content for this section
          */
-        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        contentType?:
+          | (
+              | 'richText'
+              | 'table'
+              | 'dynamicTable'
+              | 'multipleTables'
+              | 'mixed'
+              | 'mixedDynamic'
+              | 'mixedMultipleTables'
+            )
+          | null;
         /**
          * Rich text content for this section
          */
@@ -4049,6 +5552,73 @@ export interface Admission {
            */
           variant?: ('default' | 'bordered' | 'striped') | null;
         };
+        /**
+         * Configure multiple custom tables with CSV input support
+         */
+        multipleTablesConfig?:
+          | {
+              /**
+               * Title for this table
+               */
+              tableTitle?: string | null;
+              /**
+               * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+               */
+              csvInput?: string | null;
+              columns: {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key: string;
+                /**
+                 * Display label for the column header
+                 */
+                label: string;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[];
+              /**
+               * Add rows to your table. Each row should have data for all columns.
+               */
+              rows: {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData: {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey: string;
+                  /**
+                   * Cell content/value
+                   */
+                  value: string;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[];
+                id?: string | null;
+              }[];
+              /**
+               * Visual style of the table
+               */
+              variant?: ('default' | 'bordered' | 'striped') | null;
+              id?: string | null;
+            }[]
+          | null;
         /**
          * Optional custom title for the table (defaults to "Table Title")
          */
@@ -4138,7 +5708,17 @@ export interface Research {
         /**
          * Choose the type of content for this section
          */
-        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        contentType?:
+          | (
+              | 'richText'
+              | 'table'
+              | 'dynamicTable'
+              | 'multipleTables'
+              | 'mixed'
+              | 'mixedDynamic'
+              | 'mixedMultipleTables'
+            )
+          | null;
         /**
          * Rich text content for this section
          */
@@ -4237,6 +5817,73 @@ export interface Research {
            */
           variant?: ('default' | 'bordered' | 'striped') | null;
         };
+        /**
+         * Configure multiple custom tables with CSV input support
+         */
+        multipleTablesConfig?:
+          | {
+              /**
+               * Title for this table
+               */
+              tableTitle?: string | null;
+              /**
+               * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+               */
+              csvInput?: string | null;
+              columns: {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key: string;
+                /**
+                 * Display label for the column header
+                 */
+                label: string;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[];
+              /**
+               * Add rows to your table. Each row should have data for all columns.
+               */
+              rows: {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData: {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey: string;
+                  /**
+                   * Cell content/value
+                   */
+                  value: string;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[];
+                id?: string | null;
+              }[];
+              /**
+               * Visual style of the table
+               */
+              variant?: ('default' | 'bordered' | 'striped') | null;
+              id?: string | null;
+            }[]
+          | null;
         /**
          * Optional custom title for the table (defaults to "Table Title")
          */
@@ -4326,7 +5973,17 @@ export interface Placement {
         /**
          * Choose the type of content for this section
          */
-        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        contentType?:
+          | (
+              | 'richText'
+              | 'table'
+              | 'dynamicTable'
+              | 'multipleTables'
+              | 'mixed'
+              | 'mixedDynamic'
+              | 'mixedMultipleTables'
+            )
+          | null;
         /**
          * Rich text content for this section
          */
@@ -4425,6 +6082,73 @@ export interface Placement {
            */
           variant?: ('default' | 'bordered' | 'striped') | null;
         };
+        /**
+         * Configure multiple custom tables with CSV input support
+         */
+        multipleTablesConfig?:
+          | {
+              /**
+               * Title for this table
+               */
+              tableTitle?: string | null;
+              /**
+               * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+               */
+              csvInput?: string | null;
+              columns: {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key: string;
+                /**
+                 * Display label for the column header
+                 */
+                label: string;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[];
+              /**
+               * Add rows to your table. Each row should have data for all columns.
+               */
+              rows: {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData: {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey: string;
+                  /**
+                   * Cell content/value
+                   */
+                  value: string;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[];
+                id?: string | null;
+              }[];
+              /**
+               * Visual style of the table
+               */
+              variant?: ('default' | 'bordered' | 'striped') | null;
+              id?: string | null;
+            }[]
+          | null;
         /**
          * Optional custom title for the table (defaults to "Table Title")
          */
@@ -4514,7 +6238,17 @@ export interface InternationalRelation {
         /**
          * Choose the type of content for this section
          */
-        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        contentType?:
+          | (
+              | 'richText'
+              | 'table'
+              | 'dynamicTable'
+              | 'multipleTables'
+              | 'mixed'
+              | 'mixedDynamic'
+              | 'mixedMultipleTables'
+            )
+          | null;
         /**
          * Rich text content for this section
          */
@@ -4613,6 +6347,73 @@ export interface InternationalRelation {
            */
           variant?: ('default' | 'bordered' | 'striped') | null;
         };
+        /**
+         * Configure multiple custom tables with CSV input support
+         */
+        multipleTablesConfig?:
+          | {
+              /**
+               * Title for this table
+               */
+              tableTitle?: string | null;
+              /**
+               * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+               */
+              csvInput?: string | null;
+              columns: {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key: string;
+                /**
+                 * Display label for the column header
+                 */
+                label: string;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[];
+              /**
+               * Add rows to your table. Each row should have data for all columns.
+               */
+              rows: {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData: {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey: string;
+                  /**
+                   * Cell content/value
+                   */
+                  value: string;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[];
+                id?: string | null;
+              }[];
+              /**
+               * Visual style of the table
+               */
+              variant?: ('default' | 'bordered' | 'striped') | null;
+              id?: string | null;
+            }[]
+          | null;
         /**
          * Optional custom title for the table (defaults to "Table Title")
          */
@@ -4702,7 +6503,17 @@ export interface Academic {
         /**
          * Choose the type of content for this section
          */
-        contentType?: ('richText' | 'table' | 'dynamicTable' | 'mixed' | 'mixedDynamic') | null;
+        contentType?:
+          | (
+              | 'richText'
+              | 'table'
+              | 'dynamicTable'
+              | 'multipleTables'
+              | 'mixed'
+              | 'mixedDynamic'
+              | 'mixedMultipleTables'
+            )
+          | null;
         /**
          * Rich text content for this section
          */
@@ -4802,6 +6613,73 @@ export interface Academic {
           variant?: ('default' | 'bordered' | 'striped') | null;
         };
         /**
+         * Configure multiple custom tables with CSV input support
+         */
+        multipleTablesConfig?:
+          | {
+              /**
+               * Title for this table
+               */
+              tableTitle?: string | null;
+              /**
+               * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+               */
+              csvInput?: string | null;
+              columns: {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key: string;
+                /**
+                 * Display label for the column header
+                 */
+                label: string;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[];
+              /**
+               * Add rows to your table. Each row should have data for all columns.
+               */
+              rows: {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData: {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey: string;
+                  /**
+                   * Cell content/value
+                   */
+                  value: string;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[];
+                id?: string | null;
+              }[];
+              /**
+               * Visual style of the table
+               */
+              variant?: ('default' | 'bordered' | 'striped') | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
          * Optional custom title for the table (defaults to "Table Title")
          */
         tableTitle?: string | null;
@@ -4887,6 +6765,37 @@ export interface AboutSelect<T extends boolean = true> {
                   };
               variant?: T;
             };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
         tableTitle?: T;
         image?: T;
         order?: T;
@@ -4960,6 +6869,37 @@ export interface AdmissionsSelect<T extends boolean = true> {
                     id?: T;
                   };
               variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
             };
         tableTitle?: T;
         image?: T;
@@ -5035,6 +6975,37 @@ export interface ResearchSelect<T extends boolean = true> {
                   };
               variant?: T;
             };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
         tableTitle?: T;
         image?: T;
         order?: T;
@@ -5108,6 +7079,37 @@ export interface PlacementSelect<T extends boolean = true> {
                     id?: T;
                   };
               variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
             };
         tableTitle?: T;
         image?: T;
@@ -5183,6 +7185,37 @@ export interface InternationalRelationsSelect<T extends boolean = true> {
                   };
               variant?: T;
             };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
         tableTitle?: T;
         image?: T;
         order?: T;
@@ -5256,6 +7289,37 @@ export interface AcademicsSelect<T extends boolean = true> {
                     id?: T;
                   };
               variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
             };
         tableTitle?: T;
         image?: T;

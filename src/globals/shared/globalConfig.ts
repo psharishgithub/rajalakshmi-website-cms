@@ -157,8 +157,10 @@ export const createGlobalSectionFields = (): Field[] => [
       { label: 'Rich Text Content', value: 'richText' },
       { label: 'Link Table', value: 'table' },
       { label: 'Dynamic Table', value: 'dynamicTable' },
+      { label: 'Multiple Dynamic Tables', value: 'multipleTables' },
       { label: 'Mixed Content (Rich Text + Link Table)', value: 'mixed' },
       { label: 'Mixed Content (Rich Text + Dynamic Table)', value: 'mixedDynamic' },
+      { label: 'Mixed Content (Rich Text + Multiple Tables)', value: 'mixedMultipleTables' },
     ],
     defaultValue: 'richText',
     admin: {
@@ -172,7 +174,8 @@ export const createGlobalSectionFields = (): Field[] => [
       condition: (data, siblingData) => 
         siblingData?.contentType === 'richText' || 
         siblingData?.contentType === 'mixed' ||
-        siblingData?.contentType === 'mixedDynamic',
+        siblingData?.contentType === 'mixedDynamic' ||
+        siblingData?.contentType === 'mixedMultipleTables',
       description: 'Rich text content for this section',
     },
   },
@@ -224,6 +227,163 @@ export const createGlobalSectionFields = (): Field[] => [
       description: 'Configure a custom table with multiple columns',
     },
     fields: [
+      {
+        name: 'csvInput',
+        type: 'textarea',
+        admin: {
+          description: 'Paste CSV data here to automatically populate the table. Data will be processed when you save.',
+          placeholder: 'Paste your CSV data here...\nExample:\nName,Email,Department\nJohn Doe,john@example.com,Engineering\nJane Smith,jane@example.com,Marketing',
+          rows: 6,
+        },
+        hooks: {
+          beforeChange: [
+            ({ value, siblingData, data }) => {
+              // If CSV input has data, parse it and populate columns/rows
+              if (value && value.trim() !== '') {
+                const parsedData = parseCSVToTableData(value)
+                
+                // Update the sibling fields with parsed data
+                if (siblingData) {
+                  siblingData.columns = parsedData.columns
+                  siblingData.rows = parsedData.rows
+                }
+              }
+              return value
+            }
+          ]
+        }
+      },
+      {
+        name: 'columns',
+        type: 'array',
+        label: 'Table Columns',
+        required: true,
+        fields: [
+          {
+            name: 'key',
+            type: 'text',
+            required: true,
+            admin: {
+              description: 'Unique identifier for this column (no spaces, use camelCase)',
+            },
+          },
+          {
+            name: 'label',
+            type: 'text',
+            required: true,
+            admin: {
+              description: 'Display label for the column header',
+            },
+          },
+          {
+            name: 'width',
+            type: 'text',
+            admin: {
+              description: 'Optional CSS width (e.g., "w-20", "w-1/4")',
+            },
+          },
+        ],
+      },
+      {
+        name: 'rows',
+        type: 'array',
+        label: 'Table Rows',
+        required: true,
+        admin: {
+          description: 'Add rows to your table. Each row should have data for all columns.',
+        },
+        fields: [
+          {
+            name: 'rowData',
+            type: 'array',
+            label: 'Row Cells',
+            required: true,
+            admin: {
+              description: 'Add data for each column in this row. Make sure to add cells in the same order as your columns.',
+            },
+            fields: [
+              {
+                name: 'columnKey',
+                type: 'text',
+                required: true,
+                admin: {
+                  description: 'Column key (should match one of your column keys above)',
+                  placeholder: 'e.g., name, email, department',
+                },
+              },
+              {
+                name: 'value',
+                type: 'text',
+                required: true,
+                admin: {
+                  description: 'Cell content/value',
+                  placeholder: 'Enter the cell content',
+                },
+              },
+              {
+                name: 'isLink',
+                type: 'checkbox',
+                defaultValue: false,
+                admin: {
+                  description: 'Make this cell a clickable link',
+                },
+              },
+              {
+                name: 'linkUrl',
+                type: 'text',
+                admin: {
+                  condition: (data, siblingData) => siblingData?.isLink === true,
+                  description: 'URL for the link',
+                  placeholder: 'https://example.com or /internal-page',
+                },
+              },
+              {
+                name: 'isExternal',
+                type: 'checkbox',
+                defaultValue: false,
+                admin: {
+                  condition: (data, siblingData) => siblingData?.isLink === true,
+                  description: 'External link (opens in new tab)',
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'variant',
+        type: 'select',
+        options: [
+          { label: 'Default', value: 'default' },
+          { label: 'Bordered', value: 'bordered' },
+          { label: 'Striped', value: 'striped' },
+        ],
+        defaultValue: 'default',
+        admin: {
+          description: 'Visual style of the table',
+        },
+      },
+    ],
+  },
+  {
+    name: 'multipleTablesConfig',
+    type: 'array',
+    label: 'Multiple Tables Configuration',
+    admin: {
+      condition: (data, siblingData) => 
+        siblingData?.contentType === 'multipleTables' ||
+        siblingData?.contentType === 'mixedMultipleTables',
+      description: 'Configure multiple custom tables with CSV input support',
+    },
+    fields: [
+      {
+        name: 'tableTitle',
+        type: 'text',
+        admin: {
+          description: 'Title for this table',
+          placeholder: 'Enter table title',
+        },
+      },
       {
         name: 'csvInput',
         type: 'textarea',
