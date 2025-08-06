@@ -32,6 +32,7 @@ import { InternationalRelations } from './globals/InternationalRelations'
 // Import endpoints
 import { departmentsNavEndpoint, departmentContentEndpoint, departmentBySectionEndpoint } from './endpoints/departments'
 import { dynamicPageBySlugEndpoint, globalsPatternEndpoint } from './endpoints/dynamicPages'
+import { secondaryNavEndpoint } from './endpoints/secondaryNav'
 import { Academics } from './globals/Academics'
 
 const filename = fileURLToPath(import.meta.url)
@@ -89,5 +90,6 @@ export default buildConfig({
     departmentContentEndpoint,
     departmentBySectionEndpoint,
     dynamicPageBySlugEndpoint,
+    secondaryNavEndpoint,
   ],
 })
