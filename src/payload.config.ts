@@ -15,8 +15,6 @@ import { BlogPosts } from './collections/BlogPosts'
 import { Testimonials } from './collections/Testimonials'
 import { COE } from './collections/COE'
 import { COECategories } from './collections/COECategories'
-import { Regulations } from './collections/Regulations'
-import { RegulationCategories } from './collections/RegulationCategories'
 import { Departments } from './collections/Departments'
 import { DepartmentSections } from './collections/DepartmentSections'
 import { SecondaryNav } from './collections/SecondaryNav'
@@ -28,6 +26,8 @@ import { Admissions } from './globals/Admissions'
 import { Research } from './globals/Research'
 import { Placement } from './globals/Placement'
 import { InternationalRelations } from './globals/InternationalRelations'
+import { Regulations } from './globals/Regulations'
+import { StudentLife } from './globals/StudentLife'
 
 // Import endpoints
 import { departmentsNavEndpoint, departmentContentEndpoint, departmentBySectionEndpoint } from './endpoints/departments'
@@ -50,8 +50,8 @@ export default buildConfig({
       description: 'Content Management System for Rajalakshmi Engineering College',
     },
   },
-  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Regulations, RegulationCategories, Departments, DepartmentSections, SecondaryNav, DynamicPages],
-  globals: [About, Admissions, Research, Placement, InternationalRelations, Academics],
+  collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Departments, DepartmentSections, SecondaryNav, DynamicPages],
+  globals: [About, Admissions, Research, Placement, InternationalRelations, Academics, StudentLife, Regulations],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
