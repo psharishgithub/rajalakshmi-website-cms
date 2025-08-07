@@ -118,3 +118,4 @@ export const internationalRelationsGlobalWebhook = createGlobalWebhookHook('inte
 export const academicsGlobalWebhook = createGlobalWebhookHook('academics')
 export const studentLifeGlobalWebhook = createGlobalWebhookHook('student-life')
 export const regulationsGlobalWebhook = createGlobalWebhookHook('regulations')
+export const aluminiGlobalWebhook = createGlobalWebhookHook('Alumini')

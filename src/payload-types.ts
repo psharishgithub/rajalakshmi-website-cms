@@ -433,11 +433,11 @@ export interface DepartmentSection {
   /**
    * Select the department this content belongs to
    */
-  department: string | Department;
+  department?: (string | null) | Department;
   /**
    * Internal title for this content section
    */
-  title: string;
+  title?: string | null;
   /**
    * Whether this section is active and visible
    */
@@ -450,7 +450,7 @@ export interface DepartmentSection {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -491,11 +491,11 @@ export interface DepartmentSection {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -511,53 +511,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -576,53 +582,59 @@ export interface DepartmentSection {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */
@@ -649,11 +661,11 @@ export interface DepartmentSection {
         id?: string | null;
       }[]
     | null;
-  introduction: {
+  introduction?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -686,11 +698,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -706,53 +718,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -771,53 +789,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -842,11 +866,11 @@ export interface DepartmentSection {
      */
     isActive?: boolean | null;
   };
-  peos: {
+  peos?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -879,11 +903,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -899,53 +923,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -964,53 +994,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -1036,17 +1072,17 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     objectives?:
       | {
-          title: string;
-          description: string;
+          title?: string | null;
+          description?: string | null;
           id?: string | null;
         }[]
       | null;
   };
-  pos: {
+  pos?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -1079,11 +1115,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -1099,53 +1135,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -1164,53 +1206,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -1236,17 +1284,20 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     outcomes?:
       | {
-          title: string;
-          description: string;
+          title?: string | null;
+          description?: string | null;
           id?: string | null;
         }[]
       | null;
   };
-  opportunities: {
+  /**
+   * Optional section for career opportunities
+   */
+  opportunities?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -1279,11 +1330,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -1299,53 +1350,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -1364,53 +1421,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -1436,18 +1499,21 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     opportunityList?:
       | {
-          title: string;
+          title?: string | null;
           description?: string | null;
           image?: (string | null) | Media;
           id?: string | null;
         }[]
       | null;
   };
-  labFacility: {
+  /**
+   * Optional section for laboratory facilities
+   */
+  labFacility?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -1480,11 +1546,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -1500,53 +1566,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -1565,53 +1637,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -1637,15 +1715,15 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     labs?:
       | {
-          name: string;
-          description: string;
+          name?: string | null;
+          description?: string | null;
           /**
            * List of equipment/software available
            */
           equipment?: string | null;
           images?:
             | {
-                image: string | Media;
+                image?: (string | null) | Media;
                 id?: string | null;
               }[]
             | null;
@@ -1653,11 +1731,11 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  faculty: {
+  faculty?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -1690,11 +1768,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -1710,53 +1788,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -1775,53 +1859,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -1847,8 +1937,8 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     facultyMembers?:
       | {
-          name: string;
-          designation: string;
+          name?: string | null;
+          designation?: string | null;
           qualification?: string | null;
           specialization?: string | null;
           experience?: string | null;
@@ -1860,11 +1950,14 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  achievements: {
+  /**
+   * Optional section for department achievements
+   */
+  achievements?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -1897,11 +1990,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -1917,53 +2010,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -1982,53 +2081,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -2054,8 +2159,8 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     achievementList?:
       | {
-          title: string;
-          description: string;
+          title?: string | null;
+          description?: string | null;
           date?: string | null;
           category?: ('academic' | 'research' | 'student' | 'faculty' | 'awards' | 'other') | null;
           image?: (string | null) | Media;
@@ -2063,11 +2168,14 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  classroom: {
+  /**
+   * Optional section for classroom facilities
+   */
+  classroom?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -2100,11 +2208,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -2120,53 +2228,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -2185,53 +2299,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -2257,7 +2377,7 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     classrooms?:
       | {
-          name: string;
+          name?: string | null;
           capacity?: number | null;
           /**
            * List of facilities available in this classroom
@@ -2265,7 +2385,7 @@ export interface DepartmentSection {
           facilities?: string | null;
           images?:
             | {
-                image: string | Media;
+                image?: (string | null) | Media;
                 id?: string | null;
               }[]
             | null;
@@ -2273,11 +2393,14 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  facultyPublications: {
+  /**
+   * Optional section for faculty publications
+   */
+  facultyPublications?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -2310,11 +2433,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -2330,53 +2453,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -2395,53 +2524,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -2467,12 +2602,12 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     publications?:
       | {
-          title: string;
-          authors: string;
+          title?: string | null;
+          authors?: string | null;
           journal?: string | null;
           conference?: string | null;
-          year: number;
-          type: 'journal' | 'conference' | 'book_chapter' | 'book' | 'patent' | 'other';
+          year?: number | null;
+          type?: ('journal' | 'conference' | 'book_chapter' | 'book' | 'patent' | 'other') | null;
           /**
            * DOI or URL link to the publication
            */
@@ -2481,11 +2616,14 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  guestLectures: {
+  /**
+   * Optional section for guest lectures
+   */
+  guestLectures?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -2518,11 +2656,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -2538,53 +2676,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -2603,53 +2747,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -2675,22 +2825,25 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     lectures?:
       | {
-          title: string;
-          speaker: string;
+          title?: string | null;
+          speaker?: string | null;
           speakerDesignation?: string | null;
           organization?: string | null;
-          date: string;
+          date?: string | null;
           description?: string | null;
           image?: (string | null) | Media;
           id?: string | null;
         }[]
       | null;
   };
-  mous: {
+  /**
+   * Optional section for MOUs
+   */
+  mous?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -2723,11 +2876,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -2743,53 +2896,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -2808,53 +2967,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -2880,8 +3045,8 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     mouList?:
       | {
-          organization: string;
-          purpose: string;
+          organization?: string | null;
+          purpose?: string | null;
           dateOfSigning?: string | null;
           /**
            * Duration of the MoU (e.g., 3 years)
@@ -2896,11 +3061,14 @@ export interface DepartmentSection {
         }[]
       | null;
   };
-  universityRankHolders: {
+  /**
+   * Optional section for university rank holders
+   */
+  universityRankHolders?: {
     /**
      * Title of the section
      */
-    title: string;
+    title?: string | null;
     /**
      * Choose the type of content for this section
      */
@@ -2933,11 +3101,11 @@ export interface DepartmentSection {
           /**
            * Display text for the table row
            */
-          label: string;
+          label?: string | null;
           /**
            * URL or file path for the link
            */
-          link: string;
+          link?: string | null;
           /**
            * Check if this is an external link (opens in new tab)
            */
@@ -2953,53 +3121,59 @@ export interface DepartmentSection {
        * Paste CSV data here to automatically populate the table. Data will be processed when you save.
        */
       csvInput?: string | null;
-      columns: {
-        /**
-         * Unique identifier for this column (no spaces, use camelCase)
-         */
-        key: string;
-        /**
-         * Display label for the column header
-         */
-        label: string;
-        /**
-         * Optional CSS width (e.g., "w-20", "w-1/4")
-         */
-        width?: string | null;
-        id?: string | null;
-      }[];
+      columns?:
+        | {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key?: string | null;
+            /**
+             * Display label for the column header
+             */
+            label?: string | null;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Add rows to your table. Each row should have data for all columns.
        */
-      rows: {
-        /**
-         * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-         */
-        rowData: {
-          /**
-           * Column key (should match one of your column keys above)
-           */
-          columnKey: string;
-          /**
-           * Cell content/value
-           */
-          value: string;
-          /**
-           * Make this cell a clickable link
-           */
-          isLink?: boolean | null;
-          /**
-           * URL for the link
-           */
-          linkUrl?: string | null;
-          /**
-           * External link (opens in new tab)
-           */
-          isExternal?: boolean | null;
-          id?: string | null;
-        }[];
-        id?: string | null;
-      }[];
+      rows?:
+        | {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData?:
+              | {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey?: string | null;
+                  /**
+                   * Cell content/value
+                   */
+                  value?: string | null;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
       /**
        * Visual style of the table
        */
@@ -3018,53 +3192,59 @@ export interface DepartmentSection {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -3090,16 +3270,16 @@ export interface DepartmentSection {
     isActive?: boolean | null;
     rankHolders?:
       | {
-          studentName: string;
-          rank: number;
+          studentName?: string | null;
+          rank?: number | null;
           /**
            * Academic year in format: 2024-25
            */
-          academicYear: string;
+          academicYear?: string | null;
           /**
            * Course/Program (e.g., B.E CSE, M.E CSE)
            */
-          course: string;
+          course?: string | null;
           /**
            * CGPA/Percentage achieved
            */
@@ -3237,7 +3417,7 @@ export interface DynamicPage {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -3278,11 +3458,11 @@ export interface DynamicPage {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -3298,53 +3478,59 @@ export interface DynamicPage {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -3363,53 +3549,59 @@ export interface DynamicPage {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */
@@ -5049,7 +5241,7 @@ export interface About {
   /**
    * Main hero title for the about page
    */
-  heroTitle: string;
+  heroTitle?: string | null;
   /**
    * Hero subtitle displayed below the main title
    */
@@ -5059,7 +5251,7 @@ export interface About {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -5100,11 +5292,11 @@ export interface About {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -5120,53 +5312,59 @@ export interface About {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -5185,53 +5383,59 @@ export interface About {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */
@@ -5314,7 +5518,7 @@ export interface Admission {
   /**
    * Main hero title for the admissions page
    */
-  heroTitle: string;
+  heroTitle?: string | null;
   /**
    * Hero subtitle displayed below the main title
    */
@@ -5324,7 +5528,7 @@ export interface Admission {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -5365,11 +5569,11 @@ export interface Admission {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -5385,53 +5589,59 @@ export interface Admission {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -5450,53 +5660,59 @@ export interface Admission {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */
@@ -5579,7 +5795,7 @@ export interface Research {
   /**
    * Main hero title for the research page
    */
-  heroTitle: string;
+  heroTitle?: string | null;
   /**
    * Hero subtitle displayed below the main title
    */
@@ -5589,7 +5805,7 @@ export interface Research {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -5630,11 +5846,11 @@ export interface Research {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -5650,53 +5866,59 @@ export interface Research {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -5715,53 +5937,59 @@ export interface Research {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */
@@ -5844,7 +6072,7 @@ export interface Placement {
   /**
    * Main hero title for the placement page
    */
-  heroTitle: string;
+  heroTitle?: string | null;
   /**
    * Hero subtitle displayed below the main title
    */
@@ -5854,7 +6082,7 @@ export interface Placement {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -5895,11 +6123,11 @@ export interface Placement {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -5915,53 +6143,59 @@ export interface Placement {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -5980,53 +6214,59 @@ export interface Placement {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */
@@ -6109,7 +6349,7 @@ export interface InternationalRelation {
   /**
    * Main hero title for the international relations page
    */
-  heroTitle: string;
+  heroTitle?: string | null;
   /**
    * Hero subtitle displayed below the main title
    */
@@ -6119,7 +6359,7 @@ export interface InternationalRelation {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -6160,11 +6400,11 @@ export interface InternationalRelation {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -6180,53 +6420,59 @@ export interface InternationalRelation {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -6245,53 +6491,59 @@ export interface InternationalRelation {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */
@@ -6374,7 +6626,7 @@ export interface Academic {
   /**
    * Main hero title for the academics page
    */
-  heroTitle: string;
+  heroTitle?: string | null;
   /**
    * Hero subtitle displayed below the main title
    */
@@ -6384,7 +6636,7 @@ export interface Academic {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -6425,11 +6677,11 @@ export interface Academic {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -6445,53 +6697,59 @@ export interface Academic {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -6510,53 +6768,59 @@ export interface Academic {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */
@@ -6639,7 +6903,7 @@ export interface StudentLife {
   /**
    * Main hero title for the student life page
    */
-  heroTitle: string;
+  heroTitle?: string | null;
   /**
    * Hero subtitle displayed below the main title
    */
@@ -6649,7 +6913,7 @@ export interface StudentLife {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -6690,11 +6954,11 @@ export interface StudentLife {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -6710,53 +6974,59 @@ export interface StudentLife {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -6775,53 +7045,59 @@ export interface StudentLife {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */
@@ -6904,7 +7180,7 @@ export interface Regulation {
   /**
    * Main hero title for the regulations page
    */
-  heroTitle: string;
+  heroTitle?: string | null;
   /**
    * Hero subtitle displayed below the main title
    */
@@ -6914,7 +7190,7 @@ export interface Regulation {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -6955,11 +7231,11 @@ export interface Regulation {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -6975,53 +7251,59 @@ export interface Regulation {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -7040,53 +7322,59 @@ export interface Regulation {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */
@@ -7169,7 +7457,7 @@ export interface Facility {
   /**
    * Main hero title for the facilities page
    */
-  heroTitle: string;
+  heroTitle?: string | null;
   /**
    * Hero subtitle displayed below the main title
    */
@@ -7179,7 +7467,7 @@ export interface Facility {
         /**
          * Title of the section
          */
-        title: string;
+        title?: string | null;
         /**
          * Choose the type of content for this section
          */
@@ -7220,11 +7508,11 @@ export interface Facility {
               /**
                * Display text for the table row
                */
-              label: string;
+              label?: string | null;
               /**
                * URL or file path for the link
                */
-              link: string;
+              link?: string | null;
               /**
                * Check if this is an external link (opens in new tab)
                */
@@ -7240,53 +7528,59 @@ export interface Facility {
            * Paste CSV data here to automatically populate the table. Data will be processed when you save.
            */
           csvInput?: string | null;
-          columns: {
-            /**
-             * Unique identifier for this column (no spaces, use camelCase)
-             */
-            key: string;
-            /**
-             * Display label for the column header
-             */
-            label: string;
-            /**
-             * Optional CSS width (e.g., "w-20", "w-1/4")
-             */
-            width?: string | null;
-            id?: string | null;
-          }[];
+          columns?:
+            | {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key?: string | null;
+                /**
+                 * Display label for the column header
+                 */
+                label?: string | null;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Add rows to your table. Each row should have data for all columns.
            */
-          rows: {
-            /**
-             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-             */
-            rowData: {
-              /**
-               * Column key (should match one of your column keys above)
-               */
-              columnKey: string;
-              /**
-               * Cell content/value
-               */
-              value: string;
-              /**
-               * Make this cell a clickable link
-               */
-              isLink?: boolean | null;
-              /**
-               * URL for the link
-               */
-              linkUrl?: string | null;
-              /**
-               * External link (opens in new tab)
-               */
-              isExternal?: boolean | null;
-              id?: string | null;
-            }[];
-            id?: string | null;
-          }[];
+          rows?:
+            | {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData?:
+                  | {
+                      /**
+                       * Column key (should match one of your column keys above)
+                       */
+                      columnKey?: string | null;
+                      /**
+                       * Cell content/value
+                       */
+                      value?: string | null;
+                      /**
+                       * Make this cell a clickable link
+                       */
+                      isLink?: boolean | null;
+                      /**
+                       * URL for the link
+                       */
+                      linkUrl?: string | null;
+                      /**
+                       * External link (opens in new tab)
+                       */
+                      isExternal?: boolean | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[]
+            | null;
           /**
            * Visual style of the table
            */
@@ -7305,53 +7599,59 @@ export interface Facility {
                * Paste CSV data here to automatically populate the table. Data will be processed when you save.
                */
               csvInput?: string | null;
-              columns: {
-                /**
-                 * Unique identifier for this column (no spaces, use camelCase)
-                 */
-                key: string;
-                /**
-                 * Display label for the column header
-                 */
-                label: string;
-                /**
-                 * Optional CSS width (e.g., "w-20", "w-1/4")
-                 */
-                width?: string | null;
-                id?: string | null;
-              }[];
+              columns?:
+                | {
+                    /**
+                     * Unique identifier for this column (no spaces, use camelCase)
+                     */
+                    key?: string | null;
+                    /**
+                     * Display label for the column header
+                     */
+                    label?: string | null;
+                    /**
+                     * Optional CSS width (e.g., "w-20", "w-1/4")
+                     */
+                    width?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Add rows to your table. Each row should have data for all columns.
                */
-              rows: {
-                /**
-                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
-                 */
-                rowData: {
-                  /**
-                   * Column key (should match one of your column keys above)
-                   */
-                  columnKey: string;
-                  /**
-                   * Cell content/value
-                   */
-                  value: string;
-                  /**
-                   * Make this cell a clickable link
-                   */
-                  isLink?: boolean | null;
-                  /**
-                   * URL for the link
-                   */
-                  linkUrl?: string | null;
-                  /**
-                   * External link (opens in new tab)
-                   */
-                  isExternal?: boolean | null;
-                  id?: string | null;
-                }[];
-                id?: string | null;
-              }[];
+              rows?:
+                | {
+                    /**
+                     * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                     */
+                    rowData?:
+                      | {
+                          /**
+                           * Column key (should match one of your column keys above)
+                           */
+                          columnKey?: string | null;
+                          /**
+                           * Cell content/value
+                           */
+                          value?: string | null;
+                          /**
+                           * Make this cell a clickable link
+                           */
+                          isLink?: boolean | null;
+                          /**
+                           * URL for the link
+                           */
+                          linkUrl?: string | null;
+                          /**
+                           * External link (opens in new tab)
+                           */
+                          isExternal?: boolean | null;
+                          id?: string | null;
+                        }[]
+                      | null;
+                    id?: string | null;
+                  }[]
+                | null;
               /**
                * Visual style of the table
                */

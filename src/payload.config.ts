@@ -35,6 +35,7 @@ import { dynamicPageBySlugEndpoint, globalsPatternEndpoint } from './endpoints/d
 import { secondaryNavEndpoint } from './endpoints/secondaryNav'
 import { Academics } from './globals/Academics'
 import { Facilities } from './globals/Facilities'
+import { Alumini } from './globals/Alumini'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -52,7 +53,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Departments, DepartmentSections, SecondaryNav, DynamicPages],
-  globals: [About, Admissions, Research, Placement, InternationalRelations, Academics, StudentLife, Regulations, Facilities],
+  globals: [About, Admissions, Research, Placement, InternationalRelations, Academics, StudentLife, Regulations, Facilities, Alumini],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
