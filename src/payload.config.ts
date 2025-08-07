@@ -51,7 +51,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Announcements, HomeSlider, BlogPosts, Testimonials, COE, COECategories, Departments, DepartmentSections, SecondaryNav, DynamicPages],
-  globals: [About, Admissions, Research, Placement, InternationalRelations, Academics, StudentLife, Regulations],
+  globals: [About, Admissions, Research, Placement, InternationalRelations, Academics, StudentLife, Regulations, Facilities],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
