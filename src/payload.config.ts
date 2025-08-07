@@ -28,8 +28,6 @@ import { Placement } from './globals/Placement'
 import { InternationalRelations } from './globals/InternationalRelations'
 import { Regulations } from './globals/Regulations'
 import { StudentLife } from './globals/StudentLife'
-import { Facilities } from './globals/Facilities'
-
 // Import endpoints
 import { departmentsNavEndpoint, departmentContentEndpoint, departmentBySectionEndpoint } from './endpoints/departments'
 import { dynamicPageBySlugEndpoint, globalsPatternEndpoint } from './endpoints/dynamicPages'
