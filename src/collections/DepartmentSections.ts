@@ -1,6 +1,7 @@
 import { CollectionConfig, Field } from 'payload'
 import { universalAccess } from '../access'
 import { createGlobalSectionFields } from '../globals/shared/globalConfig'
+import { departmentSectionsWebhook } from '../hooks/webhook'
 
 export const DepartmentSections: CollectionConfig = {
   slug: 'department-sections',
@@ -10,6 +11,9 @@ export const DepartmentSections: CollectionConfig = {
     group: 'Departments',
   },
   access: universalAccess,
+  hooks: {
+    afterChange: [departmentSectionsWebhook],
+  },
   fields: [
     {
       name: 'department',

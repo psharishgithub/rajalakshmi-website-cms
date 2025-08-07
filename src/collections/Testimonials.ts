@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { universalAccess } from '../access'
+import { testimonialsWebhook } from '../hooks/webhook'
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -8,6 +9,9 @@ export const Testimonials: CollectionConfig = {
     group: 'Landing Page Components',
   },
   access: universalAccess,
+  hooks: {
+    afterChange: [testimonialsWebhook],
+  },
   fields: [
     {
       name: 'quote',

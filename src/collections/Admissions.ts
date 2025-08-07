@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { universalAccess } from '../access'
+import { admissionsWebhook } from '../hooks/webhook'
 
 export const Admissions: CollectionConfig = {
   slug: 'admissions',
@@ -8,6 +9,9 @@ export const Admissions: CollectionConfig = {
     defaultColumns: ['title', 'slug', 'isActive', 'updatedAt'],
   },
   access: universalAccess,
+  hooks: {
+    afterChange: [admissionsWebhook],
+  },
   fields: [
     {
       name: 'title',

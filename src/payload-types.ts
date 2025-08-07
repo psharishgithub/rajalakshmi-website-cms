@@ -113,6 +113,7 @@ export interface Config {
     academics: Academic;
     'student-life': StudentLife;
     regulations: Regulation;
+    facilities: Facility;
   };
   globalsSelect: {
     about: AboutSelect<false> | AboutSelect<true>;
@@ -123,6 +124,7 @@ export interface Config {
     academics: AcademicsSelect<false> | AcademicsSelect<true>;
     'student-life': StudentLifeSelect<false> | StudentLifeSelect<true>;
     regulations: RegulationsSelect<false> | RegulationsSelect<true>;
+    facilities: FacilitiesSelect<false> | FacilitiesSelect<true>;
   };
   locale: null;
   user: User & {
@@ -7115,6 +7117,271 @@ export interface Regulation {
   createdAt?: string | null;
 }
 /**
+ * Manage Facilities page content
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "facilities".
+ */
+export interface Facility {
+  id: string;
+  seo?: {
+    /**
+     * Meta title for SEO (defaults to hero title if empty). Recommended: 50-60 characters
+     */
+    metaTitle?: string | null;
+    /**
+     * Meta description for SEO and social media previews. Recommended: 150-160 characters
+     */
+    metaDescription?: string | null;
+    /**
+     * SEO keywords (comma-separated). Focus on 3-5 relevant keywords
+     */
+    keywords?: string | null;
+    /**
+     * Open Graph title for social media sharing (defaults to meta title if empty)
+     */
+    ogTitle?: string | null;
+    /**
+     * Open Graph description for social media sharing (defaults to meta description if empty)
+     */
+    ogDescription?: string | null;
+    /**
+     * Open Graph image for social media sharing (recommended: 1200x630px)
+     */
+    ogImage?: (string | null) | Media;
+    /**
+     * Twitter card type for Twitter sharing
+     */
+    twitterCard?: ('summary' | 'summary_large_image') | null;
+    /**
+     * Prevent search engines from indexing this page
+     */
+    noIndex?: boolean | null;
+    /**
+     * Prevent search engines from following links on this page
+     */
+    noFollow?: boolean | null;
+    /**
+     * Canonical URL for this page (leave empty to use current page URL)
+     */
+    canonicalUrl?: string | null;
+  };
+  /**
+   * Main hero title for the facilities page
+   */
+  heroTitle: string;
+  /**
+   * Hero subtitle displayed below the main title
+   */
+  heroSubtitle?: string | null;
+  sections?:
+    | {
+        /**
+         * Title of the section
+         */
+        title: string;
+        /**
+         * Choose the type of content for this section
+         */
+        contentType?:
+          | (
+              | 'richText'
+              | 'table'
+              | 'dynamicTable'
+              | 'multipleTables'
+              | 'mixed'
+              | 'mixedDynamic'
+              | 'mixedMultipleTables'
+            )
+          | null;
+        /**
+         * Rich text content for this section
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
+         * Table data with labels and links
+         */
+        tableData?:
+          | {
+              /**
+               * Display text for the table row
+               */
+              label: string;
+              /**
+               * URL or file path for the link
+               */
+              link: string;
+              /**
+               * Check if this is an external link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Configure a custom table with multiple columns
+         */
+        dynamicTableConfig?: {
+          /**
+           * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+           */
+          csvInput?: string | null;
+          columns: {
+            /**
+             * Unique identifier for this column (no spaces, use camelCase)
+             */
+            key: string;
+            /**
+             * Display label for the column header
+             */
+            label: string;
+            /**
+             * Optional CSS width (e.g., "w-20", "w-1/4")
+             */
+            width?: string | null;
+            id?: string | null;
+          }[];
+          /**
+           * Add rows to your table. Each row should have data for all columns.
+           */
+          rows: {
+            /**
+             * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+             */
+            rowData: {
+              /**
+               * Column key (should match one of your column keys above)
+               */
+              columnKey: string;
+              /**
+               * Cell content/value
+               */
+              value: string;
+              /**
+               * Make this cell a clickable link
+               */
+              isLink?: boolean | null;
+              /**
+               * URL for the link
+               */
+              linkUrl?: string | null;
+              /**
+               * External link (opens in new tab)
+               */
+              isExternal?: boolean | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+          }[];
+          /**
+           * Visual style of the table
+           */
+          variant?: ('default' | 'bordered' | 'striped') | null;
+        };
+        /**
+         * Configure multiple custom tables with CSV input support
+         */
+        multipleTablesConfig?:
+          | {
+              /**
+               * Title for this table
+               */
+              tableTitle?: string | null;
+              /**
+               * Paste CSV data here to automatically populate the table. Data will be processed when you save.
+               */
+              csvInput?: string | null;
+              columns: {
+                /**
+                 * Unique identifier for this column (no spaces, use camelCase)
+                 */
+                key: string;
+                /**
+                 * Display label for the column header
+                 */
+                label: string;
+                /**
+                 * Optional CSS width (e.g., "w-20", "w-1/4")
+                 */
+                width?: string | null;
+                id?: string | null;
+              }[];
+              /**
+               * Add rows to your table. Each row should have data for all columns.
+               */
+              rows: {
+                /**
+                 * Add data for each column in this row. Make sure to add cells in the same order as your columns.
+                 */
+                rowData: {
+                  /**
+                   * Column key (should match one of your column keys above)
+                   */
+                  columnKey: string;
+                  /**
+                   * Cell content/value
+                   */
+                  value: string;
+                  /**
+                   * Make this cell a clickable link
+                   */
+                  isLink?: boolean | null;
+                  /**
+                   * URL for the link
+                   */
+                  linkUrl?: string | null;
+                  /**
+                   * External link (opens in new tab)
+                   */
+                  isExternal?: boolean | null;
+                  id?: string | null;
+                }[];
+                id?: string | null;
+              }[];
+              /**
+               * Visual style of the table
+               */
+              variant?: ('default' | 'bordered' | 'striped') | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Optional custom title for the table (defaults to "Table Title")
+         */
+        tableTitle?: string | null;
+        /**
+         * Optional image for this section
+         */
+        image?: (string | null) | Media;
+        /**
+         * Order of display (lower numbers appear first)
+         */
+        order?: number | null;
+        /**
+         * Whether this section is active and visible
+         */
+        isActive?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about_select".
  */
@@ -7854,6 +8121,111 @@ export interface StudentLifeSelect<T extends boolean = true> {
  * via the `definition` "regulations_select".
  */
 export interface RegulationsSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        keywords?: T;
+        ogTitle?: T;
+        ogDescription?: T;
+        ogImage?: T;
+        twitterCard?: T;
+        noIndex?: T;
+        noFollow?: T;
+        canonicalUrl?: T;
+      };
+  heroTitle?: T;
+  heroSubtitle?: T;
+  sections?:
+    | T
+    | {
+        title?: T;
+        contentType?: T;
+        content?: T;
+        tableData?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              isExternal?: T;
+              id?: T;
+            };
+        dynamicTableConfig?:
+          | T
+          | {
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+            };
+        multipleTablesConfig?:
+          | T
+          | {
+              tableTitle?: T;
+              csvInput?: T;
+              columns?:
+                | T
+                | {
+                    key?: T;
+                    label?: T;
+                    width?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    rowData?:
+                      | T
+                      | {
+                          columnKey?: T;
+                          value?: T;
+                          isLink?: T;
+                          linkUrl?: T;
+                          isExternal?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              variant?: T;
+              id?: T;
+            };
+        tableTitle?: T;
+        image?: T;
+        order?: T;
+        isActive?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "facilities_select".
+ */
+export interface FacilitiesSelect<T extends boolean = true> {
   seo?:
     | T
     | {

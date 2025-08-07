@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { universalAccess } from '../access'
+import { departmentsWebhook } from '../hooks/webhook'
 
 export const Departments: CollectionConfig = {
   slug: 'departments',
@@ -10,6 +11,9 @@ export const Departments: CollectionConfig = {
     group: 'Departments',
   },
   access: universalAccess,
+  hooks: {
+    afterChange: [departmentsWebhook],
+  },
   fields: [
     {
       name: 'name',

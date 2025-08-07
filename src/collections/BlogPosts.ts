@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { blogPostAccess } from '../access'
+import { blogPostsWebhook } from '../hooks/webhook'
 
 export const BlogPosts: CollectionConfig = {
   slug: 'blog-posts',
@@ -42,6 +43,7 @@ export const BlogPosts: CollectionConfig = {
         }
         return doc
       },
+      blogPostsWebhook,
     ],
   },
   fields: [

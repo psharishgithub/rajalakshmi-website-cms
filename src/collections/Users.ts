@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { UserWithRole, isSuperAdmin, isSuperAdminOrAdmin } from '../access'
+import { usersWebhook } from '../hooks/webhook'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -8,6 +9,9 @@ export const Users: CollectionConfig = {
     group: 'System',
   },
   auth: true,
+  hooks: {
+    afterChange: [usersWebhook],
+  },
   fields: [
     {
       name: 'role',

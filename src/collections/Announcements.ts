@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { universalAccess } from '../access'
+import { announcementsWebhook } from '../hooks/webhook'
 
 export const Announcements: CollectionConfig = {
   slug: 'announcements',
@@ -8,6 +9,9 @@ export const Announcements: CollectionConfig = {
     group: 'Landing Page Components',
   },
   access: universalAccess,
+  hooks: {
+    afterChange: [announcementsWebhook],
+  },
   fields: [
     {
       name: 'title',

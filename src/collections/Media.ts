@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { mediaAccess } from '../access'
+import { mediaWebhook } from '../hooks/webhook'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -19,6 +20,7 @@ export const Media: CollectionConfig = {
         return data
       },
     ],
+    afterChange: [mediaWebhook],
   },
   fields: [
     {

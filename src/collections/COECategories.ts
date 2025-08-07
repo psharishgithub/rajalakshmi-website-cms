@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { universalAccess } from '../access'
+import { coeCategoriesWebhook } from '../hooks/webhook'
 
 export const COECategories: CollectionConfig = {
   slug: 'coe-categories',
@@ -9,6 +10,9 @@ export const COECategories: CollectionConfig = {
     group: 'COE',
   },
   access: universalAccess,
+  hooks: {
+    afterChange: [coeCategoriesWebhook],
+  },
   fields: [
     {
       name: 'name',

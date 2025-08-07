@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload'
 import { universalAccessPublished } from '../access'
 import { createSEOFields, createGlobalSectionFields } from '../globals/shared/globalConfig'
+import { dynamicPagesWebhook } from '../hooks/webhook'
 
 export const DynamicPages: CollectionConfig = {
   slug: 'dynamic-pages',
@@ -14,6 +15,9 @@ export const DynamicPages: CollectionConfig = {
     },
   },
   access: universalAccessPublished,
+  hooks: {
+    afterChange: [dynamicPagesWebhook],
+  },
   fields: [
     // Page Identification
     {

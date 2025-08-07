@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { universalAccess } from '../access'
+import { secondaryNavWebhook } from '../hooks/webhook'
 
 export const SecondaryNav: CollectionConfig = {
   slug: 'secondary-nav',
@@ -10,6 +11,9 @@ export const SecondaryNav: CollectionConfig = {
     description: 'Manage secondary navigation links (IIC, IIIC, IQAC, etc.)',
   },
   access: universalAccess,
+  hooks: {
+    afterChange: [secondaryNavWebhook],
+  },
   fields: [
     {
       name: 'label',

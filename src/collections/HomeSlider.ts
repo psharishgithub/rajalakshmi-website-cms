@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { universalAccess } from '../access'
+import { homeSliderWebhook } from '../hooks/webhook'
 
 export const HomeSlider: CollectionConfig = {
   slug: 'home-slider',
@@ -8,6 +9,9 @@ export const HomeSlider: CollectionConfig = {
     group: 'Landing Page Components',
   },
   access: universalAccess,
+  hooks: {
+    afterChange: [homeSliderWebhook],
+  },
   fields: [
     {
       name: 'title',

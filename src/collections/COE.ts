@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { universalAccess } from '../access'
+import { coeWebhook } from '../hooks/webhook'
 
 export const COE: CollectionConfig = {
   slug: 'coe',
@@ -19,6 +20,7 @@ export const COE: CollectionConfig = {
         return data
       },
     ],
+    afterChange: [coeWebhook],
   },
   fields: [
     {
